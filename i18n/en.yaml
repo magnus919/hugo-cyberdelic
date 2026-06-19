@@ -76,3 +76,8 @@ alert.tip: 'Tip'
 alert.important: 'Important'
 alert.warning: 'Warning'
 alert.caution: 'Caution'
+
+# Code Copy Button
+code_copy.label: 'Copy code to clipboard'
+code_copy.copied: 'Copied!'
+code_copy.copy_failed: 'Copy failed'

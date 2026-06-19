@@ -257,6 +257,10 @@
     box-shadow: inset 0 0 20px rgb(56 71 255 / 0.08);
   }
 
+  .cd-article-body pre {
+    position: relative;
+  }
+
   pre code {
     background: none;
     padding: 0;
@@ -1747,6 +1751,66 @@
   .cd-pagination-link:hover .cd-pagination-title,
   .cd-pagination-link:focus-visible .cd-pagination-title {
     color: var(--cd-accent-cyan);
+  }
+
+  /* -- Code Copy Button -- */
+  .cd-code-copy-btn {
+    position: absolute;
+    top: var(--cd-space-2);
+    right: var(--cd-space-2);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cd-space-1);
+    padding: var(--cd-space-1) var(--cd-space-2);
+    font-size: var(--cd-step--2);
+    font-family: var(--cd-font-body);
+    line-height: 1;
+    color: var(--cd-text-dim);
+    background: color-mix(in srgb, var(--cd-bg-elevated) 85%, transparent);
+    border: 1px solid var(--cd-border);
+    border-radius: var(--cd-radius-sm);
+    cursor: pointer;
+    opacity: 0;
+    transition:
+      opacity 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+    user-select: none;
+  }
+
+  .cd-article-body pre:hover .cd-code-copy-btn,
+  .cd-code-copy-btn:focus-visible {
+    opacity: 1;
+  }
+
+  .cd-code-copy-btn:focus-visible {
+    outline: 2px solid var(--cd-accent-cyan);
+    outline-offset: 1px;
+    color: var(--cd-accent-cyan);
+    border-color: color-mix(in srgb, var(--cd-accent-cyan) 40%, transparent);
+  }
+
+  .cd-code-copy-btn:hover {
+    opacity: 1;
+    color: var(--cd-text-bright);
+    border-color: color-mix(in srgb, var(--cd-accent-cyan) 30%, transparent);
+    background: color-mix(in srgb, var(--cd-bg-elevated) 90%, var(--cd-accent-cyan));
+  }
+
+  .cd-code-copy-btn--copied {
+    opacity: 1;
+    color: var(--cd-accent-cyan);
+    border-color: color-mix(in srgb, var(--cd-accent-cyan) 40%, transparent);
+    background: color-mix(in srgb, var(--cd-accent-cyan) 8%, var(--cd-bg-elevated));
+  }
+
+  .cd-code-copy-btn--error {
+    opacity: 1;
+    color: var(--cd-accent-magenta);
+    border-color: color-mix(in srgb, var(--cd-accent-magenta) 40%, transparent);
+    background: color-mix(in srgb, var(--cd-accent-magenta) 8%, var(--cd-bg-elevated));
   }
 }
 
