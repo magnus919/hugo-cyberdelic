@@ -14,6 +14,7 @@
   <div class="cd-grid">
     {{- range $pages -}}
       <article class="cd-card cd-fade-in cd-circuit-border">
+        {{- partial "cover.html" (dict "page" . "class" "cd-card-cover" "wrapper" "cd-card-figure") -}}
         <h2 class="cd-card-title">
           <a href="{{ .RelPermalink }}">{{ .Title }}</a>
         </h2>

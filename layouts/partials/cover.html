@@ -1,0 +1,60 @@
+{{- /* cover.html — renders a cover image <img> tag if one is found.
+     Lookup order:
+       1. Page bundle resource: cover.* (jpg, png, webp, avif, gif)
+       2. Frontmatter .Params.image (string path)
+       3. Frontmatter .Params.cover (string path)
+
+     Parameters:
+       .page    — the page context
+       .class   — CSS class to apply to the <img>
+       .wrapper — CSS class to apply to the wrapping <figure> (optional)
+*/ -}}
+
+{{- $img := false -}}
+{{- $page := .page -}}
+
+{{- /* 1. Page bundle resource */ -}}
+{{- with $page.Resources.GetMatch "cover.*" -}}
+  {{- $img = . -}}
+{{- end -}}
+
+{{- /* 2 & 3. Frontmatter string params */ -}}
+{{- if not $img -}}
+  {{- $src := or $page.Params.image $page.Params.cover -}}
+  {{- with $src -}}
+    {{- $img = dict "src" . "page" $page -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $img -}}
+  {{- $wrapperClass := or .wrapper "cd-cover" -}}
+  <figure class="{{ $wrapperClass }}" role="presentation">
+    {{- if reflect.IsMap $img -}}
+      {{- /* Static image from frontmatter path */ -}}
+      <img
+        src="{{ $img.src | absURL }}"
+        alt="{{ $page.Title | plainify }}"
+        {{- with .class }} class="{{ . }}"{{ end }}
+        width="1200"
+        height="675"
+        decoding="async"
+        fetchpriority="high"
+      >
+    {{- else -}}
+      {{- /* Page resource — can process with Hugo Pipes */ -}}
+      {{- $small := $img.Fill "800x450 webp" -}}
+      {{- $large := $img.Fill "1200x675 webp" -}}
+      <img
+        src="{{ $large.RelPermalink }}"
+        srcset="{{ $small.RelPermalink }} 800w, {{ $large.RelPermalink }} 1200w"
+        sizes="(max-width: 800px) 100vw, 800px"
+        alt="{{ $page.Title | plainify }}"
+        {{- with .class }} class="{{ . }}"{{ end }}
+        width="{{ $large.Width }}"
+        height="{{ $large.Height }}"
+        decoding="async"
+        fetchpriority="high"
+      >
+    {{- end -}}
+  </figure>
+{{- end -}}
