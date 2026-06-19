@@ -1812,6 +1812,87 @@
     border-color: color-mix(in srgb, var(--cd-accent-magenta) 40%, transparent);
     background: color-mix(in srgb, var(--cd-accent-magenta) 8%, var(--cd-bg-elevated));
   }
+
+  /* -- Image Zoom Lightbox -- */
+  .cd-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  .cd-lightbox--open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .cd-lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--cd-bg) 88%, transparent);
+    cursor: pointer;
+  }
+
+  .cd-lightbox-image {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    border-radius: var(--cd-radius-md);
+    box-shadow: 0 0 40px rgb(0 0 0 / 0.6);
+    object-fit: contain;
+    z-index: 1;
+    cursor: default;
+  }
+
+  .cd-lightbox-image:focus-visible {
+    outline: 2px solid var(--cd-accent-cyan);
+    outline-offset: 2px;
+  }
+
+  .cd-lightbox-close {
+    position: absolute;
+    top: var(--cd-space-4);
+    right: var(--cd-space-4);
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--cd-bg) 60%, transparent);
+    border: 1px solid var(--cd-border);
+    border-radius: var(--cd-radius-sm);
+    color: var(--cd-text);
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .cd-lightbox-close:hover {
+    background: color-mix(in srgb, var(--cd-bg) 80%, transparent);
+    border-color: var(--cd-accent-magenta);
+  }
+
+  .cd-lightbox-close:focus-visible {
+    outline: 2px solid var(--cd-accent-cyan);
+    outline-offset: 2px;
+  }
+
+  /* Mobile: thinner padding */
+  @media (width <= 640px) {
+    .cd-lightbox-image {
+      max-width: 95vw;
+      max-height: 85vh;
+    }
+  }
 }
 
 /* ---- Utilities ---- */

@@ -26,6 +26,7 @@
   </div>
 
   <span id="cd-heading-anchor-label" data-label="{{ i18n "heading_anchors.permalink_to" | default "Permalink to" }}" data-enabled="{{ .Site.Params.showHeadingAnchors }}" hidden aria-hidden="true"></span>
+  <span id="cd-image-zoom-toggle" data-enabled="{{ .Site.Params.showImageZoom }}" data-close-label="{{ i18n "image_zoom.close" | default "Close lightbox" }}" data-alt-label="{{ i18n "image_zoom.alt_label" | default "Image zoom" }}" hidden aria-hidden="true"></span>
 
   {{- block "scripts" . }}{{ partial "js.html" . }}{{ end -}}
 

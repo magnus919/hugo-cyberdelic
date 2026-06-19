@@ -81,3 +81,7 @@ alert.caution: 'Caution'
 code_copy.label: 'Copy code to clipboard'
 code_copy.copied: 'Copied!'
 code_copy.copy_failed: 'Copy failed'
+
+# Image Zoom
+image_zoom.close: 'Close lightbox'
+image_zoom.alt_label: 'Image zoom'

@@ -25,7 +25,7 @@ showHeadingAnchors  = false
 
 # === Content Enhancements ===
 showCodeCopy  = false
-showImageZoom = false
+showImageZoom = true
 showDraftLabel = false
 
 # === Author ===

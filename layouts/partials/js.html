@@ -5,7 +5,8 @@
 {{- $menu := resources.Get "js/menu.js" -}}
 {{- $youtube := resources.Get "js/youtube.js" -}}
 {{- $codeCopy := resources.Get "js/code-copy.js" -}}
-{{- $js := slice $search $toc $headingAnchors $menu $youtube $codeCopy | resources.Concat "js/bundle.js" -}}
+{{- $imageZoom := resources.Get "js/image-zoom.js" -}}
+{{- $js := slice $search $toc $headingAnchors $menu $youtube $codeCopy $imageZoom | resources.Concat "js/bundle.js" -}}
 {{- if hugo.IsProduction -}}
   {{- $js = $js | minify | fingerprint -}}
 {{- end -}}
