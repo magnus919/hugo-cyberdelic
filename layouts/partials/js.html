@@ -11,7 +11,8 @@
 {{- $chart := resources.Get "js/chart.js" -}}
 {{- $katex := resources.Get "js/katex.js" -}}
 {{- $carousel := resources.Get "js/carousel.js" -}}
-{{- $js := slice $search $toc $headingAnchors $menu $youtube $codeCopy $imageZoom $gallery $mermaid $chart $katex $carousel | resources.Concat "js/bundle.js" -}}
+{{- $githubCard := resources.Get "js/github-card.js" -}}
+{{- $js := slice $search $toc $headingAnchors $menu $youtube $codeCopy $imageZoom $gallery $mermaid $chart $katex $carousel $githubCard | resources.Concat "js/bundle.js" -}}
 {{- if hugo.IsProduction -}}
   {{- $js = $js | minify | fingerprint -}}
 {{- end -}}

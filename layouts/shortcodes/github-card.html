@@ -1,0 +1,104 @@
+{{- /* github-card.html — GitHub repo/issue/PR metadata card
+     Fetches data client-side from the GitHub API and renders a styled card.
+     Parameters:
+       url  (string, required) — GitHub URL path, e.g.:
+             "owner/repo"                  → repository card
+             "owner/repo/issues/42"        → issue card
+             "owner/repo/pull/42"          → pull request card
+*/ -}}
+
+{{- $url := .Get "url" | default "" -}}
+{{- $owner := "" -}}
+{{- $repo := "" -}}
+{{- $type := "repo" -}}
+{{- $number := "" -}}
+{{- $valid := false -}}
+
+{{- if $url -}}
+  {{- /* Parse URL: strip trailing slash, split by / */ -}}
+  {{- $parts := split (trim $url "/") "/" -}}
+  {{- $partCount := len $parts -}}
+
+  {{- if eq $partCount 2 -}}
+    {{- /* owner/repo */ -}}
+    {{- $owner = index $parts 0 -}}
+    {{- $repo = index $parts 1 -}}
+    {{- $type = "repo" -}}
+    {{- $valid = true -}}
+  {{- else if eq $partCount 4 -}}
+    {{- /* owner/repo/issues/N or owner/repo/pull/N */ -}}
+    {{- $owner = index $parts 0 -}}
+    {{- $repo = index $parts 1 -}}
+    {{- $type = index $parts 2 -}}
+    {{- $number = index $parts 3 -}}
+    {{- if or (eq $type "issues") (eq $type "issue") -}}
+      {{- $type = "issue" -}}
+      {{- $valid = true -}}
+    {{- else if or (eq $type "pull") (eq $type "pulls") -}}
+      {{- $type = "pull" -}}
+      {{- $valid = true -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $valid -}}
+  {{- $cardID := printf "cd-gh-%s-%s-%s-%s" $owner $repo $type $number | sha256 | truncate 12 "" -}}
+  {{- $apiType := $type -}}
+  {{- if eq $type "pull" -}}{{ $apiType = "pulls" }}{{- end -}}
+
+<div
+  class="cd-github-card"
+  role="region"
+  aria-label="{{ $owner }}/{{ $repo }}{{ if $number }} {{ $type }} #{{ $number }}{{ end }}"
+  data-cd-github-id="{{ $cardID }}"
+  data-gh-owner="{{ $owner }}"
+  data-gh-repo="{{ $repo }}"
+  data-gh-type="{{ $apiType }}"
+  data-gh-number="{{ $number }}"
+>
+  {{- /* Loading skeleton */ -}}
+  <div class="cd-github-card-loading" aria-label="{{ i18n "github_card.loading" }}" role="status">
+    <div class="cd-github-card-skeleton">
+      <div class="cd-github-card-skeleton-row">
+        <div class="cd-github-card-skeleton-avatar"></div>
+        <div class="cd-github-card-skeleton-lines">
+          <div class="cd-github-card-skeleton-line cd-github-card-skeleton-line--title"></div>
+          <div class="cd-github-card-skeleton-line cd-github-card-skeleton-line--subtitle"></div>
+        </div>
+      </div>
+      <div class="cd-github-card-skeleton-line cd-github-card-skeleton-line--text"></div>
+      <div class="cd-github-card-skeleton-line cd-github-card-skeleton-line--text-short"></div>
+    </div>
+  </div>
+
+  {{- /* Content area (populated by JS) */ -}}
+  <div class="cd-github-card-content" hidden aria-live="polite">
+    <div class="cd-github-card-header">
+      <img class="cd-github-card-avatar" src="" alt="" width="48" height="48" loading="lazy">
+      <div class="cd-github-card-header-text">
+        <a class="cd-github-card-title" href="" target="_blank" rel="noopener noreferrer"></a>
+        <span class="cd-github-card-owner"></span>
+      </div>
+    </div>
+    <div class="cd-github-card-body">
+      <p class="cd-github-card-description"></p>
+      <div class="cd-github-card-meta"></div>
+      <div class="cd-github-card-stats"></div>
+      <div class="cd-github-card-labels"></div>
+    </div>
+  </div>
+
+  {{- /* Error state */ -}}
+  <div class="cd-github-card-error" hidden role="alert">
+    <svg class="cd-github-card-error-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span class="cd-github-card-error-text">{{ i18n "github_card.error_generic" }}</span>
+  </div>
+</div>
+
+{{- else -}}
+  {{- /* Invalid URL: render nothing */ -}}
+{{- end -}}
