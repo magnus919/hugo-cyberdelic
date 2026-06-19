@@ -57,6 +57,18 @@ rgba(0, 255, 255, 0.015) 4px
 The scan line overlay in hugo-cyberdelic is subtle — barely perceptible to conscious perception, but
 contributing to the overall texture of the experience.
 
+## YouTube Embed Example
+
+Here is a privacy-friendly YouTube embed using the click-to-load shortcode:
+
+{{< youtube id="jNQXAC9IVRw" title="Me at the zoo — The First YouTube Video Ever" >}}
+
+This embed uses `youtube-nocookie.com` and only loads the iframe when you click the placeholder.
+
+An invalid video ID renders a graceful error state:
+
+{{< youtube id="" title="Missing Video" >}}
+
 ## The Circuit Board Motif
 
 Circuit-board inspired decorative elements serve as a visual bridge between the organic and the

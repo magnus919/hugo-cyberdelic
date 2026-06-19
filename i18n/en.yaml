@@ -64,3 +64,8 @@ pagination.label: 'Article pagination'
 # Heading Anchors
 heading_anchors.permalink_to: 'Permalink to'
 heading_anchors.label: 'Heading anchors'
+
+# YouTube Shortcode
+youtube.play: 'Play video: {{ .Title }}'
+youtube.title: 'YouTube video'
+youtube.error: 'Video could not be loaded.'

@@ -1,0 +1,59 @@
+{{- /* youtube.html — YouTube lite embed shortcode
+     Privacy-first: placeholder renders on page load, no iframe until click.
+     Uses youtube-nocookie.com for the embed URL.
+     Parameters:
+       id     (string, required) — YouTube video ID (11 chars, alphanumeric + _ -)
+       title  (string, optional) — Video title for accessibility / placeholder text
+*/ -}}
+
+{{- $id := .Get "id" | default "" -}}
+{{- $title := .Get "title" | default (i18n "youtube.title" | default "YouTube video") -}}
+
+{{- /* Validate video ID: must be non-empty and consist only of allowed characters */ -}}
+{{- $valid := false -}}
+{{- if $id -}}
+  {{- if (findRE "^[a-zA-Z0-9_-]+$" $id) -}}
+    {{- $valid = true -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $valid -}}
+  {{- $thumbnail := printf "https://img.youtube.com/vi/%s/hqdefault.jpg" $id -}}
+  {{- $playLabel := i18n "youtube.play" (dict "Title" $title) | default (printf "Play video: %s" $title) -}}
+
+<div class="cd-youtube" role="region" aria-label="{{ $title }}">
+  <div
+    class="cd-youtube-placeholder"
+    tabindex="0"
+    role="button"
+    aria-label="{{ $playLabel }}"
+    data-youtube-id="{{ $id }}"
+    data-youtube-title="{{ $title }}"
+  >
+    <img
+      class="cd-youtube-thumb"
+      src="{{ $thumbnail }}"
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      width="480"
+      height="360"
+    >
+    <div class="cd-youtube-play" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="68" height="48" viewBox="0 0 68 48" fill="none" aria-hidden="true">
+        <path d="M66.52 7.74C65.73 4.73 63.38 2.98 60.66 2.3C55.36 0.96 34 1 34 1C34 1 12.64 0.96 7.34 2.3C4.62 2.98 2.27 4.73 1.48 7.74C0.59 11.19 0 16.37 0 24C0 31.63 0.59 36.81 1.48 40.26C2.27 43.27 4.62 45.02 7.34 45.7C12.64 47.04 34 47 34 47C34 47 55.36 47.04 60.66 45.7C63.38 45.02 65.73 43.27 66.52 40.26C67.41 36.81 68 31.63 68 24C68 16.37 67.41 11.19 66.52 7.74Z" fill="#FF0000"/>
+        <path d="M45 24L27 14V34L45 24Z" fill="white"/>
+      </svg>
+    </div>
+    <span class="cd-youtube-title">{{ $title }}</span>
+  </div>
+</div>
+
+{{- else -}}
+  {{- /* Invalid or missing video ID: render nothing or themed error */ -}}
+  {{- if $id -}}
+<div class="cd-youtube cd-youtube-error" role="alert">
+  <span class="cd-youtube-error-text">{{ i18n "youtube.error" | default "Video could not be loaded." }}</span>
+</div>
+  {{- end -}}
+{{- end -}}
