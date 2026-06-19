@@ -1,0 +1,37 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+{{ define "description" }}{{ .Description | default .Title }}{{ end }}
+
+{{ define "main" }}
+<header class="cd-article-header">
+  <h1 class="cd-article-title">{{ .Title }}</h1>
+  {{- with .Description -}}
+    <p>{{ . }}</p>
+  {{- end -}}
+</header>
+
+{{- $pages := .Pages -}}
+{{- if $pages -}}
+  <div class="cd-grid">
+    {{- range $pages -}}
+      <article class="cd-card cd-fade-in cd-circuit-border">
+        <h2 class="cd-card-title">
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </h2>
+        <p class="cd-card-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+          {{- with .ReadingTime -}}
+            &middot; {{ . }} min read
+          {{- end -}}
+        </p>
+        {{- with .Summary -}}
+          <div class="cd-card-summary">
+            {{ . | truncate 200 }}
+          </div>
+        {{- end -}}
+      </article>
+    {{- end -}}
+  </div>
+{{- else -}}
+  <p>Nothing here yet.</p>
+{{- end -}}
+{{ end }}

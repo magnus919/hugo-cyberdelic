@@ -1,0 +1,39 @@
+{{ define "title" }}{{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<section class="cd-hero full-bleed">
+  <h1 class="cd-hero-title cd-glitch" data-text="{{ .Site.Title }}" aria-label="{{ .Site.Title }}">
+    <span aria-hidden="true">{{ .Site.Title }}</span>
+  </h1>
+  {{- with .Site.Params.description -}}
+    <p class="cd-hero-subtitle">{{ . }}</p>
+  {{- end -}}
+</section>
+
+{{- $pages := where .Site.RegularPages "Section" "!=" "" -}}
+{{- if $pages -}}
+  <section aria-labelledby="recent-posts-heading" class="cd-page">
+    <h2 id="recent-posts-heading" class="cd-sr-only">Recent posts</h2>
+    <div class="cd-grid">
+      {{- range first 6 $pages -}}
+        <article class="cd-card cd-fade-in cd-circuit-border">
+          <h3 class="cd-card-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h3>
+          <p class="cd-card-meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+            {{- with .ReadingTime -}}
+              &middot; {{ . }} min read
+            {{- end -}}
+          </p>
+          {{- with .Summary -}}
+            <div class="cd-card-summary">
+              {{ . | truncate 200 }}
+            </div>
+          {{- end -}}
+        </article>
+      {{- end -}}
+    </div>
+  </section>
+{{- end -}}
+{{ end }}

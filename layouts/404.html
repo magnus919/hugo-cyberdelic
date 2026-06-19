@@ -1,0 +1,12 @@
+{{ define "title" }}404 — Page not found | {{ .Site.Title }}{{ end }}
+{{ define "description" }}The page you're looking for doesn't exist.{{ end }}
+
+{{ define "main" }}
+<section class="cd-error full-bleed">
+  <div class="cd-error-code">404</div>
+  <p class="cd-error-message">Lost in the neon void.</p>
+  <p style="color: var(--cd-text-dim);">
+    <a href="{{ .Site.Home.RelPermalink }}" style="font-size: var(--cd-step-0);">Return to the surface</a>
+  </p>
+</section>
+{{ end }}

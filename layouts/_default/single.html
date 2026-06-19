@@ -1,0 +1,30 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+{{ define "description" }}{{ .Description | default .Summary | plainify | truncate 160 }}{{ end }}
+
+{{ define "main" }}
+<header class="cd-article-header">
+  <h1 class="cd-article-title">{{ .Title }}</h1>
+  <div class="cd-article-meta">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+    {{- with .ReadingTime -}}
+      &middot; {{ . }} min read
+    {{- end -}}
+    {{- with .WordCount -}}
+      &middot; {{ . }} words
+    {{- end -}}
+
+    {{- with .Params.tags -}}
+      {{- range . -}}
+        {{- $tag := . -}}
+        {{- with $.Site.GetPage (printf "/tags/%s" (urlize .)) -}}
+          <a href="{{ .RelPermalink }}" class="cd-tag">{{ $tag }}</a>
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  </div>
+</header>
+
+<div class="cd-article-body flow">
+  {{ .Content }}
+</div>
+{{ end }}

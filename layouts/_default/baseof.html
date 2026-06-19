@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ block "description" . }}{{ .Site.Params.description | default .Site.Title }}{{ end }}">
+
+  {{- partial "head.html" . -}}
+  {{- block "styles" . }}{{ partial "css.html" . }}{{ end -}}
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="cd-page">
+    {{- block "header" . }}{{ partial "header.html" . }}{{ end -}}
+
+    <main id="main-content" class="cd-article">
+      {{- block "main" . }}{{ end -}}
+    </main>
+
+    {{- block "footer" . }}{{ partial "footer.html" . }}{{ end -}}
+  </div>
+
+  {{- block "scripts" . }}{{ partial "js.html" . }}{{ end -}}
+</body>
+</html>

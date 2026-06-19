@@ -1,0 +1,6 @@
+<footer class="cd-footer" role="contentinfo">
+  <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. Powered by <a href="https://gohugo.io/" rel="noopener">Hugo</a> &amp; <a href="https://github.com/magnus919/hugo-cyberdelic" rel="noopener">hugo-cyberdelic</a>.</p>
+  {{- with .Site.Params.footerExtra -}}
+    <p>{{ . | safeHTML }}</p>
+  {{- end -}}
+</footer>

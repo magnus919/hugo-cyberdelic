@@ -1,0 +1,18 @@
+<header class="cd-header" role="banner">
+  <div class="cd-header-inner">
+    <a href="{{ .Site.Home.RelPermalink }}" class="cd-site-title cd-glitch" data-text="{{ .Site.Title }}" aria-label="{{ .Site.Title }}">
+      <span aria-hidden="true">{{ .Site.Title }}</span>
+    </a>
+
+    {{- with .Site.Menus.main -}}
+    <nav class="cd-nav" aria-label="Main navigation">
+      {{- range . -}}
+        <a href="{{ .URL | relLangURL }}"
+           {{- if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} aria-current="page"{{ end -}}>
+          {{- .Name -}}
+        </a>
+      {{- end -}}
+    </nav>
+    {{- end -}}
+  </div>
+</header>

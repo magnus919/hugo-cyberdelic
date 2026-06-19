@@ -1,0 +1,13 @@
+# hugo-cyberdelic — theme.toml
+name = "hugo-cyberdelic"
+license = "MIT"
+licenselink = "https://github.com/magnus919/hugo-cyberdelic/blob/main/LICENSE"
+description = "A cyberdelic Hugo theme — 1969 psychedelic concert poster meets cyberpunk holographic future. Violet-black voids, neon glow, circuit-board filigree, worn analog textures."
+homepage = "https://github.com/magnus919/hugo-cyberdelic"
+tags = ["cyberdelic", "psychedelic", "cyberpunk", "holographic", "dark", "neon", "retro-future"]
+features = ["dark-first", "responsive", "accessible", "neon-glow-effects", "glitch-animations", "design-tokens", "fluid-typography"]
+min_version = "0.120.0"
+
+[author]
+  name = "Magnus Hedemark"
+  homepage = "https://magnus919.com"

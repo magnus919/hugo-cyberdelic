@@ -1,0 +1,36 @@
+<meta name="generator" content="Hugo {{ hugo.Version }}">
+
+{{- with .Site.Params.author -}}
+<meta name="author" content="{{ . }}">
+{{- end -}}
+
+{{- /* Open Graph */ -}}
+<meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{- with .Site.Params.ogImage -}}
+<meta property="og:image" content="{{ . | absURL }}">
+{{- end -}}
+<meta property="og:site_name" content="{{ .Site.Title }}">
+
+{{- /* Twitter Card */ -}}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ .Title }} | {{ .Site.Title }}">
+<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+{{- with .Site.Params.ogImage -}}
+<meta name="twitter:image" content="{{ . | absURL }}">
+{{- end -}}
+
+{{- /* Theme colour for browser chrome */ -}}
+<meta name="theme-color" content="#0A0015">
+
+{{- /* Preconnect to Google Fonts */ -}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+{{- /* RSS */ -}}
+{{- with .Site.Home.OutputFormats.Get "RSS" -}}
+<link rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" href="{{ .Permalink }}">
+{{- end -}}
