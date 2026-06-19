@@ -1,0 +1,52 @@
+# exampleSite — Theme Parameters Override
+# Extends theme defaults — enable demo features here.
+
+# Site metadata
+description = "A cyberdelic Hugo theme demo — 1969 psychedelic concert poster meets cyberpunk holographic future."
+author      = "Cyberdelic Demo"
+ogImage     = ""
+
+# === Analytics ===
+[analytics]
+  provider = ""
+
+  [analytics.google]
+    id = ""
+
+  [analytics.fathom]
+    siteID = ""
+
+  [analytics.umami]
+    websiteID = ""
+    src       = ""
+
+  [analytics.seline]
+    token = ""
+
+# === Homepage ===
+homepageLayout = "hero"
+
+# === Article / Post Features ===
+showReadingTime   = true
+showWordCount     = true
+showSharing       = false
+showRelated       = false
+showPagination    = false
+showComments      = false
+
+# === Navigation & Discovery ===
+showSearch          = false
+showTableOfContents = false
+showBreadcrumbs     = false
+showHeadingAnchors  = false
+
+# === Content Enhancements ===
+showCodeCopy  = false
+showImageZoom = false
+showDraftLabel = false
+
+# === Author ===
+showAuthorBox = false
+
+# === Series ===
+showSeries = false

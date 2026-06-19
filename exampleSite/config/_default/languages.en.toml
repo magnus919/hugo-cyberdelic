@@ -1,0 +1,8 @@
+# exampleSite — English Language Configuration
+# Extends theme defaults with demo-specific values.
+
+[languages.en]
+  title         = "hugo-cyberdelic"
+  languageName  = "English"
+  languageCode  = "en-US"
+  weight        = 1

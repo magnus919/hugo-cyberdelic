@@ -1,0 +1,15 @@
+# exampleSite — hugo-cyberdelic demo configuration
+# Extends theme defaults — only values that differ from theme defaults are set here.
+
+baseURL    = "https://hugo-cyberdelic.example.com"
+languageCode = "en-US"
+title      = "hugo-cyberdelic"
+theme      = "hugo-cyberdelic"
+
+# Suppress goldmark raw HTML warnings (theme has unsafe=true)
+ignoreLogs = ['warning-goldmark-raw-html']
+
+# Default taxonomies (inherited from theme defaults)
+[taxonomies]
+  tag      = "tags"
+  category = "categories"
