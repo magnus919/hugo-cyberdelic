@@ -23,3 +23,15 @@ error.return_home: 'Return to the surface'
 
 # Footer
 footer.copyright: '© {{ .year }} {{ .siteTitle }}. Powered by <a href="{{ .hugoUrl }}" rel="noopener">Hugo</a> &amp; <a href="{{ .themeUrl }}" rel="noopener">hugo-cyberdelic</a>.'
+
+# Search
+search.title: 'Search'
+search.placeholder: 'Search posts…'
+search.close: 'Close search'
+search.results: 'Search results'
+search.no_results: 'No results found'
+search.prompt: 'Type to search.'
+search.trigger_label: 'Toggle search'
+search.min_chars: 'Type at least {{ . }} characters to search.'
+search.failed: 'Failed to load search library. Please try again later.'
+search.network_error: 'Network error. Please try again.'

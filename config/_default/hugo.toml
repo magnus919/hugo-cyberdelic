@@ -11,3 +11,15 @@ theme         = "hugo-cyberdelic"
   tag      = "tags"
   category = "categories"
   author   = "authors"
+
+# Custom output formats
+[outputFormats]
+  [outputFormats.SEARCH]
+    baseName = "search"
+    isPlainText = false
+    mediaType = "application/json"
+    notAlternative = true
+
+# Outputs by page kind
+[outputs]
+  home = ["HTML", "RSS", "SEARCH"]

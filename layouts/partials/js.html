@@ -1,1 +1,7 @@
-{{- /* JS partial — currently empty, reserved for future enhancements */ -}}
+{{- /* JS partial — concatenates and fingerprints all theme JS */ -}}
+{{- $search := resources.Get "js/search.js" -}}
+{{- $js := slice $search | resources.Concat "js/bundle.js" -}}
+{{- if hugo.IsProduction -}}
+  {{- $js = $js | minify | fingerprint -}}
+{{- end -}}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>

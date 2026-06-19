@@ -13,3 +13,14 @@ ignoreLogs = ['warning-goldmark-raw-html']
 [taxonomies]
   tag      = "tags"
   category = "categories"
+
+# Search index output (JSON)
+[outputFormats]
+  [outputFormats.SEARCH]
+    baseName = "search"
+    isPlainText = false
+    mediaType = "application/json"
+    notAlternative = true
+
+[outputs]
+  home = ["HTML", "RSS", "SEARCH"]

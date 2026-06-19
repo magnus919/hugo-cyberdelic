@@ -18,7 +18,7 @@ showPagination    = false
 showComments      = false
 
 # === Navigation & Discovery ===
-showSearch          = false
+showSearch          = true
 showTableOfContents = false
 showBreadcrumbs     = false
 showHeadingAnchors  = false

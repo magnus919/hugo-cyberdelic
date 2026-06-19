@@ -1,0 +1,11 @@
+[
+  {{- range $i, $page := where .Site.RegularPages "Section" "!=" "" -}}
+    {{- if $i }},{{ end -}}
+    {
+      "title": {{ $page.Title | jsonify }},
+      "permalink": {{ $page.RelPermalink | jsonify }},
+      "summary": {{ $page.Summary | plainify | jsonify }},
+      "tags": {{ $page.Params.tags | default slice | jsonify }}
+    }
+  {{- end -}}
+]

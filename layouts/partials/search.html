@@ -1,0 +1,30 @@
+{{- if .Site.Params.showSearch -}}
+<div id="cd-search" class="cd-search" role="dialog" aria-label="{{ i18n "search.title" }}" aria-hidden="true" data-visible="false">
+  <div class="cd-search-backdrop"></div>
+  <div class="cd-search-panel" role="document">
+    <div class="cd-search-header">
+      <input
+        type="text"
+        id="cd-search-input"
+        class="cd-search-input"
+        placeholder="{{ i18n "search.placeholder" | default "Search posts…" }}"
+        aria-label="{{ i18n "search.placeholder" | default "Search posts…" }}"
+        autocomplete="off"
+        spellcheck="false"
+      >
+      <button
+        class="cd-search-close"
+        type="button"
+        aria-label="{{ i18n "search.close" | default "Close search" }}"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="cd-search-status" aria-live="polite"></div>
+    <div class="cd-search-results" role="listbox" aria-label="{{ i18n "search.results" | default "Search results" }}"></div>
+  </div>
+</div>
+{{- end -}}
