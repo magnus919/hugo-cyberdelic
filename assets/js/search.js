@@ -14,7 +14,7 @@
   'use strict';
 
   var CONFIG = {
-    fuseKeys: ['title', 'summary', 'tags'],
+    fuseKeys: ['title', 'summary', 'tags', 'categories'],
     fuseThreshold: 0.4,
     minChars: 2,
     debounceMs: 200,
