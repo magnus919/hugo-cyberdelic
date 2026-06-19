@@ -1,0 +1,13 @@
+# hugo-cyberdelic — Default Site Configuration
+# Sites using this theme can override any of these values in their own hugo.toml.
+
+baseURL       = "https://example.com"
+languageCode  = "en-US"
+title         = "hugo-cyberdelic"
+theme         = "hugo-cyberdelic"
+
+# Default taxonomies
+[taxonomies]
+  tag      = "tags"
+  category = "categories"
+  author   = "authors"

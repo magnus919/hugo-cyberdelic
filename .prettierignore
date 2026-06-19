@@ -1,6 +1,7 @@
 public/
 resources/
 LICENSE
+config/
 
 # Hugo Go template syntax breaks HTML parser
 layouts/

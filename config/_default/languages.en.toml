@@ -1,0 +1,8 @@
+# hugo-cyberdelic — English Language Defaults
+# Sites can override any value in their own languages.en.toml.
+
+[languages.en]
+  title         = "hugo-cyberdelic"
+  languageName  = "English"
+  languageCode  = "en-US"
+  weight        = 1

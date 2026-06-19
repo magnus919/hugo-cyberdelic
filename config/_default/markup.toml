@@ -1,0 +1,21 @@
+# hugo-cyberdelic — Markup / Goldmark Configuration
+# Sites can override any value in their own markup.toml.
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
+
+  [markup.highlight]
+    codeFences = true
+    lineNos    = false
+
+  [markup.tableOfContents]
+    endLevel   = 3
+    ordered    = false
+    startLevel = 2

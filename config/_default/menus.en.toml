@@ -1,0 +1,41 @@
+# hugo-cyberdelic — Default Menu Configuration
+# Nested menu tree using Hugo's menu system.
+# Sites can override any entry in their own menus.en.toml.
+
+[[menu.main]]
+  name       = "Home"
+  identifier = "home"
+  url        = "/"
+  weight     = 10
+
+[[menu.main]]
+  name       = "Blog"
+  identifier = "blog"
+  url        = "/blog/"
+  weight     = 20
+
+[[menu.main]]
+  name       = "Tech"
+  identifier = "tech"
+  parent     = "blog"
+  url        = "/categories/tech/"
+  weight     = 21
+
+[[menu.main]]
+  name       = "Design"
+  identifier = "design"
+  parent     = "blog"
+  url        = "/categories/design/"
+  weight     = 22
+
+[[menu.main]]
+  name       = "Tags"
+  identifier = "tags"
+  url        = "/tags/"
+  weight     = 30
+
+[[menu.main]]
+  name       = "About"
+  identifier = "about"
+  url        = "/about/"
+  weight     = 40

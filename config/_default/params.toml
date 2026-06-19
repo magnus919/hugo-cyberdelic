@@ -1,0 +1,81 @@
+# hugo-cyberdelic — Theme Parameters
+# ===
+# All feature toggles default to false — no component renders unless explicitly
+# enabled by the site owner. Sites can override any value in their own params.toml.
+
+# Site metadata
+description = "A cyberdelic Hugo theme — 1969 psychedelic concert poster meets cyberpunk holographic future."
+author      = "Author"
+ogImage     = ""
+
+# === Analytics ===
+[analytics]
+  # Supported providers: "google", "fathom", "umami", "seline"
+  provider = ""
+
+  [analytics.google]
+    id = ""
+
+  [analytics.fathom]
+    siteID = ""
+
+  [analytics.umami]
+    websiteID = ""
+    src       = ""
+
+  [analytics.seline]
+    token = ""
+
+# === Homepage ===
+# Layout variant: "hero" (default), "profile", "background", "card"
+homepageLayout = "hero"
+
+# === Article / Post Features ===
+# Reading time display
+showReadingTime = false
+
+# Word count display
+showWordCount = false
+
+# Social sharing buttons (Bluesky, Twitter/X, LinkedIn, Mastodon, Reddit, email)
+showSharing = false
+
+# Related articles section at bottom of posts
+showRelated = false
+
+# Next / Previous article pagination
+showPagination = false
+
+# Comments integration (Disqus, utterances, giscus, isso)
+showComments = false
+
+# === Navigation & Discovery ===
+# Client-side search overlay (Fuse.js)
+showSearch = false
+
+# Scrollable table of contents with active heading tracking
+showTableOfContents = false
+
+# Breadcrumbs with Schema.org BreadcrumbList structured data
+showBreadcrumbs = false
+
+# Heading anchor links (on-hover permalink icon)
+showHeadingAnchors = false
+
+# === Content Enhancements ===
+# Code block copy button
+showCodeCopy = false
+
+# Image click-to-zoom lightbox
+showImageZoom = false
+
+# Draft label indicator
+showDraftLabel = false
+
+# === Author ===
+# Author bio box on article pages
+showAuthorBox = false
+
+# === Series ===
+# Series navigation component
+showSeries = false
