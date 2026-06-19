@@ -64,6 +64,8 @@
     if (!img) return;
     // Skip images without src (e.g., SVG placeholders)
     if (!img.src) return;
+    // Skip images inside galleries (gallery has its own lightbox with navigation)
+    if (img.closest('.cd-gallery')) return;
     e.preventDefault();
     // Make the image focusable so focus can return to it
     img.setAttribute('tabindex', '-1');

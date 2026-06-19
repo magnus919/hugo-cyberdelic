@@ -104,3 +104,21 @@ changes — no manual color calculation needed.
 3. **Theming** — Swap token values to create entirely different visual identities
 4. **Accessibility** — Enforce contrast ratios by controlling token relationships
 5. **Performance** — CSS custom properties are computed at render time with zero runtime cost
+
+## Image Gallery Demo
+
+The gallery shortcode renders a responsive grid of images with click-to-open lightbox and arrow key
+navigation. Here's a 3-column gallery:
+
+{{< gallery columns="3" >}} ![Abstract neon patterns](https://picsum.photos/id/21/800/600)
+![Cyberpunk cityscape](https://picsum.photos/id/22/800/600)
+![Holographic grid](https://picsum.photos/id/23/800/600)
+![Violet horizon](https://picsum.photos/id/24/800/600)
+![Digital wave forms](https://picsum.photos/id/25/800/600)
+![Neon geometry](https://picsum.photos/id/26/800/600) {{< /gallery >}}
+
+And a 2-column gallery:
+
+{{< gallery columns="2" >}} ![Fractal exploration](https://picsum.photos/id/27/800/600)
+![Light trails at dusk](https://picsum.photos/id/28/800/600)
+![Digital dreamscape](https://picsum.photos/id/29/800/600) {{< /gallery >}}

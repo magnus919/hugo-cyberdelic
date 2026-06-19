@@ -1893,6 +1893,186 @@
       max-height: 85vh;
     }
   }
+
+  /* -- Gallery -- */
+  .cd-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--cd-space-3);
+    margin: var(--cd-space-6) 0;
+  }
+
+  .cd-gallery[data-columns='1'] {
+    grid-template-columns: 1fr;
+  }
+
+  .cd-gallery[data-columns='2'] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cd-gallery[data-columns='4'] {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .cd-gallery[data-columns='5'] {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .cd-gallery[data-columns='6'] {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .cd-gallery-item {
+    margin: 0;
+    padding: 0;
+    border-radius: var(--cd-radius-md);
+    overflow: hidden;
+    border: 1px solid var(--cd-border);
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+    line-height: 0;
+  }
+
+  .cd-gallery-item:hover {
+    border-color: color-mix(in srgb, var(--cd-accent-cyan) 30%, transparent);
+    box-shadow: 0 0 12px var(--cd-glow-cyan);
+    transform: translateY(-2px);
+  }
+
+  .cd-gallery-item:focus-visible {
+    outline: 2px solid var(--cd-accent-cyan);
+    outline-offset: 2px;
+  }
+
+  .cd-gallery-thumb {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .cd-gallery-item:hover .cd-gallery-thumb {
+    transform: scale(1.05);
+  }
+
+  /* Gallery Lightbox Navigation */
+  .cd-lightbox-prev,
+  .cd-lightbox-next {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--cd-bg) 60%, transparent);
+    border: 1px solid var(--cd-border);
+    border-radius: 50%;
+    color: var(--cd-text);
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      opacity 0.2s ease;
+    opacity: 0.7;
+    padding: 0;
+  }
+
+  .cd-lightbox-prev {
+    left: var(--cd-space-4);
+  }
+
+  .cd-lightbox-next {
+    right: var(--cd-space-4);
+  }
+
+  .cd-lightbox-prev:hover,
+  .cd-lightbox-next:hover,
+  .cd-lightbox-prev:focus-visible,
+  .cd-lightbox-next:focus-visible {
+    opacity: 1;
+    background: color-mix(in srgb, var(--cd-bg) 80%, transparent);
+    border-color: var(--cd-accent-cyan);
+    color: var(--cd-accent-cyan);
+  }
+
+  .cd-lightbox-prev:focus-visible,
+  .cd-lightbox-next:focus-visible {
+    outline: 2px solid var(--cd-accent-cyan);
+    outline-offset: 2px;
+  }
+
+  /* Disabled navigation at boundaries */
+  .cd-lightbox-prev:disabled,
+  .cd-lightbox-next:disabled {
+    opacity: 0.2;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  /* Lightbox image counter */
+  .cd-lightbox-counter {
+    position: absolute;
+    bottom: var(--cd-space-4);
+    left: 50%;
+    z-index: 2;
+    transform: translateX(-50%);
+    font-family: var(--cd-font-mono);
+    font-size: var(--cd-step--1);
+    color: var(--cd-text-dim);
+    background: color-mix(in srgb, var(--cd-bg) 60%, transparent);
+    padding: var(--cd-space-1) var(--cd-space-3);
+    border-radius: var(--cd-radius-lg);
+    border: 1px solid var(--cd-border);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .cd-gallery-thumb {
+      transition: none;
+    }
+
+    .cd-gallery-item {
+      transition: none;
+    }
+
+    .cd-gallery-item:hover .cd-gallery-thumb {
+      transform: none;
+    }
+
+    .cd-gallery-item:hover {
+      transform: none;
+    }
+  }
+
+  /* Responsive gallery columns */
+  @media (width <= 768px) {
+    .cd-gallery[data-columns='3'],
+    .cd-gallery[data-columns='4'],
+    .cd-gallery[data-columns='5'],
+    .cd-gallery[data-columns='6'] {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (width <= 480px) {
+    .cd-gallery[data-columns='2'],
+    .cd-gallery[data-columns='3'],
+    .cd-gallery[data-columns='4'],
+    .cd-gallery[data-columns='5'],
+    .cd-gallery[data-columns='6'] {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 
 /* ---- Utilities ---- */

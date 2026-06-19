@@ -54,6 +54,9 @@ showCodeCopy = false
 # Image click-to-zoom lightbox
 showImageZoom = false
 
+# Gallery shortcode image lightbox
+showGalleryLightbox = false
+
 # Draft label indicator
 showDraftLabel = false
 

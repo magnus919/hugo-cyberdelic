@@ -85,3 +85,9 @@ code_copy.copy_failed: 'Copy failed'
 # Image Zoom
 image_zoom.close: 'Close lightbox'
 image_zoom.alt_label: 'Image zoom'
+
+# Gallery
+gallery.label: 'Image gallery'
+gallery.close: 'Close lightbox'
+gallery.previous: 'Previous image'
+gallery.next: 'Next image'

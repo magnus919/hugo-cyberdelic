@@ -1,0 +1,27 @@
+{{- /* gallery.html — responsive image gallery with lightbox
+     Renders a CSS grid of clickable thumbnail images.
+     Clicking opens a gallery lightbox with arrow key navigation.
+     Parameters:
+       columns (int, optional, default: 3) — number of grid columns on desktop
+       .Inner  (markdown) — markdown image references: ![alt text](image-src)
+     Usage:
+       {{< gallery columns="3" >}}
+         ![Description 1](/images/photo1.jpg)
+         ![Description 2](/images/photo2.jpg)
+       {{< /gallery >}}
+*/ -}}
+
+{{- $columns := .Get "columns" | default 3 -}}
+{{- $inner := .Inner | markdownify -}}
+
+{{- if $inner -}}
+<div class="cd-gallery" data-columns="{{ $columns }}" role="list" aria-label="Image gallery">
+  {{- /* Parse rendered markdown to wrap each image in a figure */ -}}
+  {{- $parsed := $inner -}}
+  {{- /* Process rendered img tags: wrap each in a figure with class */ -}}
+  {{- $parsed = $parsed | replaceRE `<img\s` `<img class="cd-gallery-thumb" loading="lazy" ` -}}
+  {{- /* Wrap standalone img elements in figure */ -}}
+  {{- $parsed = $parsed | replaceRE `(<img[^>]+>)` `<figure class="cd-gallery-item" role="listitem">$1</figure>` -}}
+  {{- $parsed | safeHTML -}}
+</div>
+{{- end -}}
