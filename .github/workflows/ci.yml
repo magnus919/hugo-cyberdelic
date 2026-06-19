@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint CSS & Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm install --no-save prettier stylelint stylelint-config-standard
+
+      - name: Check formatting
+        run: npx prettier --check .
+
+      - name: Lint CSS
+        run: npx stylelint 'assets/css/**/*.css'
+
+  build:
+    name: Hugo Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.120.0'
+          extended: false
+
+      - name: Create scratch site and build
+        run: |
+          hugo new site /tmp/scratch
+          cp -r . /tmp/scratch/themes/hugo-cyberdelic
+          echo 'theme = "hugo-cyberdelic"' >> /tmp/scratch/hugo.toml
+          cd /tmp/scratch
+          hugo new blog/test-post.md
+          hugo --minify

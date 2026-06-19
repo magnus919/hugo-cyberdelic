@@ -1,0 +1,34 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "selector-class-pattern": [
+      "^(cd-[a-z][a-z0-9-]*|skip-link|flow|full-bleed)$",
+      { "resolveNestedSelectors": true }
+    ],
+    "custom-property-pattern": ["^(cd-[a-z][a-z0-9-]*|flow-space)$"],
+    "no-descending-specificity": null,
+    "color-function-notation": "modern",
+    "at-rule-no-unknown": [true, { "ignoreAtRules": ["layer"] }],
+    "property-no-vendor-prefix": [
+      true,
+      {
+        "ignoreProperties": [
+          "/^backdrop-filter/",
+          "/^text-size-adjust/",
+          "/^mask-image/",
+          "/^text-fill-color/",
+          "/^background-clip/"
+        ]
+      }
+    ],
+    "value-no-vendor-prefix": [true, { "ignoreValues": ["-webkit-background-clip"] }],
+    "function-disallowed-list": ["hsl"],
+    "alpha-value-notation": "number",
+    "color-hex-length": "long",
+    "declaration-property-value-keyword-no-deprecated": [
+      true,
+      { "ignoreKeywords": ["break-word"] }
+    ],
+    "property-no-deprecated": [true, { "ignoreProperties": ["clip"] }]
+  }
+}

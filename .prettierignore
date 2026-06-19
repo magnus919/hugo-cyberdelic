@@ -1,0 +1,7 @@
+public/
+resources/
+LICENSE
+
+# Hugo Go template syntax breaks HTML parser
+layouts/
+archetypes/

@@ -1,0 +1,46 @@
+name: Bug Report
+description: Something isn't working right in the theme
+title: '[Bug]: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: 'Thanks for taking the time to report a bug in hugo-cyberdelic.'
+  - type: input
+    id: hugo-version
+    attributes:
+      label: Hugo Version
+      description: '`hugo version` output'
+      placeholder: 'hugo v0.160.0'
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser(s) show the issue?
+      placeholder: 'Firefox 138, Chrome 140'
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What went wrong? What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal steps to trigger the bug
+      placeholder: |
+        1. Create a page with...
+        2. Set frontmatter to...
+        3. Run `hugo server -D`
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Screenshots or screen recordings of the issue (optional)
