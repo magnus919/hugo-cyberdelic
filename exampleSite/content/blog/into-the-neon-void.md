@@ -23,6 +23,21 @@ elements.
 
 ![Neon glow visualization](/images/placeholder.svg)
 
+### Image Carousel
+
+The carousel shortcode displays multiple images with prev/next navigation, dot indicators, keyboard
+accessibility, and optional autoplay:
+
+{{< carousel >}} ![Neon glow demonstration](/images/placeholder.svg)
+![Digital circuit pattern](/images/placeholder.svg)
+![Cyberdelic grid overlay](/images/placeholder.svg) {{< /carousel >}}
+
+With autoplay enabled (respects reduced motion preference):
+
+{{< carousel autoplay="3000" >}} ![Void background texture](/images/placeholder.svg)
+![Scan line overlay effect](/images/placeholder.svg)
+![Neon typography example](/images/placeholder.svg) {{< /carousel >}}
+
 ### Layering Light
 
 The effect of neon in a dark environment is achieved through multiple layers:

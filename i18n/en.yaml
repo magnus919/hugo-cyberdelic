@@ -112,3 +112,10 @@ katex.title: 'Math expression'
 katex.inline_label: 'Inline math'
 katex.block_label: 'Block math'
 katex.load_error: 'Math could not be rendered. Please check your network connection and try again.'
+
+# Carousel
+carousel.label: 'Image carousel'
+carousel.previous: 'Previous slide'
+carousel.next: 'Next slide'
+carousel.indicators: 'Slide indicators'
+carousel.slide_label: 'Slide {{ .Number }}'

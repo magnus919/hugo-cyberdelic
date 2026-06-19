@@ -1,0 +1,63 @@
+{{- /* carousel.html — Image carousel with prev/next buttons, dot indicators,
+     keyboard navigation, and optional autoplay.
+     Parameters:
+       autoplay (int, optional, default: 0) — autoplay interval in milliseconds (0 = disabled)
+       .Inner  (markdown) — markdown image references: ![alt text](image-src)
+     Usage:
+       {{< carousel autoplay="3000" >}}
+         ![Mountain landscape](/images/mountain.jpg)
+         ![Ocean sunset](/images/ocean.jpg)
+         ![Forest path](/images/forest.jpg)
+       {{< /carousel >}}
+*/ -}}
+
+{{- $autoplay := .Get "autoplay" | default 0 | int -}}
+{{- $inner := .Inner | markdownify -}}
+
+{{- if $inner -}}
+  {{- /* Extract img tags with their alt and src */ -}}
+  {{- $images := findRE `<img[^>]+>` $inner -}}
+  {{- $count := len $images -}}
+
+  {{- if gt $count 0 -}}
+<div class="cd-carousel"
+     data-autoplay="{{ $autoplay }}"
+     data-count="{{ $count }}"
+     role="region"
+     aria-label="{{ i18n "carousel.label" }}"
+     tabindex="0">
+  <div class="cd-carousel-viewport">
+    <div class="cd-carousel-slides">
+      {{- range $i, $img := $images -}}
+        {{- /* Add class and loading="lazy" to each image */ -}}
+        {{- $processed := $img | replaceRE `<img\s` `<img class="cd-carousel-image" loading="lazy" ` -}}
+        <div class="cd-carousel-slide" data-index="{{ $i }}"{{ if gt $i 0 }} hidden{{ end }}>
+          {{- $processed | safeHTML -}}
+        </div>
+      {{- end -}}
+    </div>
+
+    {{- if gt $count 1 -}}
+    <button class="cd-carousel-prev" type="button" aria-label="{{ i18n "carousel.previous" }}" disabled>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button class="cd-carousel-next" type="button" aria-label="{{ i18n "carousel.next" }}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+    {{- end -}}
+  </div>
+
+  {{- if gt $count 1 -}}
+  <div class="cd-carousel-dots" role="tablist" aria-label="{{ i18n "carousel.indicators" }}">
+    {{- range $i, $_ := $images -}}
+    <button class="cd-carousel-dot{{ if eq $i 0 }} cd-carousel-dot--active{{ end }}"
+            role="tab"
+            aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}"
+            aria-label="{{ i18n "carousel.slide_label" (dict "Number" (add $i 1)) }}"
+            data-index="{{ $i }}"></button>
+    {{- end -}}
+  </div>
+  {{- end -}}
+</div>
+  {{- end -}}
+{{- end -}}
