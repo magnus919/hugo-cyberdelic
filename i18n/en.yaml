@@ -54,3 +54,7 @@ related.label: 'Related articles'
 pagination.previous: 'Previous article'
 pagination.next: 'Next article'
 pagination.label: 'Article pagination'
+
+# Heading Anchors
+heading_anchors.permalink_to: 'Permalink to'
+heading_anchors.label: 'Heading anchors'

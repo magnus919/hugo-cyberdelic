@@ -705,6 +705,61 @@
     color: var(--cd-accent-magenta);
   }
 
+  /* -- Heading Anchors -- */
+  .cd-heading-anchor {
+    opacity: 0;
+    text-decoration: none;
+    margin-inline-start: var(--cd-space-2);
+    font-size: 0.75em;
+    font-weight: 400;
+    color: var(--cd-accent-cyan);
+    transition:
+      opacity 0.2s ease,
+      color 0.2s ease;
+    vertical-align: middle;
+    line-height: 1;
+  }
+
+  .cd-heading-anchor-icon {
+    display: inline-block;
+    font-weight: 700;
+  }
+
+  /* Show on heading hover/focus-within */
+  .cd-article-body h2:hover .cd-heading-anchor,
+  .cd-article-body h3:hover .cd-heading-anchor,
+  .cd-article-body h4:hover .cd-heading-anchor,
+  .cd-article-body h5:hover .cd-heading-anchor,
+  .cd-article-body h6:hover .cd-heading-anchor,
+  .cd-article-body h2:focus-within .cd-heading-anchor,
+  .cd-article-body h3:focus-within .cd-heading-anchor,
+  .cd-article-body h4:focus-within .cd-heading-anchor,
+  .cd-article-body h5:focus-within .cd-heading-anchor,
+  .cd-article-body h6:focus-within .cd-heading-anchor {
+    opacity: 1;
+  }
+
+  /* Anchor hover/focus state */
+  .cd-heading-anchor:hover,
+  .cd-heading-anchor:focus-visible {
+    color: var(--cd-accent-blue);
+    text-shadow: 0 0 6px var(--cd-glow-blue);
+  }
+
+  .cd-heading-anchor:focus-visible {
+    opacity: 1;
+    outline: 2px solid var(--cd-accent-cyan);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Touch devices: always visible (no hover) */
+  @media (hover: none) and (pointer: coarse) {
+    .cd-heading-anchor {
+      opacity: 1;
+    }
+  }
+
   /* -- Card (for list pages) -- */
   .cd-card {
     background: var(--cd-bg-card);
