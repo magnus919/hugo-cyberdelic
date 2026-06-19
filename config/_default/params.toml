@@ -8,24 +8,6 @@ description = "A cyberdelic Hugo theme — 1969 psychedelic concert poster meets
 author      = "Author"
 ogImage     = ""
 
-# === Analytics ===
-[analytics]
-  # Supported providers: "google", "fathom", "umami", "seline"
-  provider = ""
-
-  [analytics.google]
-    id = ""
-
-  [analytics.fathom]
-    siteID = ""
-
-  [analytics.umami]
-    websiteID = ""
-    src       = ""
-
-  [analytics.seline]
-    token = ""
-
 # === Homepage ===
 # Layout variant: "hero" (default), "profile", "background", "card"
 homepageLayout = "hero"
@@ -79,3 +61,21 @@ showAuthorBox = false
 # === Series ===
 # Series navigation component
 showSeries = false
+
+# === Analytics ===
+[analytics]
+  # Supported providers: "google", "fathom", "umami", "seline"
+  provider = ""
+
+  [analytics.google]
+    id = ""
+
+  [analytics.fathom]
+    siteID = ""
+
+  [analytics.umami]
+    websiteID = ""
+    src       = ""
+
+  [analytics.seline]
+    token = ""

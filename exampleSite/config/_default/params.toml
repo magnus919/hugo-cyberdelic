@@ -6,23 +6,6 @@ description = "A cyberdelic Hugo theme demo — 1969 psychedelic concert poster 
 author      = "Cyberdelic Demo"
 ogImage     = ""
 
-# === Analytics ===
-[analytics]
-  provider = ""
-
-  [analytics.google]
-    id = ""
-
-  [analytics.fathom]
-    siteID = ""
-
-  [analytics.umami]
-    websiteID = ""
-    src       = ""
-
-  [analytics.seline]
-    token = ""
-
 # === Homepage ===
 homepageLayout = "hero"
 
@@ -50,3 +33,20 @@ showAuthorBox = false
 
 # === Series ===
 showSeries = false
+
+# === Analytics ===
+[analytics]
+  provider = ""
+
+  [analytics.google]
+    id = ""
+
+  [analytics.fathom]
+    siteID = ""
+
+  [analytics.umami]
+    websiteID = ""
+    src       = ""
+
+  [analytics.seline]
+    token = ""
