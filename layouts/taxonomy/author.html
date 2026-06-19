@@ -1,0 +1,79 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+{{ define "description" }}{{ .Description | default .Title }}{{ end }}
+
+{{ define "main" }}
+{{- /* Author taxonomy page - lists all articles by a single author */ -}}
+{{- $slug := .Data.Term -}}
+{{- $authorData := index hugo.Data.authors $slug -}}
+
+<header class="cd-article-header cd-author-header">
+  <div class="cd-author-profile">
+    {{- if $authorData -}}
+      {{- with $authorData.avatar -}}
+        <div class="cd-author-avatar">
+          <img src="{{ . | relURL }}" alt="{{ $authorData.name }}" loading="lazy" width="120" height="120">
+        </div>
+      {{- end -}}
+      <div class="cd-author-info">
+        <h1 class="cd-article-title">{{ $authorData.name }}</h1>
+        {{- with $authorData.bio -}}
+          <p class="cd-author-bio">{{ . }}</p>
+        {{- end -}}
+        {{- with $authorData.links -}}
+          <div class="cd-author-links">
+            {{- range . -}}
+              <a href="{{ .url }}" rel="me" target="_blank" rel="noopener noreferrer">{{ .label }}</a>
+            {{- end -}}
+          </div>
+        {{- end -}}
+        <p class="cd-author-post-count">
+          {{ $count := len .Pages }}
+          {{ if eq $count 1 }}{{ i18n "author.post_count_single" (dict "Count" $count) | default (printf "%d post" $count) }}
+          {{ else }}{{ i18n "author.post_count_plural" (dict "Count" $count) | default (printf "%d posts" $count) }}
+          {{ end }}
+        </p>
+      </div>
+    {{- else -}}
+      <div class="cd-author-info">
+        <h1 class="cd-article-title">{{ .Title }}</h1>
+        <p class="cd-author-post-count">
+          {{ $count := len .Pages }}
+          {{ if eq $count 1 }}{{ i18n "author.post_count_single" (dict "Count" $count) | default (printf "%d post" $count) }}
+          {{ else }}{{ i18n "author.post_count_plural" (dict "Count" $count) | default (printf "%d posts" $count) }}
+          {{ end }}
+        </p>
+      </div>
+    {{- end -}}
+  </div>
+</header>
+
+{{- $pages := .Pages -}}
+{{- if $pages -}}
+  <div class="cd-grid">
+    {{- range $pages -}}
+      <article class="cd-card cd-fade-in cd-circuit-border">
+        {{- partial "cover.html" (dict "page" . "class" "cd-card-cover" "wrapper" "cd-card-figure") -}}
+        <h2 class="cd-card-title">
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </h2>
+        <p class="cd-card-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+          {{- with .ReadingTime -}}
+            &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
+          {{- end -}}
+          {{- with .WordCount -}}
+            &middot; {{ i18n "article.words" . | default (printf "%d words" .) }}
+          {{- end -}}
+        </p>
+        {{- with .Summary -}}
+          <div class="cd-card-summary">
+            {{ . | truncate 200 }}
+          </div>
+        {{- end -}}
+      </article>
+    {{- end -}}
+  </div>
+{{- else -}}
+  <p>{{ i18n "list.nothing_here" | default "Nothing here yet." }}</p>
+{{- end -}}
+{{ end }}

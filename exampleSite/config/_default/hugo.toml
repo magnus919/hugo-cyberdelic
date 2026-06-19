@@ -9,10 +9,11 @@ theme      = "hugo-cyberdelic"
 # Suppress goldmark raw HTML warnings (theme has unsafe=true)
 ignoreLogs = ['warning-goldmark-raw-html']
 
-# Default taxonomies (inherited from theme defaults)
+# Default taxonomies
 [taxonomies]
   tag      = "tags"
   category = "categories"
+  author   = "authors"
 
 # Related content configuration (shared tags/categories)
 [related]

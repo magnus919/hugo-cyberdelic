@@ -1,0 +1,33 @@
+{{- /* author-box.html — Author bio box for single article pages
+     Parameters (passed via dict):
+       .authorSlug — the author taxonomy slug (string)
+*/ -}}
+
+{{- $slug := .authorSlug -}}
+{{- $authorData := index hugo.Data.authors $slug -}}
+{{- $page := $.page -}}
+
+{{- if $authorData -}}
+<div class="cd-author-box" itemscope itemtype="https://schema.org/Person">
+  {{- with $authorData.avatar -}}
+    <div class="cd-author-box-avatar">
+      <img src="{{ . | relURL }}" alt="{{ $authorData.name }}" itemprop="image" loading="lazy" width="80" height="80">
+    </div>
+  {{- end -}}
+  <div class="cd-author-box-body">
+    <h3 class="cd-author-box-name" itemprop="name">
+      <a href="{{ (printf "/authors/%s/" $slug) | relLangURL }}" itemprop="url" rel="author">{{ $authorData.name }}</a>
+    </h3>
+    {{- with $authorData.bio -}}
+      <p class="cd-author-box-bio" itemprop="description">{{ . }}</p>
+    {{- end -}}
+    {{- with $authorData.links -}}
+      <div class="cd-author-box-links">
+        {{- range . -}}
+          <a href="{{ .url }}" rel="me" target="_blank" rel="noopener noreferrer" itemprop="sameAs">{{ .label }}</a>
+        {{- end -}}
+      </div>
+    {{- end -}}
+  </div>
+</div>
+{{- end -}}

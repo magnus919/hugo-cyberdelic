@@ -2,6 +2,7 @@
 title: 'Mermaid Diagrams in hugo-cyberdelic'
 date: 2026-06-19
 description: 'A demonstration of Mermaid diagram shortcode rendering flowcharts, sequence diagrams, and more.'
+authors: ['magnus', 'neon-writer']
 tags: ['shortcodes', 'features', 'mermaid']
 ---
 

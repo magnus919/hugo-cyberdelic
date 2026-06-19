@@ -1,0 +1,8 @@
+# Author profile — cybernaut
+name = "Cybernaut"
+avatar = "/images/placeholder.svg"
+bio = "Digital artist and frontend architect. Passionate about cyberpunk aesthetics, interactive design, and pushing the boundaries of web technologies."
+links = [
+  { label = "Portfolio", url = "https://cybernaut.example.com" },
+  { label = "Mastodon", url = "https://mastodon.social/@cybernaut" }
+]

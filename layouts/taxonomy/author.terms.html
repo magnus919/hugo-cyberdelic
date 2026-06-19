@@ -1,0 +1,45 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+{{ define "description" }}{{ .Description | default .Title }}{{ end }}
+
+{{ define "main" }}
+{{- /* Author terms page - lists all known authors with post counts */ -}}
+{{- partial "breadcrumbs.html" . -}}
+
+<header class="cd-article-header">
+  <h1 class="cd-article-title">{{ .Title }}</h1>
+  {{- with .Description -}}
+    <p>{{ . }}</p>
+  {{- end -}}
+</header>
+
+{{- $authorPages := .Site.Taxonomies.authors -}}
+{{- if $authorPages -}}
+  <div class="cd-grid cd-authors-grid">
+    {{- range $slug, $taxonomy := $authorPages -}}
+      {{- $authorData := index hugo.Data.authors $slug -}}
+      <article class="cd-card cd-fade-in cd-circuit-border">
+        <a href="{{ $taxonomy.Page.RelPermalink }}" class="cd-author-card-link">
+          {{- if $authorData -}}
+            {{- with $authorData.avatar -}}
+              <div class="cd-author-card-avatar">
+                <img src="{{ . | relURL }}" alt="{{ $authorData.name }}" loading="lazy" width="80" height="80">
+              </div>
+            {{- end -}}
+            <h2 class="cd-card-title cd-author-card-name">{{ $authorData.name }}</h2>
+          {{- else -}}
+            <h2 class="cd-card-title cd-author-card-name">{{ $taxonomy.Page.Title }}</h2>
+          {{- end -}}
+          <p class="cd-card-meta cd-author-card-count">
+            {{ $count := $taxonomy.Count }}
+            {{ if eq $count 1 }}{{ i18n "author.post_count_single" (dict "Count" $count) | default (printf "%d post" $count) }}
+            {{ else }}{{ i18n "author.post_count_plural" (dict "Count" $count) | default (printf "%d posts" $count) }}
+            {{ end }}
+          </p>
+        </a>
+      </article>
+    {{- end -}}
+  </div>
+{{- else -}}
+  <p>{{ i18n "list.nothing_here" | default "Nothing here yet." }}</p>
+{{- end -}}
+{{ end }}

@@ -2,6 +2,7 @@
 title: 'Into the Neon Void'
 date: 2026-06-10
 description: 'A meditation on darkness, light, and the spaces between in cyberdelic visual design.'
+authors: ['magnus']
 tags: ['design', 'philosophy', 'visual-language']
 cover: '/images/placeholder.svg'
 ---

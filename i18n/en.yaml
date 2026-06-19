@@ -21,6 +21,14 @@ list.nothing_here: 'Nothing here yet.'
 article.min_read: '{{ . }} min read'
 article.words: '{{ . }} words'
 
+# Author
+author.by: 'By'
+author.and: '&amp;'
+author.post_count_single: '{{ .Count }} post'
+author.post_count_plural: '{{ .Count }} posts'
+author.post: 'post'
+author.posts: 'posts'
+
 # Error / 404
 error.page_title: 'Page not found'
 error.description: "The page you're looking for doesn't exist."

@@ -2,6 +2,7 @@
 title: 'Using GitHub-Flavored Alerts'
 date: 2026-06-19
 description: 'A demonstration of all five GitHub-flavored alert variants in hugo-cyberdelic.'
+authors: ['cybernaut']
 tags: ['shortcodes', 'features', 'documentation']
 cover: '/images/placeholder.svg'
 ---

@@ -29,7 +29,7 @@ showImageZoom = true
 showDraftLabel = false
 
 # === Author ===
-showAuthorBox = false
+showAuthorBox = true
 
 # === Series ===
 showSeries = false

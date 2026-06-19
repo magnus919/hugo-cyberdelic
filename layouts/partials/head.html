@@ -22,6 +22,47 @@
 <meta name="twitter:image" content="{{ . | absURL }}">
 {{- end -}}
 
+{{- /* JSON-LD Structured Data */ -}}
+{{- if not .IsHome -}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": {{ if .IsPage }}"Article"{{ else }}"WebPage"{{ end }},
+    "headline": {{ .Title | jsonify }},
+    "url": {{ .Permalink | jsonify }},
+    {{- with .Description }}
+    "description": {{ . | jsonify }},
+    {{- end -}}
+    {{- with .PublishDate }}
+    "datePublished": {{ .Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+    {{- end -}}
+    {{- with .Lastmod }}
+    "dateModified": {{ .Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+    {{- end -}}
+    {{- if and .IsPage .Params.authors }}
+    "author": [
+      {{- $authors := .Params.authors -}}
+      {{- $len := len $authors -}}
+      {{- range $i, $author := $authors -}}
+        {{- $slug := urlize . -}}
+        {{- $authorData := index hugo.Data.authors $slug -}}
+        {{- $name := $authorData.name | default . -}}
+        {
+          "@type": "Person",
+          "name": {{ $name | jsonify }}
+          {{- with $authorData.url -}}, "url": {{ . | jsonify }}{{ end -}}
+        }{{- if lt (add $i 1) $len -}},{{- end -}}
+      {{- end -}}
+    ],
+    {{- end -}}
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ .Site.Title | jsonify }}
+    }
+  }
+  </script>
+{{- end -}}
+
 {{- /* Theme colour for browser chrome */ -}}
 <meta name="theme-color" content="#0A0015">
 

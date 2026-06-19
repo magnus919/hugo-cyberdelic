@@ -17,6 +17,24 @@
       &middot; {{ i18n "article.words" . | default (printf "%d words" .) }}
     {{- end -}}
 
+    {{- /* Author names in article meta */ -}}
+    {{- $authors := .Params.authors -}}
+    {{- if $authors -}}
+      {{- $authorLinks := slice -}}
+      {{- range $authors -}}
+        {{- $slug := urlize . -}}
+        {{- $authorData := index hugo.Data.authors $slug -}}
+        {{- $displayName := $authorData.name | default . -}}
+        {{- $authorPage := $.Site.GetPage (printf "/authors/%s" $slug) -}}
+        {{- if $authorPage -}}
+          {{- $authorLinks = $authorLinks | append (printf `<a href="%s" rel="author" class="cd-author-meta-link">%s</a>` $authorPage.RelPermalink $displayName) -}}
+        {{- else -}}
+          {{- $authorLinks = $authorLinks | append $displayName -}}
+        {{- end -}}
+      {{- end -}}
+      &middot; <span class="cd-author-meta">{{ i18n "author.by" | default "By" }} {{ delimit $authorLinks ", " (i18n "author.and" | default " &amp; ") | safeHTML }}</span>
+    {{- end -}}
+
     {{- with .Params.tags -}}
       {{- range . -}}
         {{- $tag := . -}}
@@ -34,6 +52,29 @@
   </div>
   {{- partial "toc.html" . -}}
 </div>
+
+{{- /* Author bio boxes */ -}}
+{{- if and .Site.Params.showAuthorBox .Params.authors -}}
+  {{- $authorSlugs := .Params.authors -}}
+  {{- $hasVisible := false -}}
+  {{- range $authorSlugs -}}
+    {{- $slug := urlize . -}}
+    {{- if (index hugo.Data.authors $slug) -}}
+      {{- $hasVisible = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $hasVisible -}}
+    <div class="cd-author-boxes">
+      {{- range $authorSlugs -}}
+        {{- $slug := urlize . -}}
+        {{- $authorData := index hugo.Data.authors $slug -}}
+        {{- if $authorData -}}
+          {{- partial "author-box.html" (dict "authorSlug" $slug "page" $) -}}
+        {{- end -}}
+      {{- end -}}
+    </div>
+  {{- end -}}
+{{- end -}}
 
 {{- partial "pagination.html" . -}}
 

@@ -2,6 +2,7 @@
 title: 'The Future of Web Typography'
 date: 2026-06-15
 description: 'Variable fonts, fluid type scales, and the evolution of readable text on the web.'
+authors: ['cybernaut']
 tags: ['design', 'typography', 'web']
 cover: '/images/placeholder.svg'
 ---

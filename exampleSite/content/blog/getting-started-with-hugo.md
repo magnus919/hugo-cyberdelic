@@ -4,6 +4,7 @@ date: 2026-06-05
 description:
   "A practical guide to building static websites with Hugo, the world's fastest static site
   generator."
+authors: ['neon-writer']
 tags: ['tutorial', 'hugo', 'web-development']
 cover: '/images/placeholder.svg'
 ---
