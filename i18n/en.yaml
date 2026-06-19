@@ -69,3 +69,10 @@ heading_anchors.label: 'Heading anchors'
 youtube.play: 'Play video: {{ .Title }}'
 youtube.title: 'YouTube video'
 youtube.error: 'Video could not be loaded.'
+
+# GitHub Alerts Shortcode
+alert.note: 'Note'
+alert.tip: 'Tip'
+alert.important: 'Important'
+alert.warning: 'Warning'
+alert.caution: 'Caution'
