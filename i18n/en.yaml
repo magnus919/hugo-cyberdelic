@@ -5,6 +5,12 @@
 navigation.skip_to_content: 'Skip to main content'
 navigation.main: 'Main navigation'
 
+# Menu
+menu.toggle: 'Toggle menu'
+menu.close: 'Close menu'
+menu.submenu: '{{ . }} submenu'
+menu.open_submenu: 'Open {{ . }} submenu'
+
 # Homepage
 home.recent_posts: 'Recent posts'
 

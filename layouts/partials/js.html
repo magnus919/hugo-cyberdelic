@@ -2,7 +2,8 @@
 {{- $search := resources.Get "js/search.js" -}}
 {{- $toc := resources.Get "js/toc.js" -}}
 {{- $headingAnchors := resources.Get "js/heading-anchors.js" -}}
-{{- $js := slice $search $toc $headingAnchors | resources.Concat "js/bundle.js" -}}
+{{- $menu := resources.Get "js/menu.js" -}}
+{{- $js := slice $search $toc $headingAnchors $menu | resources.Concat "js/bundle.js" -}}
 {{- if hugo.IsProduction -}}
   {{- $js = $js | minify | fingerprint -}}
 {{- end -}}

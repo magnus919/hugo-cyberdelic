@@ -4,6 +4,12 @@
       <span aria-hidden="true">{{ .Site.Title }}</span>
     </a>
 
+    <button class="cd-hamburger" type="button" aria-label="{{ i18n "menu.toggle" | default "Toggle menu" }}" aria-expanded="false" aria-controls="cd-main-nav">
+      <span class="cd-hamburger-box" aria-hidden="true">
+        <span class="cd-hamburger-inner"></span>
+      </span>
+    </button>
+
     <div class="cd-nav-group">
       {{- if .Site.Params.showSearch -}}
       <button class="cd-search-trigger" type="button" aria-label="{{ i18n "search.trigger_label" | default "Toggle search" }}">
@@ -16,13 +22,10 @@
       {{- end -}}
 
       {{- with .Site.Menus.main -}}
-      <nav class="cd-nav" aria-label="{{ i18n "navigation.main" | default "Main navigation" }}">
-        {{- range . -}}
-          <a href="{{ .URL | relLangURL }}"
-             {{- if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} aria-current="page"{{ end -}}>
-            {{- .Name -}}
-          </a>
-        {{- end -}}
+      <nav class="cd-nav" id="cd-main-nav" aria-label="{{ i18n "navigation.main" | default "Main navigation" }}" role="navigation" aria-hidden="false">
+        <ul class="cd-nav-list" role="menubar" aria-label="{{ i18n "navigation.main" | default "Main navigation" }}">
+          {{- partial "menu.html" (dict "menu" . "page" $ "root" true) -}}
+        </ul>
       </nav>
       {{- end -}}
     </div>

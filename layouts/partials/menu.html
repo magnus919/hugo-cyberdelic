@@ -1,0 +1,53 @@
+{{- /* menu.html — Recursive menu renderer
+     Renders a flat or nested list of menu entries as <ul>/<li>.
+     Parameters (via dict):
+       .menu     — array of menu entries (required)
+       .page     — current page context (required, for aria-current detection)
+       .level    — nesting depth (integer, internal; omit on first call)
+       .root     — boolean, true when rendering the root list
+*/ -}}
+
+{{- $menu := .menu -}}
+{{- $page := .page -}}
+{{- $level := .level | default 0 -}}
+{{- $root := .root | default false -}}
+
+{{- range $menu -}}
+  {{- $hasChildren := ne (len .Children) 0 -}}
+  {{- $isCurrent := $page.IsMenuCurrent "main" . -}}
+  {{- $isActive := or $isCurrent ($page.HasMenuCurrent "main" .) -}}
+  <li class="cd-nav-item{{ if $hasChildren }} cd-nav-item--parent{{ end }}{{ if $isActive }} cd-nav-item--active{{ end }}"
+      role="none"
+      {{- if $hasChildren }} data-has-children{{ end -}}>
+    {{- /* Use a <button> for parent items (expand/collapse), <a> for leaf items */ -}}
+    {{- if $hasChildren -}}
+    <button class="cd-nav-link cd-nav-link--parent"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="menu-{{ .Identifier }}"
+            tabindex="{{ if eq $level 0 }}0{{ else }}-1{{ end }}"
+            data-identifier="{{ .Identifier }}"
+            {{- if $isCurrent }} aria-current="page"{{ end -}}>
+      <span class="cd-nav-label">{{ .Name }}</span>
+      <svg class="cd-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M1 1l4 4 4-4"/>
+      </svg>
+    </button>
+    <ul class="cd-nav-sub{{ if $root }} cd-nav-sub--root{{ end }}"
+        id="menu-{{ .Identifier }}"
+        role="menu"
+        aria-label="{{ .Name }}">
+      {{- partial "menu.html" (dict "menu" .Children "page" $page "level" (add $level 1)) -}}
+    </ul>
+    {{- else -}}
+    <a href="{{ .URL | relLangURL }}"
+       class="cd-nav-link"
+       role="menuitem"
+       tabindex="{{ if eq $level 0 }}0{{ else }}-1{{ end }}"
+       {{- if $isCurrent }} aria-current="page"{{ end -}}>
+      <span class="cd-nav-label">{{ .Name }}</span>
+    </a>
+    {{- end -}}
+  </li>
+{{- end -}}

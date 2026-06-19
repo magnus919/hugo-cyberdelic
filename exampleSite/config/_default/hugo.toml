@@ -38,3 +38,121 @@ ignoreLogs = ['warning-goldmark-raw-html']
 
 [outputs]
   home = ["HTML", "RSS", "SEARCH"]
+
+# Nested menu structure (3 levels deep)
+# NOTE: Defined here instead of a separate menus.en.toml to avoid
+# config cascade conflicts with the theme's menus.en.toml.
+[[menu.main]]
+  name       = "Home"
+  identifier = "home"
+  url        = "/"
+  weight     = 10
+
+[[menu.main]]
+  name       = "Blog"
+  identifier = "blog"
+  url        = "/blog/"
+  weight     = 20
+
+[[menu.main]]
+  name       = "Tech"
+  identifier = "tech"
+  parent     = "blog"
+  url        = "/categories/tech/"
+  weight     = 21
+
+[[menu.main]]
+  name       = "Frontend"
+  identifier = "frontend"
+  parent     = "tech"
+  url        = "/categories/tech/frontend/"
+  weight     = 22
+
+[[menu.main]]
+  name       = "AI / ML"
+  identifier = "aiml"
+  parent     = "tech"
+  url        = "/categories/tech/ai-ml/"
+  weight     = 23
+
+[[menu.main]]
+  name       = "Design"
+  identifier = "design"
+  parent     = "blog"
+  url        = "/categories/design/"
+  weight     = 24
+
+[[menu.main]]
+  name       = "Branding"
+  identifier = "branding"
+  parent     = "design"
+  url        = "/categories/design/branding/"
+  weight     = 25
+
+[[menu.main]]
+  name       = "UX"
+  identifier = "ux"
+  parent     = "design"
+  url        = "/categories/design/ux/"
+  weight     = 26
+
+[[menu.main]]
+  name       = "Tags"
+  identifier = "tags"
+  parent     = "blog"
+  url        = "/tags/"
+  weight     = 27
+
+[[menu.main]]
+  name       = "Topics"
+  identifier = "topics"
+  url        = "/topics/"
+  weight     = 30
+
+[[menu.main]]
+  name       = "Development"
+  identifier = "development"
+  parent     = "topics"
+  url        = "/topics/development/"
+  weight     = 31
+
+[[menu.main]]
+  name       = "Rust"
+  identifier = "rust"
+  parent     = "development"
+  url        = "/topics/development/rust/"
+  weight     = 32
+
+[[menu.main]]
+  name       = "TypeScript"
+  identifier = "typescript"
+  parent     = "development"
+  url        = "/topics/development/typescript/"
+  weight     = 33
+
+[[menu.main]]
+  name       = "Creative"
+  identifier = "creative"
+  parent     = "topics"
+  url        = "/topics/creative/"
+  weight     = 34
+
+[[menu.main]]
+  name       = "Music"
+  identifier = "music"
+  parent     = "creative"
+  url        = "/topics/creative/music/"
+  weight     = 35
+
+[[menu.main]]
+  name       = "Art"
+  identifier = "art"
+  parent     = "creative"
+  url        = "/topics/creative/art/"
+  weight     = 36
+
+[[menu.main]]
+  name       = "About"
+  identifier = "about"
+  url        = "/about/"
+  weight     = 40
