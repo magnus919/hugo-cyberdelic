@@ -25,7 +25,7 @@
     {{- block "footer" . }}{{ partial "footer.html" . }}{{ end -}}
   </div>
 
-  <span id="cd-heading-anchor-label" data-label="{{ i18n "heading_anchors.permalink_to" | default "Permalink to" }}" hidden aria-hidden="true"></span>
+  <span id="cd-heading-anchor-label" data-label="{{ i18n "heading_anchors.permalink_to" | default "Permalink to" }}" data-enabled="{{ .Site.Params.showHeadingAnchors }}" hidden aria-hidden="true"></span>
 
   {{- block "scripts" . }}{{ partial "js.html" . }}{{ end -}}
 

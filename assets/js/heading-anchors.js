@@ -34,6 +34,12 @@
    * Add heading anchors to all h2-h6 inside the article body.
    */
   function initHeadingAnchors() {
+    // Respect showHeadingAnchors config toggle
+    var configEl = document.getElementById('cd-heading-anchor-label');
+    if (configEl && configEl.getAttribute('data-enabled') !== 'true') {
+      return;
+    }
+
     var articleBody = document.querySelector('.cd-article-body');
     if (!articleBody) return;
 
