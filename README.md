@@ -72,6 +72,31 @@ Tags are supported out of the box:
   tag = 'tags'
 ```
 
+### Cover Images
+
+The theme supports cover images through two methods:
+
+**1. Page bundle (recommended)** — place a `cover.jpg` (or `cover.png`, `cover.webp`) alongside your `index.md`:
+
+```
+content/blog/my-post/
+├── index.md
+└── cover.jpg
+```
+
+The image is processed through Hugo Pipes — automatically generates responsive WebP variants and a `srcset` attribute.
+
+**2. Frontmatter path** — for flat `.md` files, set `image` or `cover` in frontmatter:
+
+```yaml
+---
+title: "My Post"
+image: "/images/my-cover.jpg"
+---
+```
+
+Articles without cover images render cleanly — no image placeholder, no empty space.
+
 ### Markdown
 
 To allow inline HTML in markdown content:
