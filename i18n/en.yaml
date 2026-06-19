@@ -30,6 +30,10 @@ toc.on_this_page: 'On this page'
 toc.sections: 'Sections'
 toc.toggle: 'Toggle table of contents'
 
+# Breadcrumbs
+breadcrumbs.home: 'Home'
+breadcrumbs.label: 'Breadcrumbs'
+
 # Search
 search.title: 'Search'
 search.placeholder: 'Search posts…'

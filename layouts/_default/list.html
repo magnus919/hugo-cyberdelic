@@ -2,6 +2,8 @@
 {{ define "description" }}{{ .Description | default .Title }}{{ end }}
 
 {{ define "main" }}
+{{- partial "breadcrumbs.html" . -}}
+
 <header class="cd-article-header">
   <h1 class="cd-article-title">{{ .Title }}</h1>
   {{- with .Description -}}

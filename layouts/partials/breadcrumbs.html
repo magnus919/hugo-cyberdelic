@@ -1,0 +1,52 @@
+{{- /* breadcrumbs.html — Schema.org BreadcrumbList
+     Renders page hierarchy as a breadcrumb trail with structured data.
+     Last crumb is plain text with aria-current="page".
+     Safe to call on any page — homepage renders gracefully.
+     Depends on .Site.Params.showBreadcrumbs (default false).
+*/ -}}
+
+{{- $showBreadcrumbs := .Site.Params.showBreadcrumbs | default false -}}
+{{- if $showBreadcrumbs -}}
+  {{- $page := . -}}
+
+  <nav class="cd-breadcrumbs" aria-label="{{ i18n "breadcrumbs.label" | default "Breadcrumbs" }}">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+      {{- if $page.IsHome -}}
+        {{- /* Homepage: single plain-text crumb */ -}}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+          <span itemprop="name">{{ i18n "breadcrumbs.home" | default "Home" }}</span>
+          <meta itemprop="position" content="1">
+        </li>
+      {{- else -}}
+        {{- /* Home crumb — always first and linked */ -}}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="{{ .Site.Home.RelPermalink }}" itemprop="item">
+            <span itemprop="name">{{ i18n "breadcrumbs.home" | default "Home" }}</span>
+          </a>
+          <meta itemprop="position" content="1">
+        </li>
+
+        {{- /* Ancestor pages (outermost to innermost) */ -}}
+        {{- $position := 2 -}}
+        {{- range $page.Ancestors.Reverse -}}
+          {{- /* Skip the home page since we already rendered it */ -}}
+          {{- if not .IsHome -}}
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a href="{{ .RelPermalink }}" itemprop="item">
+                <span itemprop="name">{{ .Title }}</span>
+              </a>
+              <meta itemprop="position" content="{{ $position }}">
+            </li>
+            {{- $position = add $position 1 -}}
+          {{- end -}}
+        {{- end -}}
+
+        {{- /* Current page — plain text, not a link */ -}}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+          <span itemprop="name">{{ $page.Title }}</span>
+          <meta itemprop="position" content="{{ $position }}">
+        </li>
+      {{- end -}}
+    </ol>
+  </nav>
+{{- end -}}

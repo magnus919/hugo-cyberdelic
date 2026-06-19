@@ -4,6 +4,8 @@
 {{ define "main" }}
 {{- partial "cover.html" (dict "page" . "class" "cd-cover-img") -}}
 
+{{- partial "breadcrumbs.html" . -}}
+
 <header class="cd-article-header">
   <h1 class="cd-article-title">{{ .Title }}</h1>
   <div class="cd-article-meta">
