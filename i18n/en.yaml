@@ -24,6 +24,12 @@ error.return_home: 'Return to the surface'
 # Footer
 footer.copyright: '© {{ .year }} {{ .siteTitle }}. Powered by <a href="{{ .hugoUrl }}" rel="noopener">Hugo</a> &amp; <a href="{{ .themeUrl }}" rel="noopener">hugo-cyberdelic</a>.'
 
+# Table of Contents
+toc.title: 'Table of Contents'
+toc.on_this_page: 'On this page'
+toc.sections: 'Sections'
+toc.toggle: 'Toggle table of contents'
+
 # Search
 search.title: 'Search'
 search.placeholder: 'Search posts…'

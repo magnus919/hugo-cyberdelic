@@ -1,6 +1,7 @@
 {{- /* JS partial — concatenates and fingerprints all theme JS */ -}}
 {{- $search := resources.Get "js/search.js" -}}
-{{- $js := slice $search | resources.Concat "js/bundle.js" -}}
+{{- $toc := resources.Get "js/toc.js" -}}
+{{- $js := slice $search $toc | resources.Concat "js/bundle.js" -}}
 {{- if hugo.IsProduction -}}
   {{- $js = $js | minify | fingerprint -}}
 {{- end -}}

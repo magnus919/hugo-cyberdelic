@@ -1,0 +1,19 @@
+{{- /* Table of contents partial.
+     Renders a sidebar on desktop and a collapsible widget on mobile.
+     Requires .Site.Params.showTableOfContents = true and >= 2 headings in the page.
+  */ -}}
+{{- $toc := .TableOfContents -}}
+{{- $headingCount := len (findRE `<a[^>]*>` $toc) -}}
+{{- if and .Site.Params.showTableOfContents (ge $headingCount 2) -}}
+<aside class="cd-toc" role="navigation" aria-label="{{ i18n "toc.title" | default "Table of Contents" }}">
+  <button class="cd-toc-toggle" type="button" aria-controls="cd-toc-nav" aria-expanded="false" aria-label="{{ i18n "toc.toggle" | default "Toggle table of contents" }}">
+    <span class="cd-toc-heading">{{ i18n "toc.on_this_page" | default "On this page" }}</span>
+    <svg class="cd-toc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+  <nav id="cd-toc-nav" class="cd-toc-nav" aria-label="{{ i18n "toc.sections" | default "Sections" }}">
+    {{ $toc | safeHTML }}
+  </nav>
+</aside>
+{{- end -}}

@@ -26,7 +26,10 @@
   </div>
 </header>
 
-<div class="cd-article-body flow">
-  {{ .Content }}
+<div class="cd-article-layout">
+  <div class="cd-article-body flow">
+    {{ .Content }}
+  </div>
+  {{- partial "toc.html" . -}}
 </div>
 {{ end }}

@@ -19,7 +19,7 @@ showComments      = false
 
 # === Navigation & Discovery ===
 showSearch          = true
-showTableOfContents = false
+showTableOfContents = true
 showBreadcrumbs     = false
 showHeadingAnchors  = false
 
