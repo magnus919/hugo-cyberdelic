@@ -1,0 +1,40 @@
+{{- /* analytics.html — Analytics integration partial
+     Supports Google Analytics (gtag), Fathom, Umami, and Seline.
+     Provider chosen by site config; only one active at a time.
+     Suppressed in development mode (hugo server -D).
+*/ -}}
+
+{{- $provider := site.Params.analytics.provider -}}
+
+{{- /* Suppress analytics in development mode (hugo server -D) */ -}}
+{{- if not hugo.IsDevelopment -}}
+
+  {{- /* Google Analytics (gtag) */ -}}
+  {{- if eq $provider "google" -}}
+    {{- with site.Params.analytics.google.id -}}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '{{ . }}');</script>
+    {{- end -}}
+
+  {{- /* Fathom Analytics */ -}}
+  {{- else if eq $provider "fathom" -}}
+    {{- with site.Params.analytics.fathom.siteID -}}
+<script src="https://cdn.usefathom.com/script.js" data-site="{{ . }}" defer></script>
+    {{- end -}}
+
+  {{- /* Umami Analytics */ -}}
+  {{- else if eq $provider "umami" -}}
+    {{- $umamiWebsiteID := site.Params.analytics.umami.websiteID -}}
+    {{- $umamiSrc := site.Params.analytics.umami.src -}}
+    {{- if and $umamiWebsiteID $umamiSrc -}}
+<script src="{{ $umamiSrc }}" data-website-id="{{ $umamiWebsiteID }}" defer></script>
+    {{- end -}}
+
+  {{- /* Seline Analytics */ -}}
+  {{- else if eq $provider "seline" -}}
+    {{- with site.Params.analytics.seline.token -}}
+<script src="https://cdn.seline.so/seline.js" data-token="{{ . }}" defer></script>
+    {{- end -}}
+  {{- end -}}
+
+{{- end -}}

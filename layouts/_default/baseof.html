@@ -8,6 +8,7 @@
   <meta name="description" content="{{ block "description" . }}{{ .Site.Params.description | default .Site.Title }}{{ end }}">
 
   {{- partial "head.html" . -}}
+  {{- partial "analytics.html" . -}}
   {{- partial "head-extra.html" . -}}
   {{- block "styles" . }}{{ partial "css.html" . }}{{ end -}}
 </head>
