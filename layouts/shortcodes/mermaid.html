@@ -1,0 +1,26 @@
+{{- /* mermaid.html — Mermaid diagram shortcode
+     Renders a Mermaid diagram definition as an SVG.
+     Provides a static <pre> fallback when JavaScript is disabled.
+     Handles syntax errors gracefully with a human-readable message.
+     Parameters:
+       title (string, optional) — Accessible title for the diagram
+*/ -}}
+
+{{- $title := .Get "title" | default (i18n "mermaid.title" | default "Mermaid diagram") -}}
+{{- $content := .Inner | chomp -}}
+
+{{- if $content -}}
+<div class="cd-mermaid" role="img" aria-label="{{ $title }}">
+  {{- /* Static fallback: visible when JS is disabled or Mermaid fails to load */ -}}
+  <pre class="cd-mermaid-fallback">{{ $content }}</pre>
+  {{- /* Hidden container where Mermaid JS will inject the rendered SVG */ -}}
+  <div class="cd-mermaid-svg" aria-hidden="true"></div>
+</div>
+
+{{- /* Load Mermaid CDN only once per page */ -}}
+{{- if not (.Page.Scratch.Get "mermaid-cdn-loaded") -}}
+  {{- .Page.Scratch.Set "mermaid-cdn-loaded" true -}}
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" defer></script>
+{{- end -}}
+
+{{- end -}}

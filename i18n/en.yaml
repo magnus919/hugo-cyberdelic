@@ -94,3 +94,8 @@ gallery.next: 'Next image'
 
 # Timeline
 timeline.label: 'Timeline'
+
+# Mermaid Diagrams
+mermaid.title: 'Mermaid diagram'
+mermaid.error: 'Diagram could not be rendered. Please check the diagram syntax and try again.'
+mermaid.load_error: 'Diagram could not be rendered. Please check your network connection and try again.'

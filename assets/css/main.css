@@ -2220,6 +2220,82 @@
       box-shadow: none;
     }
   }
+
+  /* -- Mermaid Diagrams -- */
+  .cd-mermaid {
+    margin: var(--cd-space-6) 0;
+    max-width: 100%;
+    overflow-x: auto;
+    border-radius: var(--cd-radius-md);
+    border: 1px solid var(--cd-border);
+    background: var(--cd-bg-alt);
+    padding: var(--cd-space-4);
+  }
+
+  .cd-mermaid-fallback {
+    margin: 0;
+    padding: 0;
+    font-family: var(--cd-font-mono);
+    font-size: var(--cd-step--1);
+    color: var(--cd-text-dim);
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+  }
+
+  .cd-mermaid-svg {
+    max-width: 100%;
+    overflow-x: auto;
+
+    /* Hide SVG container initially; shown after render */
+    display: none;
+  }
+
+  .cd-mermaid-svg svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Visible state when Mermaid has rendered */
+  .cd-mermaid--rendered .cd-mermaid-svg {
+    display: block;
+  }
+
+  .cd-mermaid--rendered .cd-mermaid-fallback {
+    display: none;
+  }
+
+  /* Error state */
+  .cd-mermaid-error {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--cd-space-2);
+    padding: var(--cd-space-3) var(--cd-space-4);
+    background: color-mix(in srgb, var(--cd-accent-magenta) 6%, var(--cd-bg-alt));
+    border: 1px solid color-mix(in srgb, var(--cd-accent-magenta) 25%, transparent);
+    border-radius: var(--cd-radius-sm);
+    font-size: var(--cd-step--1);
+    color: var(--cd-text);
+    line-height: 1.5;
+  }
+
+  .cd-mermaid-error-icon {
+    flex-shrink: 0;
+    font-size: var(--cd-step-0);
+    line-height: 1.4;
+  }
+
+  .cd-mermaid-error-text {
+    color: var(--cd-text-dim);
+  }
+
+  /* Responsive: tighten padding on mobile */
+  @media (width <= 600px) {
+    .cd-mermaid {
+      padding: var(--cd-space-3);
+    }
+  }
 }
 
 /* ---- Utilities ---- */
