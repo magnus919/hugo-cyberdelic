@@ -53,6 +53,8 @@
   {{- partial "toc.html" . -}}
 </div>
 
+{{- partial "series.html" . -}}
+
 {{- /* Author bio boxes */ -}}
 {{- if and .Site.Params.showAuthorBox .Params.authors -}}
   {{- $authorSlugs := .Params.authors -}}

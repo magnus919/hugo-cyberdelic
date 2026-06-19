@@ -1,0 +1,75 @@
+{{- /* series.html — Series navigation component for single article pages
+     Shows:
+       - Series indicator: "Part X of Y in Series Name"
+       - Previous article link (if not first)
+       - Next article link (if not last)
+     Controlled by params.showSeries.
+     Only renders when the article belongs to a series.
+*/ -}}
+
+{{- $page := . -}}
+{{- $showSeries := $page.Site.Params.showSeries | default false -}}
+
+{{- if $showSeries -}}
+  {{- $seriesParam := $page.Params.series -}}
+  {{- if $seriesParam -}}
+    {{- /* series can be a string (single series) or array (multiple, but we use first) */ -}}
+    {{- $seriesSlug := "" -}}
+    {{- $seriesTitle := "" -}}
+
+    {{- if reflect.IsSlice $seriesParam -}}
+      {{- $seriesSlug = urlize (index $seriesParam 0) -}}
+      {{- $seriesTitle = index $seriesParam 0 -}}
+    {{- else -}}
+      {{- $seriesSlug = urlize $seriesParam -}}
+      {{- $seriesTitle = $seriesParam -}}
+    {{- end -}}
+
+    {{- $seriesPage := $.Site.GetPage (printf "/series/%s" $seriesSlug) -}}
+    {{- if $seriesPage -}}
+      {{- /* Get all pages in the series, ordered by series_weight or date */ -}}
+      {{- $seriesPages := $seriesPage.Pages.ByParam "series_weight" -}}
+      {{- if not $seriesPages -}}
+        {{- $seriesPages = $seriesPage.Pages.ByDate -}}
+      {{- end -}}
+
+      {{- $total := len $seriesPages -}}
+      {{- $currentIndex := -1 -}}
+
+      {{- range $i, $p := $seriesPages -}}
+        {{- if eq $p.RelPermalink $page.RelPermalink -}}
+          {{- $currentIndex = $i -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{- if ge $currentIndex 0 -}}
+        {{- $part := add $currentIndex 1 -}}
+        {{- $prev := index $seriesPages (sub $currentIndex 1) -}}
+        {{- $next := index $seriesPages (add $currentIndex 1) -}}
+
+        <nav class="cd-series" aria-label="{{ i18n "series.label" | default "Series navigation" }}">
+          <div class="cd-series-indicator">
+            {{ i18n "series.part_of" (dict "Part" $part "Total" $total "Title" $seriesTitle) | default (printf "Part %d of %d in" $part $total) }}
+            <a href="{{ $seriesPage.RelPermalink }}">{{ $seriesTitle }}</a>
+          </div>
+
+          <div class="cd-series-links">
+            {{- with $prev -}}
+              <a href="{{ .RelPermalink }}" class="cd-series-prev" rel="prev">
+                <span class="cd-series-direction">{{ i18n "series.previous" | default "Previous" }}</span>
+                <span class="cd-series-title">{{ .Title }}</span>
+              </a>
+            {{- end -}}
+
+            {{- with $next -}}
+              <a href="{{ .RelPermalink }}" class="cd-series-next" rel="next">
+                <span class="cd-series-direction">{{ i18n "series.next" | default "Next" }}</span>
+                <span class="cd-series-title">{{ .Title }}</span>
+              </a>
+            {{- end -}}
+          </div>
+        </nav>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

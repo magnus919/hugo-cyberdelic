@@ -32,7 +32,7 @@ showDraftLabel = false
 showAuthorBox = true
 
 # === Series ===
-showSeries = false
+showSeries = true
 
 # === Analytics ===
 [analytics]

@@ -1,0 +1,31 @@
+{{ define "title" }}{{ i18n "series.title" | default "Series" }} | {{ .Site.Title }}{{ end }}
+{{ define "description" }}{{ i18n "series.description" | default "Article series" }}{{ end }}
+
+{{ define "main" }}
+{{- /* Series terms page - lists all series */ -}}
+
+<header class="cd-article-header cd-series-terms-header">
+  <h1 class="cd-article-title">{{ i18n "series.title" | default "Series" }}</h1>
+</header>
+
+{{- $seriesList := .Site.Taxonomies.series -}}
+{{- if $seriesList -}}
+  <div class="cd-series-terms-grid cd-grid">
+    {{- range $slug, $taxonomy := $seriesList -}}
+      <article class="cd-card cd-fade-in cd-circuit-border">
+        <h2 class="cd-card-title">
+          <a href="{{ $taxonomy.Page.RelPermalink }}">{{ $taxonomy.Page.Title }}</a>
+        </h2>
+        <p class="cd-card-meta">
+          {{ $count := $taxonomy.Count }}
+          {{ if eq $count 1 }}{{ i18n "series.post_count_single" (dict "Count" $count) | default (printf "%d article" $count) }}
+          {{ else }}{{ i18n "series.post_count_plural" (dict "Count" $count) | default (printf "%d articles" $count) }}
+          {{ end }}
+        </p>
+      </article>
+    {{- end -}}
+  </div>
+{{- else -}}
+  <p>{{ i18n "list.nothing_here" | default "Nothing here yet." }}</p>
+{{- end -}}
+{{ end }}

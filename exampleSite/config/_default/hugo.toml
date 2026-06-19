@@ -14,6 +14,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
   tag      = "tags"
   category = "categories"
   author   = "authors"
+  series   = "series"
 
 # Related content configuration (shared tags/categories)
 [related]

@@ -1,0 +1,47 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+{{ define "description" }}{{ .Description | default .Title }}{{ end }}
+
+{{ define "main" }}
+{{- /* Series taxonomy page - lists all articles in a series, ordered by series_weight */ -}}
+
+<header class="cd-article-header cd-series-header">
+  <h1 class="cd-article-title">{{ .Title }}</h1>
+  {{- $count := len .Pages -}}
+  <p class="cd-series-post-count">
+    {{ if eq $count 1 }}{{ i18n "series.post_count_single" (dict "Count" $count) | default (printf "%d article" $count) }}
+    {{ else }}{{ i18n "series.post_count_plural" (dict "Count" $count) | default (printf "%d articles" $count) }}
+    {{ end }}
+  </p>
+</header>
+
+{{- $pages := .Pages.ByParam "series_weight" -}}
+{{- if not $pages -}}
+  {{- $pages = .Pages.ByDate -}}
+{{- end -}}
+
+{{- if $pages -}}
+  <div class="cd-series-list">
+    {{- range $index, $page := $pages -}}
+      <article class="cd-series-entry cd-fade-in cd-circuit-border">
+        <span class="cd-series-entry-part">{{ i18n "series.part" (dict "Number" (add $index 1)) | default (printf "Part %d" (add $index 1)) }}</span>
+        <h2 class="cd-series-entry-title">
+          <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
+        </h2>
+        <p class="cd-series-entry-meta">
+          <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "Jan 2, 2006" }}</time>
+          {{- with $page.ReadingTime -}}
+            &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
+          {{- end -}}
+        </p>
+        {{- with $page.Summary -}}
+          <div class="cd-series-entry-summary">
+            {{ . | truncate 200 }}
+          </div>
+        {{- end -}}
+      </article>
+    {{- end -}}
+  </div>
+{{- else -}}
+  <p>{{ i18n "list.nothing_here" | default "Nothing here yet." }}</p>
+{{- end -}}
+{{ end }}

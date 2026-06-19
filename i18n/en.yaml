@@ -94,6 +94,17 @@ code_copy.copy_failed: 'Copy failed'
 image_zoom.close: 'Close lightbox'
 image_zoom.alt_label: 'Image zoom'
 
+# Series
+series.title: 'Series'
+series.description: 'Article series'
+series.label: 'Series navigation'
+series.part: 'Part {{ .Number }}'
+series.part_of: 'Part {{ .Part }} of {{ .Total }} in'
+series.previous: 'Previous article in series'
+series.next: 'Next article in series'
+series.post_count_single: '{{ .Count }} article'
+series.post_count_plural: '{{ .Count }} articles'
+
 # Gallery
 gallery.label: 'Image gallery'
 gallery.close: 'Close lightbox'

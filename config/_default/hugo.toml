@@ -11,6 +11,7 @@ theme         = "hugo-cyberdelic"
   tag      = "tags"
   category = "categories"
   author   = "authors"
+  series   = "series"
 
 # Related content configuration (shared tags/categories)
 [related]
