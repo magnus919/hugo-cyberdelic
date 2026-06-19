@@ -2290,8 +2290,98 @@
     color: var(--cd-text-dim);
   }
 
+  /* -- Chart.js Charts -- */
+  .cd-chart {
+    margin: var(--cd-space-6) 0;
+    padding: var(--cd-space-5);
+    border-radius: var(--cd-radius-md);
+    border: 1px solid var(--cd-border);
+    background: var(--cd-bg-alt);
+    max-width: 100%;
+  }
+
+  .cd-chart-title {
+    font-family: var(--cd-font-heading);
+    font-size: var(--cd-step-0);
+    font-weight: 600;
+    color: var(--cd-text-bright);
+    margin-bottom: var(--cd-space-4);
+    text-align: center;
+  }
+
+  .cd-chart-canvas-wrap {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .cd-chart-canvas {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Accessible data table (shown when CDN fails) */
+  .cd-chart-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--cd-step--1);
+    line-height: 1.6;
+  }
+
+  .cd-chart-table caption {
+    font-family: var(--cd-font-heading);
+    font-weight: 600;
+    color: var(--cd-accent-cyan);
+    padding: var(--cd-space-2) 0;
+    text-align: left;
+  }
+
+  .cd-chart-table th,
+  .cd-chart-table td {
+    padding: var(--cd-space-2) var(--cd-space-3);
+    text-align: left;
+    border-bottom: 1px solid var(--cd-border);
+  }
+
+  .cd-chart-table th {
+    font-weight: 600;
+    color: var(--cd-accent-cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: var(--cd-step--1);
+    background: color-mix(in srgb, var(--cd-accent-blue) 6%, var(--cd-bg-alt));
+  }
+
+  .cd-chart-table tr:hover td {
+    background: color-mix(in srgb, var(--cd-accent-magenta) 3%, var(--cd-bg));
+  }
+
+  /* Error state (shown when CDN fails) */
+  .cd-chart-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--cd-space-4);
+    margin-top: var(--cd-space-3);
+    background: color-mix(in srgb, var(--cd-accent-magenta) 6%, var(--cd-bg-alt));
+    border: 1px solid color-mix(in srgb, var(--cd-accent-magenta) 25%, transparent);
+    border-radius: var(--cd-radius-sm);
+  }
+
+  .cd-chart-error-text {
+    font-size: var(--cd-step--1);
+    color: var(--cd-text-dim);
+    text-align: center;
+  }
+
   /* Responsive: tighten padding on mobile */
   @media (width <= 600px) {
+    .cd-chart {
+      padding: var(--cd-space-3);
+    }
+
     .cd-mermaid {
       padding: var(--cd-space-3);
     }

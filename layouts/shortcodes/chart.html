@@ -1,0 +1,80 @@
+{{- /* chart.html — Chart.js chart shortcode
+     Renders a Chart.js chart as a <canvas> element with an accessible data table fallback.
+     Gracefully degrades to visible table when Chart.js CDN fails to load.
+     Parameters:
+       type             (string, required) — Chart type: bar, line, pie, doughnut, radar, polarArea
+       labels           (string, required) — Comma-separated labels (e.g., "Jan,Feb,Mar")
+       dataset          (string, optional) — Dataset label (default: "Dataset")
+       data             (string, required) — Comma-separated numeric values (e.g., "100,200,150")
+       backgroundColor  (string, optional) — Comma-separated CSS colors for data points
+       borderColor      (string, optional) — Comma-separated CSS colors for borders
+       title            (string, optional) — Chart title displayed above the chart
+*/ -}}
+
+{{- $type := .Get "type" | default "bar" -}}
+{{- $labels := .Get "labels" | default "" -}}
+{{- $dataset := .Get "dataset" | default (i18n "chart.dataset_default") -}}
+{{- $data := .Get "data" | default "" -}}
+{{- $backgroundColor := .Get "backgroundColor" | default "" -}}
+{{- $borderColor := .Get "borderColor" | default "" -}}
+{{- $title := .Get "title" | default "" -}}
+{{- $id := printf "cd-chart-%d" (now.UnixNano) -}}
+
+{{- if and $labels $data -}}
+{{- $labelList := split $labels "," -}}
+{{- $dataList := split $data "," -}}
+
+<div class="cd-chart" role="figure" aria-label="{{ if $title }}{{ $title }}{{ else }}{{ i18n "chart.title" }}{{ end }}">
+  {{- with $title -}}
+  <div class="cd-chart-title">{{ . }}</div>
+  {{- end -}}
+
+  {{- /* Canvas element for Chart.js rendering */ -}}
+  <div class="cd-chart-canvas-wrap">
+    <canvas
+      id="{{ $id }}"
+      class="cd-chart-canvas"
+      data-chart-type="{{ $type }}"
+      data-chart-labels="{{ $labels }}"
+      data-chart-dataset="{{ $dataset }}"
+      data-chart-data="{{ $data }}"
+      {{- with $backgroundColor }} data-chart-bg="{{ . }}"{{ end }}
+      {{- with $borderColor }} data-chart-border="{{ . }}"{{ end }}
+      {{- with $title }} data-chart-title="{{ . }}"{{ end }}
+      aria-describedby="{{ $id }}-table"
+    ></canvas>
+  </div>
+
+  {{- /* Accessible data table (visually hidden by default, shown on CDN failure) */ -}}
+  <table id="{{ $id }}-table" class="cd-chart-table cd-sr-only">
+    <caption>{{ if $title }}{{ $title }}{{ else }}{{ i18n "chart.data_table" }}{{ end }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ i18n "chart.label_column" }}</th>
+        <th scope="col">{{ $dataset }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{- range $i, $label := $labelList -}}
+      {{- $val := index $dataList $i | default "" -}}
+      <tr>
+        <td>{{ trim $label " " }}</td>
+        <td>{{ trim $val " " }}</td>
+      </tr>
+      {{- end -}}
+    </tbody>
+  </table>
+
+  {{- /* Error message container (hidden by default, shown on CDN failure) */ -}}
+  <div class="cd-chart-error cd-sr-only" role="alert">
+    {{ i18n "chart.load_error" }}
+  </div>
+</div>
+
+{{- /* Load Chart.js CDN only once per page */ -}}
+{{- if not (.Page.Scratch.Get "chartjs-cdn-loaded") -}}
+  {{- .Page.Scratch.Set "chartjs-cdn-loaded" true -}}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js" defer></script>
+{{- end -}}
+
+{{- end -}}

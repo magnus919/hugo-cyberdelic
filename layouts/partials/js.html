@@ -8,7 +8,8 @@
 {{- $imageZoom := resources.Get "js/image-zoom.js" -}}
 {{- $gallery := resources.Get "js/gallery.js" -}}
 {{- $mermaid := resources.Get "js/mermaid.js" -}}
-{{- $js := slice $search $toc $headingAnchors $menu $youtube $codeCopy $imageZoom $gallery $mermaid | resources.Concat "js/bundle.js" -}}
+{{- $chart := resources.Get "js/chart.js" -}}
+{{- $js := slice $search $toc $headingAnchors $menu $youtube $codeCopy $imageZoom $gallery $mermaid $chart | resources.Concat "js/bundle.js" -}}
 {{- if hugo.IsProduction -}}
   {{- $js = $js | minify | fingerprint -}}
 {{- end -}}

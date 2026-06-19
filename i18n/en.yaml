@@ -99,3 +99,10 @@ timeline.label: 'Timeline'
 mermaid.title: 'Mermaid diagram'
 mermaid.error: 'Diagram could not be rendered. Please check the diagram syntax and try again.'
 mermaid.load_error: 'Diagram could not be rendered. Please check your network connection and try again.'
+
+# Chart.js Charts
+chart.title: 'Chart'
+chart.dataset_default: 'Dataset'
+chart.data_table: 'Chart data'
+chart.label_column: 'Label'
+chart.load_error: 'Chart could not be loaded. Please check your network connection and try again.'
