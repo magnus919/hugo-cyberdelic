@@ -5,7 +5,7 @@
     </a>
 
     {{- with .Site.Menus.main -}}
-    <nav class="cd-nav" aria-label="Main navigation">
+    <nav class="cd-nav" aria-label="{{ i18n "navigation.main" | default "Main navigation" }}">
       {{- range . -}}
         <a href="{{ .URL | relLangURL }}"
            {{- if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} aria-current="page"{{ end -}}>

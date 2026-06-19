@@ -9,10 +9,10 @@
   <div class="cd-article-meta">
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
     {{- with .ReadingTime -}}
-      &middot; {{ . }} min read
+      &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
     {{- end -}}
     {{- with .WordCount -}}
-      &middot; {{ . }} words
+      &middot; {{ i18n "article.words" . | default (printf "%d words" .) }}
     {{- end -}}
 
     {{- with .Params.tags -}}

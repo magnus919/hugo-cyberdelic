@@ -1,0 +1,25 @@
+# hugo-cyberdelic — English Translation Strings
+# All user-facing UI strings use i18n lookups via {{ i18n "key" }}.
+
+# Navigation
+navigation.skip_to_content: 'Skip to main content'
+navigation.main: 'Main navigation'
+
+# Homepage
+home.recent_posts: 'Recent posts'
+
+# List pages
+list.nothing_here: 'Nothing here yet.'
+
+# Articles
+article.min_read: '{{ . }} min read'
+article.words: '{{ . }} words'
+
+# Error / 404
+error.page_title: 'Page not found'
+error.description: "The page you're looking for doesn't exist."
+error.lost_in_void: 'Lost in the neon void.'
+error.return_home: 'Return to the surface'
+
+# Footer
+footer.copyright: '© {{ .year }} {{ .siteTitle }}. Powered by <a href="{{ .hugoUrl }}" rel="noopener">Hugo</a> &amp; <a href="{{ .themeUrl }}" rel="noopener">hugo-cyberdelic</a>.'

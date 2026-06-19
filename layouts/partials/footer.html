@@ -1,5 +1,5 @@
 <footer class="cd-footer" role="contentinfo">
-  <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. Powered by <a href="https://gohugo.io/" rel="noopener">Hugo</a> &amp; <a href="https://github.com/magnus919/hugo-cyberdelic" rel="noopener">hugo-cyberdelic</a>.</p>
+  <p>{{ i18n "footer.copyright" (dict "year" (now.Format "2006") "siteTitle" .Site.Title "hugoUrl" "https://gohugo.io/" "themeUrl" "https://github.com/magnus919/hugo-cyberdelic") | safeHTML }}</p>
   {{- with .Site.Params.footerExtra -}}
     <p>{{ . | safeHTML }}</p>
   {{- end -}}

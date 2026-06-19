@@ -13,7 +13,7 @@
 {{- $pages := where .Site.RegularPages "Section" "!=" "" -}}
 {{- if $pages -}}
   <section aria-labelledby="recent-posts-heading" class="cd-page">
-    <h2 id="recent-posts-heading" class="cd-sr-only">Recent posts</h2>
+    <h2 id="recent-posts-heading" class="cd-sr-only">{{ i18n "home.recent_posts" | default "Recent posts" }}</h2>
     <div class="cd-grid">
       {{- range first 6 $pages -}}
         <article class="cd-card cd-fade-in cd-circuit-border">
@@ -24,7 +24,7 @@
           <p class="cd-card-meta">
             <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
             {{- with .ReadingTime -}}
-              &middot; {{ . }} min read
+              &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
             {{- end -}}
           </p>
           {{- with .Summary -}}

@@ -21,7 +21,7 @@
         <p class="cd-card-meta">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
           {{- with .ReadingTime -}}
-            &middot; {{ . }} min read
+            &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
           {{- end -}}
         </p>
         {{- with .Summary -}}
@@ -33,6 +33,6 @@
     {{- end -}}
   </div>
 {{- else -}}
-  <p>Nothing here yet.</p>
+  <p>{{ i18n "list.nothing_here" | default "Nothing here yet." }}</p>
 {{- end -}}
 {{ end }}
