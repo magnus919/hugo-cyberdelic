@@ -91,3 +91,6 @@ gallery.label: 'Image gallery'
 gallery.close: 'Close lightbox'
 gallery.previous: 'Previous image'
 gallery.next: 'Next image'
+
+# Timeline
+timeline.label: 'Timeline'

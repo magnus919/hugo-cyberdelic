@@ -1,0 +1,20 @@
+{{- /* timeline.html — Vertical timeline with cyberdelic-styled connecting line
+     Wraps individual timeline-item shortcodes.
+     Usage:
+       {{< timeline >}}
+         {{< timeline-item date="2024-01-15" title="Launch" >}}
+           Content here
+         {{< /timeline-item >}}
+         {{< timeline-item date="2024-06-20" title="Update" >}}
+           More content
+         {{< /timeline-item >}}
+       {{< /timeline >}}
+     Empty state: Renders nothing if no items are provided.
+*/ -}}
+
+{{- $inner := trim .Inner " \n\r\t" -}}
+{{- if $inner -}}
+<div class="cd-timeline" role="list" aria-label="{{ i18n "timeline.label" | default "Timeline" }}">
+  {{- $inner -}}
+</div>
+{{- end -}}

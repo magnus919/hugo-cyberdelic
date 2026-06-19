@@ -1,0 +1,31 @@
+{{- /* timeline-item.html — Single timeline item with date, title, and body content
+     Parameters:
+       date  (string, required) — ISO 8601 date string (e.g. "2024-01-15")
+       title (string, required) — Item title/heading
+     Inner: Markdown body content rendered below the title.
+     Usage (inside {{< timeline >}} block):
+       {{< timeline-item date="2024-01-15" title="Launch" >}}
+         Description text with **markdown** support.
+       {{< /timeline-item >}}
+*/ -}}
+
+{{- $date := .Get "date" | default "" -}}
+{{- $title := .Get "title" | default "" -}}
+{{- $content := .Inner | markdownify -}}
+
+{{- if $date -}}
+<div class="cd-timeline-item" role="listitem">
+  <div class="cd-timeline-marker" aria-hidden="true">
+    <div class="cd-timeline-dot"></div>
+  </div>
+  <div class="cd-timeline-body">
+    <time class="cd-timeline-date" datetime="{{ $date }}">{{ $date }}</time>
+    <h3 class="cd-timeline-title">{{ $title }}</h3>
+    {{- if $content -}}
+    <div class="cd-timeline-content">
+      {{- $content -}}
+    </div>
+    {{- end -}}
+  </div>
+</div>
+{{- end -}}
