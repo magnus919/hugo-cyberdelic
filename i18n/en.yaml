@@ -49,3 +49,8 @@ search.network_error: 'Network error. Please try again.'
 # Related Articles
 related.title: 'Related articles'
 related.label: 'Related articles'
+
+# Pagination
+pagination.previous: 'Previous article'
+pagination.next: 'Next article'
+pagination.label: 'Article pagination'

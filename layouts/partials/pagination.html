@@ -1,0 +1,31 @@
+{{- /* pagination.html — Next/previous article navigation
+     Shows chronologically adjacent articles with their titles.
+     Controlled by params.showPagination.
+     First article: no next (newer) link. Last article: no previous (older) link.
+     Single-article sections: no links at all.
+     rel=prev/next for SEO, accessible focus indicators via base styles.
+*/ -}}
+
+{{- $page := . -}}
+{{- $showPagination := $page.Site.Params.showPagination | default false -}}
+
+{{- if $showPagination -}}
+  {{- $prev := $page.PrevInSection -}}
+  {{- $next := $page.NextInSection -}}
+  {{- if or $prev $next -}}
+    <nav class="cd-pagination" aria-label="{{ i18n "pagination.label" | default "Article pagination" }}">
+      {{- with $prev -}}
+        <a href="{{ .RelPermalink }}" class="cd-pagination-link cd-pagination-link--prev" rel="prev">
+          <span class="cd-pagination-direction">{{ i18n "pagination.previous" | default "Previous" }}</span>
+          <span class="cd-pagination-title">{{ .Title }}</span>
+        </a>
+      {{- end -}}
+      {{- with $next -}}
+        <a href="{{ .RelPermalink }}" class="cd-pagination-link cd-pagination-link--next" rel="next">
+          <span class="cd-pagination-direction">{{ i18n "pagination.next" | default "Next" }}</span>
+          <span class="cd-pagination-title">{{ .Title }}</span>
+        </a>
+      {{- end -}}
+    </nav>
+  {{- end -}}
+{{- end -}}

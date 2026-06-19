@@ -14,7 +14,7 @@ showReadingTime   = true
 showWordCount     = true
 showSharing       = false
 showRelated       = true
-showPagination    = false
+showPagination    = true
 showComments      = false
 
 # === Navigation & Discovery ===
