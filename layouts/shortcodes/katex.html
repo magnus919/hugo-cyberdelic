@@ -1,0 +1,34 @@
+{{- /* katex.html — KaTeX math shortcode
+     Renders LaTeX math using KaTeX library loaded from CDN.
+     Supports inline and block math modes.
+     Falls back to raw LaTeX in <code>/<pre> when CDN fails.
+     Parameters:
+       inline (bool, optional, default: false) — render inline within text flow
+       title  (string, optional) — accessible description (defaults to LaTeX source)
+*/ -}}
+
+{{- $inline := .Get "inline" | default "false" -}}
+{{- $title := .Get "title" | default "" -}}
+{{- $content := .Inner | chomp -}}
+
+{{- if $content -}}
+{{- if eq $inline "true" -}}
+{{- /* Inline math */ -}}
+<span class="cd-katex cd-katex--inline" role="math"{{ with $title }} aria-label="{{ . }}"{{ else }} aria-label="{{ $content }}"{{ end }}>
+  <code class="cd-katex-fallback">{{ $content }}</code>
+</span>
+{{- else -}}
+{{- /* Block math */ -}}
+<div class="cd-katex cd-katex--block" role="math"{{ with $title }} aria-label="{{ . }}"{{ else }} aria-label="{{ $content }}"{{ end }}>
+  <pre class="cd-katex-fallback"><code>{{ $content }}</code></pre>
+</div>
+{{- end -}}
+
+{{- /* Load KaTeX CDN only once per page */ -}}
+{{- if not (.Page.Scratch.Get "katex-cdn-loaded") -}}
+  {{- .Page.Scratch.Set "katex-cdn-loaded" true -}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
+{{- end -}}
+
+{{- end -}}

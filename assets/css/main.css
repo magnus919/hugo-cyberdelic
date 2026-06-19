@@ -2386,6 +2386,61 @@
       padding: var(--cd-space-3);
     }
   }
+
+  /* -- KaTeX Math -- */
+  .cd-katex--block {
+    margin: var(--cd-space-6) 0;
+    text-align: center;
+    overflow: auto hidden;
+    padding: var(--cd-space-2) 0;
+  }
+
+  .cd-katex--inline {
+    display: inline;
+    white-space: nowrap;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .cd-katex--block > .katex-display {
+    margin: 0;
+    text-align: center;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .cd-katex--inline > .katex {
+    display: inline;
+  }
+
+  /* Fallback: raw LaTeX in code element */
+  .cd-katex-fallback {
+    font-family: var(--cd-font-mono);
+    color: var(--cd-text-dim);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .cd-katex--inline .cd-katex-fallback {
+    display: inline;
+    font-size: 0.9em;
+    padding: 0.15em 0.3em;
+    background: color-mix(in srgb, var(--cd-accent-cyan) 10%, var(--cd-bg-alt));
+    border-radius: var(--cd-radius-sm);
+  }
+
+  .cd-katex--block .cd-katex-fallback {
+    display: inline-block;
+    text-align: left;
+    padding: var(--cd-space-4);
+    border: 1px solid var(--cd-border);
+    border-radius: var(--cd-radius-md);
+    background: var(--cd-bg);
+    min-width: 200px;
+  }
+
+  /* When KaTeX has rendered, hide the raw LaTeX fallback */
+  .cd-katex--rendered .cd-katex-fallback {
+    display: none;
+  }
 }
 
 /* ---- Utilities ---- */

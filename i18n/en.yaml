@@ -106,3 +106,9 @@ chart.dataset_default: 'Dataset'
 chart.data_table: 'Chart data'
 chart.label_column: 'Label'
 chart.load_error: 'Chart could not be loaded. Please check your network connection and try again.'
+
+# KaTeX Math
+katex.title: 'Math expression'
+katex.inline_label: 'Inline math'
+katex.block_label: 'Block math'
+katex.load_error: 'Math could not be rendered. Please check your network connection and try again.'
