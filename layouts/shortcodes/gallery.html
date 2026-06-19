@@ -21,7 +21,7 @@
   {{- /* Process rendered img tags: wrap each in a figure with class */ -}}
   {{- $parsed = $parsed | replaceRE `<img\s` `<img class="cd-gallery-thumb" loading="lazy" ` -}}
   {{- /* Wrap standalone img elements in figure */ -}}
-  {{- $parsed = $parsed | replaceRE `(<img[^>]+>)` `<figure class="cd-gallery-item" role="listitem">$1</figure>` -}}
+  {{- $parsed = $parsed | replaceRE `(<img[^>]+>)` `<figure class="cd-gallery-item" role="listitem" tabindex="0">$1</figure>` -}}
   {{- $parsed | safeHTML -}}
 </div>
 {{- end -}}

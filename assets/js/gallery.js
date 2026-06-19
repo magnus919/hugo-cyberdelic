@@ -151,29 +151,16 @@
     if (img) img.focus();
   }
 
-  function handleImageClick(e) {
-    // Support clicking on either the thumbnail img or its parent figure
-    var thumb = e.target.closest('.cd-gallery-thumb');
-    var item = e.target.closest('.cd-gallery-item');
-    if (!thumb && !item) return;
+  function openGalleryFromThumb(thumb) {
+    if (!thumb || !thumb.src) return;
 
-    // If clicked on the figure, find the img inside it
-    if (!thumb && item) {
-      thumb = item.querySelector('.cd-gallery-thumb');
-    }
-    if (!thumb) return;
-    if (!thumb.src) return;
-
-    e.preventDefault();
-
-    // Find the index of this image in the gallery
     var allImages = getGalleryData();
     if (allImages.length === 0) return;
 
-    var clickSrc = thumb.currentSrc || thumb.src;
+    var thumbSrc = thumb.currentSrc || thumb.src;
     var idx = -1;
     for (var i = 0; i < allImages.length; i++) {
-      if (allImages[i].src === clickSrc) {
+      if (allImages[i].src === thumbSrc) {
         idx = i;
         break;
       }
@@ -184,6 +171,33 @@
     galleryImages = allImages;
     activeTrigger = thumb;
     openLightbox(idx);
+  }
+
+  function handleImageClick(e) {
+    // Support clicking on either the thumbnail img or its parent figure
+    var thumb = e.target.closest('.cd-gallery-thumb');
+    var item = e.target.closest('.cd-gallery-item');
+    if (!thumb && !item) return;
+
+    // If clicked on the figure, find the img inside it
+    if (!thumb && item) {
+      thumb = item.querySelector('.cd-gallery-thumb');
+    }
+
+    e.preventDefault();
+    openGalleryFromThumb(thumb);
+  }
+
+  function handleItemKeyDown(e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+
+    var item = e.target.closest('.cd-gallery-item');
+    if (!item) return;
+
+    e.preventDefault();
+
+    var thumb = item.querySelector('.cd-gallery-thumb');
+    openGalleryFromThumb(thumb);
   }
 
   function handleKeyDown(e) {
@@ -268,6 +282,7 @@
     document.addEventListener('click', handleOverlayClick);
     document.addEventListener('click', handleDocumentClick);
     document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', handleItemKeyDown);
     window.addEventListener('resize', handleResize);
   }
 
