@@ -1,0 +1,40 @@
+{{- /* related.html — Related articles section based on shared tags/categories
+     Renders a grid of related article cards below the post content.
+     Controlled by params.showRelated and params.relatedArticlesLimit.
+     Never includes the current article (Hugo's Related method handles this).
+     Hides entirely when no related articles are found.
+*/ -}}
+
+{{- $page := . -}}
+{{- $showRelated := $page.Site.Params.showRelated | default false -}}
+{{- $limit := $page.Site.Params.relatedArticlesLimit | default 4 -}}
+
+{{- if $showRelated -}}
+  {{- $related := $page.Site.RegularPages.Related $page | first $limit -}}
+  {{- if $related -}}
+    <section class="cd-related" aria-labelledby="cd-related-heading">
+      <h2 id="cd-related-heading" class="cd-related-heading">{{ i18n "related.title" | default "Related articles" }}</h2>
+      <div class="cd-grid cd-related-grid">
+        {{- range $related -}}
+          <article class="cd-card cd-related-card">
+            {{- partial "cover.html" (dict "page" . "class" "cd-card-cover" "wrapper" "cd-card-figure") -}}
+            <h3 class="cd-card-title">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h3>
+            <p class="cd-card-meta">
+              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+              {{- with .ReadingTime -}}
+                &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
+              {{- end -}}
+            </p>
+            {{- with .Summary -}}
+              <div class="cd-card-summary">
+                {{- . | truncate 200 -}}
+              </div>
+            {{- end -}}
+          </article>
+        {{- end -}}
+      </div>
+    </section>
+  {{- end -}}
+{{- end -}}

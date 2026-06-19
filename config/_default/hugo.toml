@@ -12,6 +12,20 @@ theme         = "hugo-cyberdelic"
   category = "categories"
   author   = "authors"
 
+# Related content configuration (shared tags/categories)
+[related]
+  threshold    = 1
+  includeNewer = true
+  toLower      = true
+
+  [[related.indices]]
+    name     = "tags"
+    weight   = 100
+
+  [[related.indices]]
+    name     = "categories"
+    weight   = 50
+
 # Custom output formats
 [outputFormats]
   [outputFormats.SEARCH]

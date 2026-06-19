@@ -45,3 +45,7 @@ search.trigger_label: 'Toggle search'
 search.min_chars: 'Type at least {{ . }} characters to search.'
 search.failed: 'Failed to load search library. Please try again later.'
 search.network_error: 'Network error. Please try again.'
+
+# Related Articles
+related.title: 'Related articles'
+related.label: 'Related articles'

@@ -1130,6 +1130,25 @@
   .cd-toc-nav ul ul ul a {
     padding-left: var(--cd-space-8);
   }
+
+  /* -- Related Articles -- */
+  .cd-related {
+    margin-top: var(--cd-space-8);
+    padding-top: var(--cd-space-7);
+    border-top: 1px solid var(--cd-border);
+  }
+
+  .cd-related-heading {
+    font-family: var(--cd-font-heading);
+    font-size: var(--cd-step-1);
+    color: var(--cd-accent-cyan);
+    margin-bottom: var(--cd-space-5);
+    letter-spacing: 0.03em;
+  }
+
+  .cd-related-grid {
+    --cd-grid-min: 280px;
+  }
 }
 
 /* ---- Utilities ---- */

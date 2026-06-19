@@ -25,6 +25,9 @@ showSharing = false
 # Related articles section at bottom of posts
 showRelated = false
 
+# Maximum number of related articles to show
+relatedArticlesLimit = 4
+
 # Next / Previous article pagination
 showPagination = false
 

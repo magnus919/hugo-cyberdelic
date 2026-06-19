@@ -13,7 +13,7 @@ homepageLayout = "hero"
 showReadingTime   = true
 showWordCount     = true
 showSharing       = false
-showRelated       = false
+showRelated       = true
 showPagination    = false
 showComments      = false
 
