@@ -109,3 +109,4 @@ showSeries = true
   tableOfContents = true
   backToTop = true
   readingProgress = true
+  ambientCanvas = true

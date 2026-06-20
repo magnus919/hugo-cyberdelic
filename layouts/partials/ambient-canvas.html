@@ -1,0 +1,202 @@
+{{- /* ambient-canvas.html — p5.js ambient background effects
+     Gated behind params.cyberdelic.ambientCanvas
+     Self-contained sketch: load p5 from CDN, detect page type, render effects
+*/ -}}
+{{- if .Site.Params.cyberdelic.ambientCanvas -}}
+<div id="cd-ambient-wrapper"><div id="cd-ambient"></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.4/p5.min.js"></script>
+
+<script>
+(function() {
+  var isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (isReduced) return;
+
+  var isHero = document.querySelector('.cd-hero') !== null;
+  var isArticle = document.querySelector('.cd-article') !== null && !isHero;
+  var is404 = document.title.indexOf('404') !== -1 || document.title.indexOf('Page not found') !== -1;
+
+  var sketch = function(p) {
+    var particles = [];
+    var lightShafts = [];
+    var circuitTraces = [];
+    var time = 0;
+
+    /* Configuration by page type */
+    var cfg = (function() {
+      if (isHero || is404) {
+        return { particles: 50, lightShafts: 4, circuitTraces: 0, particleSize: [1, 5] };
+      } else if (isArticle) {
+        return { particles: 20, lightShafts: 0, circuitTraces: 10, particleSize: [1, 3] };
+      }
+      return { particles: 15, lightShafts: 0, circuitTraces: 0, particleSize: [1, 3] };
+    })();
+
+    var palette = [
+      [255, 0, 170],   /* magenta */
+      [56, 71, 255],   /* blue */
+      [0, 255, 255],   /* cyan */
+      [255, 176, 0]    /* amber */
+    ];
+
+    p.setup = function() {
+      var canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+      canvas.parent('cd-ambient');
+      p.frameRate(24);
+
+      /* Drift particles */
+      for (var i = 0; i < cfg.particles; i++) {
+        var col = palette[Math.floor(p.random(palette.length))];
+        particles.push({
+          x: p.random(p.width),
+          y: p.random(p.height),
+          size: p.random(cfg.particleSize[0], cfg.particleSize[1]),
+          vx: p.random(-0.3, 0.3),
+          vy: p.random(-1.2, -0.3),
+          color: col,
+          alpha: p.random(80, 200),
+          pulse: p.random(100, 300),
+          pulsePhase: p.random(p.TWO_PI)
+        });
+      }
+
+      /* Light shafts (hero/404 only) */
+      for (var i = 0; i < cfg.lightShafts; i++) {
+        lightShafts.push({
+          x: p.random(p.width * 0.2, p.width * 0.8),
+          angle: p.random(-0.3, 0.3),
+          speed: p.random(0.002, 0.005),
+          phase: p.random(p.TWO_PI),
+          color: palette[i % 2],
+          width: p.random(60, 100)
+        });
+      }
+
+      /* Circuit traces (article only) */
+      for (var i = 0; i < cfg.circuitTraces; i++) {
+        var startX = p.random(p.width * 0.1, p.width * 0.9);
+        var startY = p.random() < 0.5 ? p.random(10, 60) : p.random(p.height - 80, p.height - 10);
+        circuitTraces.push({
+          points: genCircuitPath(startX, startY, p.random(3, 6)),
+          color: i % 2 === 0 ? [0, 255, 255] : [255, 176, 0],
+          alpha: p.random(12, 20),
+          speed: p.random(0.5, 1.5),
+          phase: p.random(p.TWO_PI)
+        });
+      }
+    };
+
+    function genCircuitPath(x, y, segments) {
+      var pts = [{x: x, y: y}];
+      var cx = x, cy = y;
+      for (var i = 0; i < segments; i++) {
+        if (p.random() < 0.5) {
+          cx += p.random(-80, 80);
+        } else {
+          cy += p.random(-80, 80);
+        }
+        pts.push({x: cx, y: cy});
+      }
+      return pts;
+    }
+
+    p.draw = function() {
+      if (document.hidden) return;
+      p.clear();
+      time += 1;
+
+      /* Drift particles */
+      for (var i = particles.length - 1; i >= 0; i--) {
+        var pt = particles[i];
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        /* Wrap around */
+        if (pt.y + pt.size < 0) {
+          pt.y = p.height + pt.size;
+          pt.x = p.random(p.width);
+        }
+        if (pt.x < -pt.size) pt.x = p.width + pt.size;
+        if (pt.x > p.width + pt.size) pt.x = -pt.size;
+
+        var pulseFactor = 0.7 + 0.3 * p.sin(time * 0.05 + pt.pulsePhase);
+        var alpha = pt.alpha * pulseFactor;
+
+        p.noStroke();
+        p.fill(pt.color[0], pt.color[1], pt.color[2], alpha);
+        p.circle(pt.x, pt.y, pt.size);
+
+        /* Connection lines between nearby particles */
+        for (var j = i + 1; j < particles.length; j++) {
+          var d = p.dist(pt.x, pt.y, particles[j].x, particles[j].y);
+          if (d < 150) {
+            var connAlpha = p.map(d, 0, 150, 40, 0);
+            var avgColor = [
+              (pt.color[0] + particles[j].color[0]) / 2,
+              (pt.color[1] + particles[j].color[1]) / 2,
+              (pt.color[2] + particles[j].color[2]) / 2
+            ];
+            p.stroke(avgColor[0], avgColor[1], avgColor[2], connAlpha);
+            p.strokeWeight(0.5);
+            p.line(pt.x, pt.y, particles[j].x, particles[j].y);
+          }
+        }
+      }
+
+      /* Light shafts (hero/404) */
+      for (var i = 0; i < lightShafts.length; i++) {
+        var shaft = lightShafts[i];
+        var angle = shaft.angle + p.sin(time * shaft.speed + shaft.phase) * 0.3;
+        var cx = shaft.x;
+        var w = shaft.width;
+
+        p.noStroke();
+        for (var j = 0; j < 20; j++) {
+          var t = j / 20;
+          var a = p.map(t, 0, 1, 6, 1);
+          p.fill(shaft.color[0], shaft.color[1], shaft.color[2], a);
+          p.beginShape();
+          var x1 = cx - w/2 + p.cos(angle) * t * p.height;
+          var y1 = t * p.height + p.sin(angle) * (w/2);
+          var x2 = cx + w/2 + p.cos(angle) * t * p.height;
+          var y2 = t * p.height + p.sin(angle) * (-w/2);
+          p.vertex(x1, y1);
+          p.vertex(x2, y2);
+          p.endShape(p.CLOSE);
+        }
+      }
+
+      /* Circuit traces (article) */
+      for (var i = 0; i < circuitTraces.length; i++) {
+        var trace = circuitTraces[i];
+        var bright = 0.3 + 0.7 * (0.5 + 0.5 * p.sin(time * 0.02 * trace.speed + trace.phase));
+        var alpha = trace.alpha * bright;
+
+        p.noFill();
+        p.stroke(trace.color[0], trace.color[1], trace.color[2], alpha);
+        p.strokeWeight(1);
+
+        p.beginShape();
+        for (var j = 0; j < trace.points.length; j++) {
+          var pt2 = trace.points[j];
+          /* Make angular: line to x, then to y (right-angle routing) */
+          if (j === 0) {
+            p.vertex(pt2.x, pt2.y);
+          } else {
+            var prev = trace.points[j - 1];
+            p.vertex(pt2.x, prev.y);
+            p.vertex(pt2.x, pt2.y);
+          }
+        }
+        p.endShape();
+      }
+    };
+
+    p.windowResized = function() {
+      p.resizeCanvas(p.windowWidth, p.windowHeight);
+    };
+  };
+
+  new p5(sketch);
+})();
+</script>
+{{- end -}}

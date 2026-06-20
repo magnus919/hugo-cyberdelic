@@ -116,6 +116,8 @@ showSeries = false
   showRelatedPosts = false
   tableOfContents = false
   backToTop = false
+  readingProgress = false
+  ambientCanvas = false
   paginationStyle = "minimal"   # "minimal" | "numbered" | "infinite"
 
 # === Social Sharing ===

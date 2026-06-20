@@ -19,6 +19,8 @@
       data-circuit-border="{{ .Site.Params.cyberdelic.circuitBorder | default false }}">
   <a href="#main-content" class="skip-link">{{ i18n "navigation.skip_to_content" | default "Skip to main content" }}</a>
 
+  {{- partial "ambient-canvas.html" . -}}
+
   <div class="cd-page">
     {{- block "header" . }}{{ partial "header.html" . }}{{ end -}}
 
