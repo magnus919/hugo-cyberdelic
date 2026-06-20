@@ -166,6 +166,19 @@
     accent-color: var(--cd-accent-magenta);
   }
 
+  /* Ambient canvas wrapper — fixed behind all content */
+  #cd-ambient-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  #cd-ambient-wrapper canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
   h1,
   h2,
   h3,
