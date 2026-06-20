@@ -6,7 +6,7 @@ description:
   generator."
 authors: ['neon-writer']
 tags: ['tutorial', 'hugo', 'web-development']
-cover: '/images/placeholder.svg'
+cover: 'cover.png'
 ---
 
 ## Why Hugo?

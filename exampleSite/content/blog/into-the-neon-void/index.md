@@ -4,7 +4,7 @@ date: 2026-06-10
 description: 'A meditation on darkness, light, and the spaces between in cyberdelic visual design.'
 authors: ['magnus']
 tags: ['design', 'philosophy', 'visual-language']
-cover: '/images/placeholder.svg'
+cover: 'cover.png'
 ---
 
 ## The Void as Canvas
@@ -22,22 +22,22 @@ Neon light behaves differently from reflected light. It glows. It bleeds into su
 CSS terms, this translates to `text-shadow` and `box-shadow` properties that create an aura around
 elements.
 
-![Neon glow visualization](/images/placeholder.svg)
+![Neon glow visualization](inline-neon-visualization.png)
 
 ### Image Carousel
 
 The carousel shortcode displays multiple images with prev/next navigation, dot indicators, keyboard
 accessibility, and optional autoplay:
 
-{{< carousel >}} ![Neon glow demonstration](/images/placeholder.svg)
-![Digital circuit pattern](/images/placeholder.svg)
-![Cyberdelic grid overlay](/images/placeholder.svg) {{< /carousel >}}
+{{< carousel >}} ![Neon glow demonstration](carousel-neon-glow.png)
+![Digital circuit pattern](carousel-circuit-pattern.png)
+![Cyberdelic grid overlay](carousel-grid-overlay.png) {{< /carousel >}}
 
 With autoplay enabled (respects reduced motion preference):
 
-{{< carousel autoplay="3000" >}} ![Void background texture](/images/placeholder.svg)
-![Scan line overlay effect](/images/placeholder.svg)
-![Neon typography example](/images/placeholder.svg) {{< /carousel >}}
+{{< carousel autoplay="3000" >}} ![Void background texture](carousel-void-texture.png)
+![Scan line overlay effect](carousel-scanlines.png)
+![Neon typography example](carousel-neon-typography.png) {{< /carousel >}}
 
 ### Layering Light
 

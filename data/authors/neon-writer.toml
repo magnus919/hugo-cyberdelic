@@ -1,6 +1,6 @@
 # Author profile — neon-writer
 name = "Neon Writer"
-avatar = "/images/placeholder.svg"
+avatar = "/images/neon-writer-avatar.png"
 bio = "Technical writer and content strategist specializing in developer documentation and design systems. Lover of cyberdelic aesthetics."
 links = [
   { label = "Blog", url = "https://neonwriter.example.com" },

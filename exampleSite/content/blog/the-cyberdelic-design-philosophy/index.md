@@ -4,7 +4,7 @@ date: 2026-06-01
 description: 'Exploring the visual language that merges 1960s psychedelia with cyberpunk futurism.'
 authors: ['magnus']
 tags: ['design', 'cyberpunk', 'aesthetics']
-cover: '/images/placeholder.svg'
+cover: 'cover.png'
 ---
 
 ## Where Two Worlds Collide
