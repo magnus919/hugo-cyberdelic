@@ -9,3 +9,6 @@ data/
 # Hugo Go template syntax breaks HTML parser
 layouts/
 archetypes/
+
+# Vendored libraries (minified)
+assets/js/p5.min.js
