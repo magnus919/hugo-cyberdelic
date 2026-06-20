@@ -3,6 +3,7 @@
 
 {{ define "main" }}
 {{- /* Author taxonomy page - lists all articles by a single author */ -}}
+{{- partial "breadcrumbs.html" . -}}
 {{- $slug := .Data.Term -}}
 {{- $authorData := index hugo.Data.authors $slug -}}
 

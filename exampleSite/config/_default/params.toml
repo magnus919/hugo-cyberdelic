@@ -15,6 +15,23 @@ showSharing       = true
 showRelated       = true
 showPagination    = true
 
+# === Navigation & Discovery ===
+showSearch          = true
+showTableOfContents = true
+showBreadcrumbs     = true
+showHeadingAnchors  = true
+
+# === Content Enhancements ===
+showCodeCopy  = true
+showImageZoom = true
+showDraftLabel = true
+
+# === Author ===
+showAuthorBox = true
+
+# === Series ===
+showSeries = true
+
 # === Social Sharing ===
 [sharing]
   enabled    = true
@@ -24,23 +41,6 @@ showPagination    = true
   mastodon   = true
   reddit     = true
   email      = true
-
-# === Navigation & Discovery ===
-showSearch          = true
-showTableOfContents = true
-showBreadcrumbs     = true
-showHeadingAnchors  = false
-
-# === Content Enhancements ===
-showCodeCopy  = false
-showImageZoom = true
-showDraftLabel = true
-
-# === Author ===
-showAuthorBox = true
-
-# === Series ===
-showSeries = true
 
 # === Analytics ===
 [analytics]

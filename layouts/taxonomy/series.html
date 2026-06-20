@@ -3,6 +3,7 @@
 
 {{ define "main" }}
 {{- /* Series taxonomy page - lists all articles in a series, ordered by series_weight */ -}}
+{{- partial "breadcrumbs.html" . -}}
 
 <header class="cd-article-header cd-series-header">
   <h1 class="cd-article-title">{{ .Title }}</h1>

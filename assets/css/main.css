@@ -73,6 +73,9 @@
 /* ---- Design Tokens ---- */
 @layer design-tokens {
   :root {
+    /* Ensure dark colour scheme to prevent white flash */
+    color-scheme: dark;
+
     /* ---- Cyberdelic Palette ---- */
     --cd-bg: #0a0015;
     --cd-bg-alt: #120022;
@@ -331,7 +334,7 @@
     z-index: 10000;
     padding: var(--cd-space-2) var(--cd-space-4);
     background: var(--cd-accent-blue);
-    color: #ffffff;
+    color: var(--cd-text-bright);
     text-decoration: none;
     border-radius: 0 0 var(--cd-radius-sm) var(--cd-radius-sm);
     font-size: var(--cd-step--1);
@@ -1773,6 +1776,12 @@
     font-family: var(--cd-font-body);
     font-size: var(--cd-step-0);
     padding: var(--cd-space-2) 0;
+  }
+
+  .cd-search-input:focus-visible {
+    outline: 2px solid var(--cd-accent-cyan);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
   .cd-search-input::placeholder {
@@ -3363,7 +3372,7 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     line-height: 1.5;
-    color: #ffffff;
+    color: var(--cd-text-bright);
   }
 
   /* -- Labels -- */
@@ -4481,10 +4490,32 @@
 
 /* Print styles */
 @media print {
+  /* Hide interactive/navigational elements */
   .cd-header,
   .cd-footer,
-  .cd-nav {
-    display: none;
+  .cd-nav,
+  .cd-search,
+  .cd-search-trigger,
+  .cd-hamburger,
+  .cd-toc,
+  .cd-toc-toggle,
+  .cd-comments,
+  .cd-sharing,
+  .cd-pagination,
+  .cd-series,
+  .cd-breadcrumbs,
+  .cd-code-copy-btn,
+  .cd-youtube-placeholder,
+  .cd-gallery,
+  .cd-carousel,
+  .cd-mermaid,
+  .cd-chart,
+  .cd-github-card,
+  .skip-link,
+  .cd-home-profile-social,
+  .cd-background-overlay,
+  .cd-hero::before {
+    display: none !important;
   }
 
   body {
@@ -4492,13 +4523,84 @@
     color: #000000;
   }
 
+  body::before,
+  body::after {
+    display: none !important;
+  }
+
   a {
     color: #000000;
     text-decoration: underline;
   }
 
+  /* Remove glow effects and decorative gradients */
+  .cd-card {
+    border: 1px solid #cccccc;
+    box-shadow: none;
+    transform: none;
+    background: #ffffff;
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+
+  .cd-card-title a {
+    color: #000000;
+  }
+
+  .cd-card-cover {
+    transform: none !important;
+  }
+
   pre {
     border: 1px solid #cccccc;
     box-shadow: none;
+    background: #f5f5f5;
+    color: #000000;
+  }
+
+  pre code {
+    color: #000000;
+    background: none;
+  }
+
+  .cd-article-body {
+    max-width: none;
+  }
+
+  .cd-article-title {
+    color: #000000;
+  }
+
+  .cd-article-meta time {
+    color: #666666;
+  }
+
+  img {
+    max-width: 100% !important;
+    break-inside: avoid;
+  }
+
+  .cd-page {
+    display: block;
+  }
+
+  .cd-grid {
+    display: block;
+  }
+
+  /* Hide decorative elements */
+  .cd-circuit-border::before,
+  .cd-home-background-overlay {
+    display: none;
+  }
+
+  /* Hero section cleanup for print */
+  .cd-hero-title {
+    text-shadow: none;
+    color: #000000;
+  }
+
+  .cd-hero-subtitle {
+    color: #333333;
   }
 }

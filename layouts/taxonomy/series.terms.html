@@ -3,6 +3,7 @@
 
 {{ define "main" }}
 {{- /* Series terms page - lists all series */ -}}
+{{- partial "breadcrumbs.html" . -}}
 
 <header class="cd-article-header cd-series-terms-header">
   <h1 class="cd-article-title">{{ i18n "series.title" | default "Series" }}</h1>
