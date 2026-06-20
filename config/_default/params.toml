@@ -19,6 +19,9 @@ showReadingTime = false
 # Word count display
 showWordCount = false
 
+# Word count display on list cards (requires showWordCount = true)
+showWordCountOnList = false
+
 # Social sharing buttons (Bluesky, Twitter/X, LinkedIn, Mastodon, Reddit, email)
 showSharing = false
 

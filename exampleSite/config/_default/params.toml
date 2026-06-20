@@ -12,6 +12,7 @@ homepageLayout = "hero"
 # === Article / Post Features ===
 showReadingTime   = true
 showWordCount     = true
+showWordCountOnList = true
 showSharing       = false
 showRelated       = true
 showPagination    = true

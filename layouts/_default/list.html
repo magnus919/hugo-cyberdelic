@@ -28,6 +28,12 @@
           {{- with .ReadingTime -}}
             &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
           {{- end -}}
+          {{- if site.Params.showWordCountOnList -}}
+            {{- with .WordCount -}}
+              {{- $words := lang.FormatNumber 0 . -}}
+              &middot; {{ i18n "article.words" $words | default (printf "%s words" $words) }}
+            {{- end -}}
+          {{- end -}}
         </p>
         {{- with .Summary -}}
           <div class="cd-card-summary">

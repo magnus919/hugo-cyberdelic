@@ -29,8 +29,11 @@
     {{- with .ReadingTime -}}
       &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
     {{- end -}}
-    {{- with .WordCount -}}
-      &middot; {{ i18n "article.words" . | default (printf "%d words" .) }}
+    {{- if site.Params.showWordCount -}}
+      {{- with .WordCount -}}
+        {{- $words := lang.FormatNumber 0 . -}}
+        &middot; {{ i18n "article.words" $words | default (printf "%s words" $words) }}
+      {{- end -}}
     {{- end -}}
 
     {{- /* Author names in article meta */ -}}
