@@ -11,11 +11,16 @@
 </section>
 
 {{- $pages := where .Site.RegularPages "Section" "!=" "" -}}
+{{- $total := len $pages -}}
+{{- $limit := 6 -}}
+{{- $homepage := .Site.Params.homepage -}}
+{{- $showMore := $homepage.showMoreLink | default true -}}
+{{- $moreLinkDest := $homepage.showMoreLinkDest | default "/blog/" -}}
 {{- if $pages -}}
   <section aria-labelledby="recent-posts-heading" class="cd-page">
     <h2 id="recent-posts-heading" class="cd-sr-only">{{ i18n "home.recent_posts" | default "Recent posts" }}</h2>
     <div class="cd-grid">
-      {{- range first 6 $pages -}}
+      {{- range first $limit $pages -}}
         <article class="cd-card cd-fade-in cd-circuit-border">
           {{- partial "cover.html" (dict "page" . "class" "cd-card-cover" "wrapper" "cd-card-figure") -}}
           {{- if and .Draft .Site.Params.showDraftLabel -}}
@@ -42,5 +47,10 @@
         </article>
       {{- end -}}
     </div>
+    {{- if and $showMore (gt $total $limit) -}}
+      <div class="cd-home-card-footer">
+        <a href="{{ $moreLinkDest | relLangURL }}" class="cd-home-card-view-all">{{ i18n "home.view_all_posts" | default "View all posts" }} &rarr;</a>
+      </div>
+    {{- end -}}
   </section>
 {{- end -}}

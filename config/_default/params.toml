@@ -92,6 +92,11 @@ showSeries = false
     # Subtitle text (falls back to site description)
     subtitle = ""
 
+  # Show "View all posts" link when total posts exceed the card limit
+  showMoreLink = true
+  # Destination URL for the "View all posts" link (default: "/blog/")
+  showMoreLinkDest = "/blog/"
+
   [homepage.card]
     # Custom heading text (falls back to i18n "Recent Posts")
     heading = ""
