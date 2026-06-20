@@ -23,7 +23,7 @@
     <h3 class="cd-timeline-title">{{ $title }}</h3>
     {{- if $content -}}
     <div class="cd-timeline-content">
-      {{- $content -}}
+      {{- $content | safeHTML -}}
     </div>
     {{- end -}}
   </div>

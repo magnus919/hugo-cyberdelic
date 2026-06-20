@@ -15,6 +15,6 @@
 {{- $inner := trim .Inner " \n\r\t" -}}
 {{- if $inner -}}
 <div class="cd-timeline" role="list" aria-label="{{ i18n "timeline.label" | default "Timeline" }}">
-  {{- $inner -}}
+  {{- $inner | safeHTML -}}
 </div>
 {{- end -}}
