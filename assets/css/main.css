@@ -143,6 +143,11 @@
       rgb(0 255 255 / 0.015) 2px,
       rgb(0 255 255 / 0.015) 4px
     );
+
+    /* Ornate frame */
+    --cd-frame-gold: #d4a017;
+    --cd-frame-brass: #c5a44e;
+    --cd-frame-glow: 0 0 6px rgb(212 160 23 / 0.5);
   }
 }
 
@@ -969,6 +974,87 @@
     .cd-nav-sub--bottom {
       inset: auto;
     }
+  }
+
+  /* -- Ornate frame (corner medallions + edge strips) -- */
+  .cd-frame {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .cd-frame svg {
+    display: block;
+  }
+
+  .cd-frame-corner {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+  }
+
+  .cd-frame-corner--tl {
+    top: 0;
+    left: 0;
+  }
+
+  .cd-frame-corner--tr {
+    top: 0;
+    right: 0;
+  }
+
+  .cd-frame-corner--bl {
+    bottom: 0;
+    left: 0;
+  }
+
+  .cd-frame-corner--br {
+    bottom: 0;
+    right: 0;
+  }
+
+  .cd-frame-edge {
+    position: absolute;
+    overflow: hidden;
+  }
+
+  .cd-frame-edge--left {
+    left: 30px;
+    top: 80px;
+    bottom: 80px;
+    width: 20px;
+  }
+
+  .cd-frame-edge--right {
+    right: 30px;
+    top: 80px;
+    bottom: 80px;
+    width: 20px;
+  }
+
+  .cd-frame-flourish {
+    position: absolute;
+  }
+
+  .cd-frame-flourish--tl {
+    top: 0;
+    left: 72px;
+  }
+
+  .cd-frame-flourish--tr {
+    top: 0;
+    right: 72px;
+  }
+
+  .cd-frame-flourish--bl {
+    bottom: 0;
+    left: 72px;
+  }
+
+  .cd-frame-flourish--br {
+    bottom: 0;
+    right: 72px;
   }
 
   /* -- Footer -- */
@@ -4439,6 +4525,15 @@
       opacity: 0.3;
     }
   }
+
+  /* Frame toggle */
+  [data-frame='true'] .cd-frame {
+    display: block;
+  }
+
+  [data-frame='false'] .cd-frame {
+    display: none;
+  }
 }
 
 /* ---- Responsive ---- */
@@ -4672,7 +4767,8 @@
 
   /* Hide decorative elements */
   .cd-circuit-border::before,
-  .cd-home-background-overlay {
+  .cd-home-background-overlay,
+  .cd-frame {
     display: none;
   }
 
