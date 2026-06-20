@@ -98,6 +98,25 @@
         b.x += b.vx + 0.3 * p.sin(time * 0.003 + b.driftPhase);
         b.y += b.vy + 0.3 * p.cos(time * 0.004 + b.driftPhase * 0.7);
 
+        /* Blob-blob repulsion physics */
+        for (var j = 0; j < blobs.length; j++) {
+          if (i === j) continue;
+          var other = blobs[j];
+          var dx = b.x - other.x;
+          var dy = b.y - other.y;
+          var dist = p.sqrt(dx * dx + dy * dy);
+          var minDist = (b.baseRadius + other.baseRadius) * 0.9;
+          if (dist < minDist && dist > 0.01) {
+            var force = (minDist - dist) / minDist * 0.08;
+            var nx = dx / dist;
+            var ny = dy / dist;
+            b.x += nx * force * other.baseRadius;
+            b.y += ny * force * other.baseRadius;
+            other.x -= nx * force * b.baseRadius;
+            other.y -= ny * force * b.baseRadius;
+          }
+        }
+
         /* Wrap around edges with padding */
         var margin = b.baseRadius * 2;
         if (b.x < -margin) b.x = p.width + margin;
@@ -126,37 +145,9 @@
     function drawBlob(b, radius, r, g, bv) {
       var steps = 40;
 
-      /* --- Layer 1: Outer glow (large, soft, low alpha) --- */
+      /* --- Layer 1: Barely-visible fill (dark center, just hints color) --- */
       p.noStroke();
-      p.fill(r, g, bv, b.glowAlpha);
-      p.beginShape();
-      for (var k = 0; k <= steps; k++) {
-        var a = (k / steps) * p.TWO_PI;
-        var morphR = radius * 1.8;
-        for (var l = 0; l < b.lobes.length; l++) {
-          morphR += radius * b.lobes[l].amp *
-            p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase);
-        }
-        p.vertex(b.x + p.cos(a) * morphR, b.y + p.sin(a) * morphR);
-      }
-      p.endShape(p.CLOSE);
-
-      /* --- Layer 2: Mid glow (medium, slight bleed) --- */
-      p.fill(r, g, bv, b.bodyAlpha * 0.5);
-      p.beginShape();
-      for (var k = 0; k <= steps; k++) {
-        var a = (k / steps) * p.TWO_PI;
-        var morphR = radius * 1.3;
-        for (var l = 0; l < b.lobes.length; l++) {
-          morphR += radius * b.lobes[l].amp * 0.8 *
-            p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase);
-        }
-        p.vertex(b.x + p.cos(a) * morphR, b.y + p.sin(a) * morphR);
-      }
-      p.endShape(p.CLOSE);
-
-      /* --- Layer 3: Body (core color) --- */
-      p.fill(r, g, bv, b.bodyAlpha);
+      p.fill(r, g, bv, 15);
       p.beginShape();
       for (var k = 0; k <= steps; k++) {
         var a = (k / steps) * p.TWO_PI;
@@ -169,10 +160,10 @@
       }
       p.endShape(p.CLOSE);
 
-      /* --- Layer 4: Sharp glowing edge --- */
+      /* --- Layer 2: Wide outer glow stroke (bleeds outward from edge) --- */
       p.noFill();
-      p.stroke(r, g, bv, b.edgeAlpha);
-      p.strokeWeight(1.2);
+      p.stroke(r, g, bv, b.glowAlpha);
+      p.strokeWeight(12);
       p.beginShape();
       for (var k = 0; k <= steps; k++) {
         var a = (k / steps) * p.TWO_PI;
@@ -185,18 +176,48 @@
       }
       p.endShape(p.CLOSE);
 
-      /* --- Layer 5: Hot edge highlight (brighter accent on a portion) --- */
+      /* --- Layer 3: Medium glow stroke (tighter) --- */
+      p.stroke(r, g, bv, b.bodyAlpha);
+      p.strokeWeight(4);
+      p.beginShape();
+      for (var k = 0; k <= steps; k++) {
+        var a = (k / steps) * p.TWO_PI;
+        var morphR = radius;
+        for (var l = 0; l < b.lobes.length; l++) {
+          morphR += radius * b.lobes[l].amp * 0.6 *
+            p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase);
+        }
+        p.vertex(b.x + p.cos(a) * morphR, b.y + p.sin(a) * morphR);
+      }
+      p.endShape(p.CLOSE);
+
+      /* --- Layer 4: Sharp bright rim --- */
+      p.stroke(r, g, bv, b.edgeAlpha);
+      p.strokeWeight(1.5);
+      p.beginShape();
+      for (var k = 0; k <= steps; k++) {
+        var a = (k / steps) * p.TWO_PI;
+        var morphR = radius;
+        for (var l = 0; l < b.lobes.length; l++) {
+          morphR += radius * b.lobes[l].amp * 0.6 *
+            p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase);
+        }
+        p.vertex(b.x + p.cos(a) * morphR, b.y + p.sin(a) * morphR);
+      }
+      p.endShape(p.CLOSE);
+
+      /* --- Layer 5: Hot edge highlight --- */
       p.stroke(
-        p.min(r + 80, 255),
-        p.min(g + 80, 255),
-        p.min(bv + 80, 255),
-        b.edgeAlpha * 0.5
+        p.min(r + 100, 255),
+        p.min(g + 100, 255),
+        p.min(bv + 100, 255),
+        b.edgeAlpha * 0.6
       );
       p.strokeWeight(0.8);
       p.beginShape();
       for (var k = 0; k <= steps; k++) {
         var a = (k / steps) * p.TWO_PI;
-        var morphR = radius * 0.98;
+        var morphR = radius * 0.97;
         for (var l = 0; l < b.lobes.length; l++) {
           morphR += radius * b.lobes[l].amp * 0.5 *
             p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase + 0.3);
