@@ -6,9 +6,6 @@ description = "A cyberdelic Hugo theme demo — 1969 psychedelic concert poster 
 author      = "Cyberdelic Demo"
 ogImage     = ""
 
-# === Homepage ===
-homepageLayout = "hero"
-
 # === Article / Post Features ===
 showReadingTime   = true
 readingSpeed      = 0
@@ -97,3 +94,7 @@ showSeries = true
   #   dataUrl = "https://comments.example.com"
   #   avatar = true
   #   css = true
+
+# === Homepage ===
+[homepage]
+  layout = "hero"

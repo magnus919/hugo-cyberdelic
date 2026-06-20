@@ -1,0 +1,49 @@
+{{- /* home-card.html — Card homepage layout: card grid with configurable heading and limit
+     Uses params.homepage.card.* settings
+     Includes "view all posts" link when total > limit
+*/ -}}
+
+{{- $card := .Site.Params.homepage.card -}}
+{{- $heading := $card.heading | default (i18n "home.card_heading" | default "Recent Posts") -}}
+{{- $limit := $card.limit | default 6 -}}
+{{- $pages := where .Site.RegularPages "Section" "!=" "" -}}
+{{- $total := len $pages -}}
+
+<section aria-labelledby="card-layout-heading" class="cd-page">
+  <h2 id="card-layout-heading" class="cd-home-card-heading">{{ $heading }}</h2>
+  {{- if $pages -}}
+    <div class="cd-grid">
+      {{- range first $limit $pages -}}
+        <article class="cd-card cd-fade-in cd-circuit-border">
+          {{- partial "cover.html" (dict "page" . "class" "cd-card-cover" "wrapper" "cd-card-figure") -}}
+          {{- if and .Draft .Site.Params.showDraftLabel -}}
+            <span class="cd-card-draft-label" role="status">{{ i18n "draft.label" }}</span>
+          {{- end -}}
+          <h3 class="cd-card-title">
+            <a href="{{ .Params.externalUrl | default .RelPermalink }}"{{ if .Params.externalUrl }}{{ if site.Params.externalLink.newTab | default true }} target="_blank" rel="noopener noreferrer"{{ end }}{{ end }}>{{ .Title }}{{- if and .Params.externalUrl (site.Params.externalLink.showIndicator | default true) -}}<span class="cd-external-indicator" aria-label="{{ i18n "external_link.indicator" | default "External link" }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M18 10.82a1 1 0 0 1-1-1V6.41l-8.3 8.3a1 1 0 1 1-1.41-1.41l8.3-8.3h-3.41a1 1 0 0 1 0-2H18a1 1 0 0 1 1 1v5.41a1 1 0 0 1-1 1z"/><path d="M18 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h4a1 1 0 1 1 0 2H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4a1 1 0 0 1 2 0v4a3 3 0 0 1-3 3z"/></svg></span>{{- end -}}</a>
+          </h3>
+          <p class="cd-card-meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+            {{- partial "reading-time.html" . -}}
+            {{- if site.Params.showWordCountOnList -}}
+              {{- with .WordCount -}}
+                {{- $words := lang.FormatNumber 0 . -}}
+                &middot; {{ i18n "article.words" $words | default (printf "%s words" $words) }}
+              {{- end -}}
+            {{- end -}}
+          </p>
+          {{- with .Summary -}}
+            <div class="cd-card-summary">
+              {{ . | truncate 200 }}
+            </div>
+          {{- end -}}
+        </article>
+      {{- end -}}
+    </div>
+    {{- if gt $total $limit -}}
+      <div class="cd-home-card-footer">
+        <a href="{{ "/blog/" | relLangURL }}" class="cd-home-card-view-all">{{ i18n "home.view_all_posts" | default "View all posts" }} &rarr;</a>
+      </div>
+    {{- end -}}
+  {{- end -}}
+</section>

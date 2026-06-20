@@ -1,0 +1,23 @@
+{{- /* home-background.html — Background homepage layout: full-bleed image with overlay text
+     Uses params.homepage.background.* settings
+     Falls back to site title/description for heading/subtitle
+     Handles missing image gracefully with gradient fallback
+*/ -}}
+
+{{- $bg := .Site.Params.homepage.background -}}
+{{- $bgImage := $bg.image | default "" -}}
+{{- $heading := $bg.heading | default .Site.Title -}}
+{{- $subtitle := $bg.subtitle | default .Site.Params.description | default "" -}}
+
+<section class="cd-home-background full-bleed" aria-label="Site introduction">
+  {{- if $bgImage -}}
+    <div class="cd-home-background-image" style="background-image: url('{{ $bgImage | relURL }}');" role="img" aria-label="{{ $heading }}"></div>
+  {{- end -}}
+  <div class="cd-home-background-overlay"></div>
+  <div class="cd-home-background-content">
+    <h1 class="cd-home-background-heading">{{ $heading }}</h1>
+    {{- with $subtitle -}}
+      <p class="cd-home-background-subtitle">{{ . }}</p>
+    {{- end -}}
+  </div>
+</section>

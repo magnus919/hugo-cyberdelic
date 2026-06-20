@@ -13,6 +13,9 @@ menu.open_submenu: 'Open {{ . }} submenu'
 
 # Homepage
 home.recent_posts: 'Recent posts'
+home.view_all_posts: 'View all posts'
+home.card_heading: 'Recent Posts'
+home.profile_social: 'Social links'
 
 # List pages
 list.nothing_here: 'Nothing here yet.'

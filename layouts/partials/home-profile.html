@@ -1,0 +1,47 @@
+{{- /* home-profile.html — Profile homepage layout: centered author info
+     Uses params.homepage.profile.* settings, falls back to params.author
+*/ -}}
+
+{{- $profile := .Site.Params.homepage.profile -}}
+{{- $authorName := $profile.name | default .Site.Params.author | default "" -}}
+{{- $authorAvatar := $profile.avatar | default "" -}}
+{{- $headline := $profile.headline | default "" -}}
+{{- $bio := $profile.bio | default "" -}}
+
+<section class="cd-home-profile full-bleed" aria-label="Author profile">
+  <div class="cd-home-profile-inner">
+    {{- if $authorAvatar -}}
+      <div class="cd-home-profile-avatar-wrapper">
+        <img src="{{ $authorAvatar | relURL }}" alt="{{ $authorName }}" class="cd-home-profile-avatar" loading="lazy" width="120" height="120">
+      </div>
+    {{- end -}}
+
+    {{- if $authorName -}}
+      <h1 class="cd-home-profile-name">{{ $authorName }}</h1>
+    {{- end -}}
+
+    {{- with $headline -}}
+      <p class="cd-home-profile-headline">{{ . }}</p>
+    {{- end -}}
+
+    {{- with $bio -}}
+      <div class="cd-home-profile-bio">{{ . | markdownify }}</div>
+    {{- end -}}
+
+    {{- /* Render social links from homepage.profile.social or site social menu */ -}}
+    {{- $socialLinks := $profile.social -}}
+    {{- if $socialLinks -}}
+      <nav class="cd-home-profile-social" aria-label="{{ i18n "home.profile_social" | default "Social links" }}">
+        {{- range $socialLinks -}}
+          <a href="{{ .url }}" class="cd-home-profile-social-link" target="_blank" rel="me noopener noreferrer"{{ with .name }} aria-label="{{ . }}"{{ end }}>
+            {{- if .icon -}}
+              {{ .icon | safeHTML }}
+            {{- else -}}
+              <span class="cd-home-profile-social-text">{{ .name | default .url }}</span>
+            {{- end -}}
+          </a>
+        {{- end -}}
+      </nav>
+    {{- end -}}
+  </div>
+</section>

@@ -8,10 +8,6 @@ description = "A cyberdelic Hugo theme — 1969 psychedelic concert poster meets
 author      = "Author"
 ogImage     = ""
 
-# === Homepage ===
-# Layout variant: "hero" (default), "profile", "background", "card"
-homepageLayout = "hero"
-
 # === Article / Post Features ===
 # Reading time display
 showReadingTime = false
@@ -38,6 +34,69 @@ relatedArticlesLimit = 4
 
 # Next / Previous article pagination
 showPagination = false
+
+# === Navigation & Discovery ===
+# Client-side search overlay (Fuse.js)
+showSearch = false
+
+# Scrollable table of contents with active heading tracking
+showTableOfContents = false
+
+# Breadcrumbs with Schema.org BreadcrumbList structured data
+showBreadcrumbs = false
+
+# Heading anchor links (on-hover permalink icon)
+showHeadingAnchors = false
+
+# === Content Enhancements ===
+# Code block copy button
+showCodeCopy = false
+
+# Image click-to-zoom lightbox
+showImageZoom = false
+
+# Gallery shortcode image lightbox
+showGalleryLightbox = false
+
+# Draft label indicator
+showDraftLabel = false
+
+# === Author ===
+# Author bio box on article pages
+showAuthorBox = false
+
+# === Series ===
+# Series navigation component
+showSeries = false
+
+# === Homepage ===
+[homepage]
+  # Layout variant: "hero" (default), "profile", "background", "card"
+  layout = "hero"
+
+  [homepage.profile]
+    # Author avatar image URL
+    avatar = ""
+    # Author display name (falls back to params.author)
+    name = ""
+    # Tagline / headline text
+    headline = ""
+    # Short biography text
+    bio = ""
+
+  [homepage.background]
+    # Full-bleed background image URL
+    image = ""
+    # Custom heading text (falls back to site title)
+    heading = ""
+    # Subtitle text (falls back to site description)
+    subtitle = ""
+
+  [homepage.card]
+    # Custom heading text (falls back to i18n "Recent Posts")
+    heading = ""
+    # Maximum number of cards to display
+    limit = 6
 
 # === Social Sharing ===
 [sharing]
@@ -106,40 +165,6 @@ showPagination = false
     avatar = true
     # Load Isso CSS: true or false
     css = true
-
-# === Navigation & Discovery ===
-# Client-side search overlay (Fuse.js)
-showSearch = false
-
-# Scrollable table of contents with active heading tracking
-showTableOfContents = false
-
-# Breadcrumbs with Schema.org BreadcrumbList structured data
-showBreadcrumbs = false
-
-# Heading anchor links (on-hover permalink icon)
-showHeadingAnchors = false
-
-# === Content Enhancements ===
-# Code block copy button
-showCodeCopy = false
-
-# Image click-to-zoom lightbox
-showImageZoom = false
-
-# Gallery shortcode image lightbox
-showGalleryLightbox = false
-
-# Draft label indicator
-showDraftLabel = false
-
-# === Author ===
-# Author bio box on article pages
-showAuthorBox = false
-
-# === Series ===
-# Series navigation component
-showSeries = false
 
 # === External Articles ===
 # Articles with externalUrl frontmatter open in new tab and show an indicator
