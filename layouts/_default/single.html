@@ -67,7 +67,9 @@
   <div class="cd-article-body flow">
     {{ .Content }}
   </div>
-  {{- partial "toc.html" . -}}
+  {{- if or .Site.Params.showTableOfContents .Site.Params.cyberdelic.tableOfContents -}}
+    {{- partial "toc.html" . -}}
+  {{- end -}}
 </div>
 
 {{- partial "sharing.html" . -}}
@@ -99,8 +101,14 @@
 
 {{- partial "pagination.html" . -}}
 
-{{- partial "related.html" . -}}
+{{- if or .Site.Params.showRelated .Site.Params.cyberdelic.showRelatedPosts -}}
+  {{- partial "related.html" . -}}
+{{- end -}}
 
 {{- partial "comments.html" . -}}
+
+{{- if .Site.Params.cyberdelic.backToTop -}}
+  {{- partial "back-to-top.html" . -}}
+{{- end -}}
 {{- end -}}
 {{ end }}

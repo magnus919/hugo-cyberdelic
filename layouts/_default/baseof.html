@@ -12,7 +12,11 @@
   {{- partial "head-extra.html" . -}}
   {{- block "styles" . }}{{ partial "css.html" . }}{{ end -}}
 </head>
-<body>
+<body data-glitch="{{ .Site.Params.cyberdelic.glitch | default true }}"
+      data-scanlines="{{ .Site.Params.cyberdelic.scanlines | default true }}"
+      data-fade-in="{{ .Site.Params.cyberdelic.fadeIn | default true }}"
+      data-particles="{{ .Site.Params.cyberdelic.particles | default false }}"
+      data-circuit-border="{{ .Site.Params.cyberdelic.circuitBorder | default false }}">
   <a href="#main-content" class="skip-link">{{ i18n "navigation.skip_to_content" | default "Skip to main content" }}</a>
 
   <div class="cd-page">

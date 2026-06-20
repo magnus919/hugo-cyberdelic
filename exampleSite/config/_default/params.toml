@@ -97,3 +97,14 @@ showSeries = true
 # === Homepage ===
 [homepage]
   layout = "hero"
+
+# === Cyberdelic Effects ===
+[cyberdelic]
+  glitch = true
+  scanlines = true
+  fadeIn = true
+  particles = false
+  circuitBorder = false
+  showRelatedPosts = true
+  tableOfContents = true
+  backToTop = true

@@ -4356,6 +4356,56 @@
       transparent 12px
     );
   }
+
+  /* Feature flag toggles — data attributes on <body> */
+  [data-glitch="false"] .cd-glitch::before,
+  [data-glitch="false"] .cd-glitch::after {
+    animation: none !important;
+  }
+
+  [data-scanlines="false"] {
+    background-image: radial-gradient(ellipse at 50% 0%, rgb(56 71 255 / 0.04) 0%, transparent 60%) !important;
+  }
+
+  [data-fade-in="false"] .cd-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-particles="true"] .cd-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(0, 255, 255, 0.4), transparent),
+      radial-gradient(1px 1px at 30% 60%, rgba(255, 0, 170, 0.3), transparent),
+      radial-gradient(1.5px 1.5px at 50% 10%, rgba(255, 176, 0, 0.3), transparent),
+      radial-gradient(1px 1px at 70% 40%, rgba(56, 71, 255, 0.3), transparent),
+      radial-gradient(1px 1px at 90% 80%, rgba(0, 255, 255, 0.2), transparent),
+      radial-gradient(1.5px 1.5px at 20% 90%, rgba(255, 0, 170, 0.2), transparent),
+      radial-gradient(1px 1px at 60% 30%, rgba(255, 176, 0, 0.2), transparent),
+      radial-gradient(1px 1px at 80% 70%, rgba(56, 71, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 40% 50%, rgba(0, 255, 255, 0.15), transparent);
+    animation: cd-particles-float 60s linear infinite;
+  }
+
+  @keyframes cd-particles-float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100vh); }
+  }
+
+  [data-circuit-border="true"] .cd-circuit-border::after {
+    animation: cd-circuit-trace 10s linear infinite;
+  }
+
+  @keyframes cd-circuit-trace {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+  }
 }
 
 /* ---- Responsive ---- */
