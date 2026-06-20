@@ -4358,22 +4358,26 @@
   }
 
   /* Feature flag toggles — data attributes on <body> */
-  [data-glitch="false"] .cd-glitch::before,
-  [data-glitch="false"] .cd-glitch::after {
+  [data-glitch='false'] .cd-glitch::before,
+  [data-glitch='false'] .cd-glitch::after {
     animation: none !important;
   }
 
-  [data-scanlines="false"] {
-    background-image: radial-gradient(ellipse at 50% 0%, rgb(56 71 255 / 0.04) 0%, transparent 60%) !important;
+  [data-scanlines='false'] {
+    background-image: radial-gradient(
+      ellipse at 50% 0%,
+      rgb(56 71 255 / 0.04) 0%,
+      transparent 60%
+    ) !important;
   }
 
-  [data-fade-in="false"] .cd-fade-in {
+  [data-fade-in='false'] .cd-fade-in {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
 
-  [data-particles="true"] .cd-page::before {
+  [data-particles='true'] .cd-page::before {
     content: '';
     position: fixed;
     inset: 0;
@@ -4393,18 +4397,28 @@
   }
 
   @keyframes cd-particles-float {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-100vh); }
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-100vh);
+    }
   }
 
-  [data-circuit-border="true"] .cd-circuit-border::after {
+  [data-circuit-border='true'] .cd-circuit-border::after {
     animation: cd-circuit-trace 10s linear infinite;
   }
 
   @keyframes cd-circuit-trace {
-    0% { opacity: 0.3; }
-    50% { opacity: 1; }
-    100% { opacity: 0.3; }
+    0% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.3;
+    }
   }
 }
 
