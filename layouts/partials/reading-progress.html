@@ -1,0 +1,180 @@
+{{- /* reading-progress.html — Cyberdelic instrument-grade reading progress bar
+     Gated behind params.cyberdelic.readingProgress
+     Only renders on single article pages (not homepage, not lists)
+*/ -}}
+{{- if and .Site.Params.cyberdelic.readingProgress .IsPage -}}
+<div id="cd-reading-progress" class="cd-reading-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="{{ i18n "reading_progress.label" | default "Reading progress" }}">
+  <div class="cd-reading-progress-track">
+    <div class="cd-reading-progress-fill" id="cd-reading-progress-fill">
+      <span class="cd-reading-progress-marker" id="cd-reading-progress-marker"></span>
+    </div>
+    <span class="cd-reading-progress-endcap"></span>
+    <span class="cd-reading-progress-pct" id="cd-reading-progress-pct" aria-hidden="true">0%</span>
+  </div>
+</div>
+
+<style>
+  .cd-reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .cd-reading-progress.visible {
+    opacity: 1;
+  }
+  .cd-reading-progress-track {
+    position: relative;
+    height: 100%;
+    background: #0A0015;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+    overflow: visible;
+  }
+  .cd-reading-progress-track::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #dac8a8;
+    opacity: 0.15;
+    mask-image: repeating-linear-gradient(
+      0deg,
+      #000 0,
+      #000 2px,
+      transparent 2px,
+      transparent 4px
+    );
+    -webkit-mask-image: repeating-linear-gradient(
+      0deg,
+      #000 0,
+      #000 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  }
+  .cd-reading-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #FF00AA, #3847FF 50%, #00FFFF 100%);
+    background-size: 200% 100%;
+    transition: width 0.1s linear;
+    box-shadow:
+      0 0 4px #FF00AA,
+      0 0 8px rgba(255, 0, 170, 0.4),
+      0 0 12px rgba(0, 255, 255, 0.2);
+  }
+  .cd-reading-progress-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: cd-progress-shimmer 4s linear infinite;
+  }
+  @keyframes cd-progress-shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .cd-reading-progress-marker {
+    position: absolute;
+    right: -4px;
+    top: -2px;
+    width: 8px;
+    height: 12px;
+    background: #00FFFF;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    box-shadow: 0 0 6px #00FFFF, 0 0 12px rgba(0, 255, 255, 0.5);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .cd-reading-progress-fill[style*="width: 0"] .cd-reading-progress-marker,
+  .cd-reading-progress-fill[style*="width:0"] .cd-reading-progress-marker {
+    opacity: 0;
+  }
+  .cd-reading-progress-endcap {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: #1E0038;
+    box-shadow: -1px 0 2px rgba(0, 255, 255, 0.3);
+  }
+  .cd-reading-progress-pct {
+    position: absolute;
+    right: 8px;
+    top: -14px;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    color: #FFB000;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .cd-reading-progress-pct.visible {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cd-reading-progress-fill::after {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var fill = document.getElementById('cd-reading-progress-fill');
+    var pct = document.getElementById('cd-reading-progress-pct');
+    var marker = document.getElementById('cd-reading-progress-marker');
+    var container = document.getElementById('cd-reading-progress');
+    var hidden = true;
+    var pctTimer = null;
+
+    function update() {
+      var scrollTop = window.scrollY;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+      if (docHeight <= 0) return;
+
+      var progress = Math.min(scrollTop / docHeight, 1);
+      var pctVal = Math.round(progress * 100);
+
+      fill.style.width = pctVal + '%';
+      fill.setAttribute('aria-valuenow', pctVal);
+      pct.textContent = pctVal + '%';
+
+      if (marker) {
+        marker.style.opacity = pctVal > 0 ? '1' : '0';
+      }
+
+      /* Container visibility: fade in on first scroll */
+      if (scrollTop > 50 && hidden) {
+        hidden = false;
+        container.classList.add('visible');
+      } else if (scrollTop <= 50 && !hidden) {
+        hidden = true;
+        container.classList.remove('visible');
+      }
+
+      /* Percentage readout: show while scrolling, hide after idle */
+      if (pctVal > 0) {
+        pct.classList.add('visible');
+        clearTimeout(pctTimer);
+        pctTimer = setTimeout(function() {
+          pct.classList.remove('visible');
+        }, 3000);
+      }
+    }
+
+    document.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+{{- end -}}

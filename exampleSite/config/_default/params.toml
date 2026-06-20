@@ -108,3 +108,4 @@ showSeries = true
   showRelatedPosts = true
   tableOfContents = true
   backToTop = true
+  readingProgress = true
