@@ -1,6 +1,7 @@
 {{- /* ambient-canvas.html — p5.js ambient background effects
      Gated behind params.cyberdelic.ambientCanvas
-     Loads p5 from theme assets via Hugo Pipes, detects page type, renders effects
+     Loads p5 from theme assets via Hugo Pipes, renders psychedelic effects
+     1969 psychedelic concert poster meets cyberpunk: liquid aurora + pulsating rings
 */ -}}
 {{- if .Site.Params.cyberdelic.ambientCanvas -}}
 {{- $p5 := resources.Get "js/p5.min.js" -}}
@@ -16,182 +17,169 @@
   var isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (isReduced) return;
 
-  var isHero = document.querySelector('.cd-hero') !== null;
-  var isArticle = document.querySelector('.cd-article') !== null && !isHero;
-  var is404 = document.title.indexOf('404') !== -1 || document.title.indexOf('Page not found') !== -1;
+  var isArticle = document.querySelector('.cd-article') !== null &&
+    document.querySelector('.cd-hero') === null;
 
   var sketch = function(p) {
-    var particles = [];
-    var lightShafts = [];
-    var circuitTraces = [];
+    var aurora = [];
+    var rings = [];
     var time = 0;
-
-    /* Configuration by page type */
-    var cfg = (function() {
-      if (isHero || is404) {
-        return { particles: 50, lightShafts: 4, circuitTraces: 0, particleSize: [1, 5] };
-      } else if (isArticle) {
-        return { particles: 20, lightShafts: 0, circuitTraces: 10, particleSize: [1, 3] };
-      }
-      return { particles: 15, lightShafts: 0, circuitTraces: 0, particleSize: [1, 3] };
-    })();
 
     var palette = [
       [255, 0, 170],   /* magenta */
-      [56, 71, 255],   /* blue */
-      [0, 255, 255],   /* cyan */
-      [255, 176, 0]    /* amber */
+      [56, 71, 255],   /* electric blue */
+      [0, 255, 255],   /* holographic cyan */
+      [255, 176, 0]    /* warm amber */
     ];
+
+    var maxOpacity = isArticle ? 0.35 : 0.5;
 
     p.setup = function() {
       var canvas = p.createCanvas(p.windowWidth, p.windowHeight);
       canvas.parent('cd-ambient');
-      p.frameRate(24);
+      p.frameRate(20);
 
-      /* Drift particles */
-      for (var i = 0; i < cfg.particles; i++) {
-        var col = palette[Math.floor(p.random(palette.length))];
-        particles.push({
-          x: p.random(p.width),
-          y: p.random(p.height),
-          size: p.random(cfg.particleSize[0], cfg.particleSize[1]),
-          vx: p.random(-0.3, 0.3),
-          vy: p.random(-1.2, -0.3),
-          color: col,
-          alpha: p.random(150, 230),
-          pulse: p.random(100, 300),
-          pulsePhase: p.random(p.TWO_PI)
-        });
-      }
-
-      /* Light shafts (hero/404 only) */
-      for (var i = 0; i < cfg.lightShafts; i++) {
-        lightShafts.push({
-          x: p.random(p.width * 0.2, p.width * 0.8),
-          angle: p.random(-0.3, 0.3),
-          speed: p.random(0.002, 0.005),
+      /* Aurora fields — large organic morphing blobs */
+      for (var i = 0; i < (isArticle ? 3 : 5); i++) {
+        aurora.push({
+          cx: p.random(p.width),
+          cy: p.random(p.height),
+          radius: p.random(p.min(p.width, p.height) * 0.15, p.min(p.width, p.height) * 0.4),
+          color: palette[i % palette.length],
+          alpha: p.random(0.08, 0.18) * maxOpacity * 2,
+          driftX: p.random(-0.15, 0.15),
+          driftY: p.random(-0.1, 0.1),
           phase: p.random(p.TWO_PI),
-          color: palette[i % 2],
-          width: p.random(60, 100)
+          warp: p.random(0.3, 0.7),
+          speed: p.random(0.003, 0.008),
+          pulseSpeed: p.random(0.005, 0.015)
         });
       }
 
-      /* Circuit traces (article only) */
-      for (var i = 0; i < cfg.circuitTraces; i++) {
-        var startX = p.random(p.width * 0.1, p.width * 0.9);
-        var startY = p.random() < 0.5 ? p.random(10, 60) : p.random(p.height - 80, p.height - 10);
-        circuitTraces.push({
-          points: genCircuitPath(startX, startY, p.random(3, 6)),
-          color: i % 2 === 0 ? [0, 255, 255] : [255, 176, 0],
-          alpha: p.random(60, 120),
-          speed: p.random(0.5, 1.5),
-          phase: p.random(p.TWO_PI)
+      /* Pulsating rings — concentric geometric shapes */
+      var ringCount = isArticle ? 3 : 6;
+      for (var i = 0; i < ringCount; i++) {
+        rings.push({
+          cx: p.random(p.width * 0.15, p.width * 0.85),
+          cy: p.random(p.height * 0.15, p.height * 0.85),
+          baseRadius: p.random(40, p.min(p.width, p.height) * 0.35),
+          strokeWidth: p.random(0.5, 2.5),
+          color: palette[i % palette.length],
+          alpha: p.random(0.04, 0.12) * maxOpacity * 2,
+          rotation: p.random(p.TWO_PI),
+          rotSpeed: p.random(-0.003, 0.003),
+          pulseAmp: p.random(0.05, 0.2),
+          pulseSpeed: p.random(0.008, 0.025),
+          phase: p.random(p.TWO_PI),
+          dash: p.random() > 0.5,
+          sides: p.choice([3, 4, 5, 6, 8, 12, 24, 60]),
+          warp: p.random(0.02, 0.08)
         });
+      }
+
+      /* Fill the void — more rings on article pages near edges */
+      if (isArticle) {
+        for (var i = 0; i < 4; i++) {
+          rings.push({
+            cx: p.random(p.width * 0.05, p.width * 0.95),
+            cy: p.random(p.height * 0.05, p.height * 0.95),
+            baseRadius: p.random(20, 80),
+            strokeWidth: p.random(0.3, 1.0),
+            color: palette[i % palette.length],
+            alpha: p.random(0.02, 0.06) * maxOpacity * 2,
+            rotation: p.random(p.TWO_PI),
+            rotSpeed: p.random(-0.005, 0.005),
+            pulseAmp: p.random(0.1, 0.25),
+            pulseSpeed: p.random(0.01, 0.03),
+            phase: p.random(p.TWO_PI),
+            dash: true,
+            sides: p.choice([3, 4, 6, 12]),
+            warp: p.random(0.03, 0.1)
+          });
+        }
       }
     };
-
-    function genCircuitPath(x, y, segments) {
-      var pts = [{x: x, y: y}];
-      var cx = x, cy = y;
-      for (var i = 0; i < segments; i++) {
-        if (p.random() < 0.5) {
-          cx += p.random(-80, 80);
-        } else {
-          cy += p.random(-80, 80);
-        }
-        pts.push({x: cx, y: cy});
-      }
-      return pts;
-    }
 
     p.draw = function() {
       if (document.hidden) return;
       p.clear();
       time += 1;
 
-      /* Drift particles */
-      for (var i = particles.length - 1; i >= 0; i--) {
-        var pt = particles[i];
-        pt.x += pt.vx;
-        pt.y += pt.vy;
-        /* Wrap around */
-        if (pt.y + pt.size < 0) {
-          pt.y = p.height + pt.size;
-          pt.x = p.random(p.width);
-        }
-        if (pt.x < -pt.size) pt.x = p.width + pt.size;
-        if (pt.x > p.width + pt.size) pt.x = -pt.size;
+      /* Fade-tint the background for subtle persistence */
+      p.noStroke();
+      p.fill(10, 0, 21, 2);
+      p.rect(0, 0, p.width, p.height);
 
-        var pulseFactor = 0.7 + 0.3 * p.sin(time * 0.05 + pt.pulsePhase);
-        var alpha = pt.alpha * pulseFactor;
+      /* Aurora fields */
+      for (var i = 0; i < aurora.length; i++) {
+        var a = aurora[i];
+        var cx = a.cx + p.sin(time * a.driftX * 0.5 + a.phase) * a.warp * a.radius * 0.3;
+        var cy = a.cy + p.cos(time * a.driftY * 0.5 + a.phase * 1.3) * a.warp * a.radius * 0.3;
+        var r = a.radius * (0.85 + 0.15 * p.sin(time * a.pulseSpeed + a.phase));
+        var alpha = a.alpha * (0.7 + 0.3 * p.sin(time * a.speed * 2 + a.phase * 0.7));
 
-        p.noStroke();
-        p.fill(pt.color[0], pt.color[1], pt.color[2], alpha);
-        p.circle(pt.x, pt.y, pt.size);
-
-        /* Connection lines between nearby particles */
-        for (var j = i + 1; j < particles.length; j++) {
-          var d = p.dist(pt.x, pt.y, particles[j].x, particles[j].y);
-          if (d < 150) {
-            var connAlpha = p.map(d, 0, 150, 80, 0);
-            var avgColor = [
-              (pt.color[0] + particles[j].color[0]) / 2,
-              (pt.color[1] + particles[j].color[1]) / 2,
-              (pt.color[2] + particles[j].color[2]) / 2
-            ];
-            p.stroke(avgColor[0], avgColor[1], avgColor[2], connAlpha);
-            p.strokeWeight(0.5);
-            p.line(pt.x, pt.y, particles[j].x, particles[j].y);
-          }
+        for (var j = 5; j > 0; j--) {
+          var t = j / 5;
+          var layerAlpha = alpha * (1 - t) * 0.3;
+          var layerR = r * (1 + t * 1.5);
+          p.fill(a.color[0], a.color[1], a.color[2], layerAlpha);
+          p.noStroke();
+          p.ellipse(cx + p.sin(time * a.speed + j) * 20,
+                    cy + p.cos(time * a.speed * 1.2 + j) * 20,
+                    layerR, layerR * (0.8 + 0.2 * p.sin(time * a.speed * 0.7 + j)));
         }
       }
 
-      /* Light shafts (hero/404) */
-      for (var i = 0; i < lightShafts.length; i++) {
-        var shaft = lightShafts[i];
-        var angle = shaft.angle + p.sin(time * shaft.speed + shaft.phase) * 0.3;
-        var cx = shaft.x;
-        var w = shaft.width;
-
-        p.noStroke();
-        for (var j = 0; j < 20; j++) {
-          var t = j / 20;
-          var a = p.map(t, 0, 1, 20, 3);
-          p.fill(shaft.color[0], shaft.color[1], shaft.color[2], a);
-          p.beginShape();
-          var x1 = cx - w/2 + p.cos(angle) * t * p.height;
-          var y1 = t * p.height + p.sin(angle) * (w/2);
-          var x2 = cx + w/2 + p.cos(angle) * t * p.height;
-          var y2 = t * p.height + p.sin(angle) * (-w/2);
-          p.vertex(x1, y1);
-          p.vertex(x2, y2);
-          p.endShape(p.CLOSE);
-        }
-      }
-
-      /* Circuit traces (article) */
-      for (var i = 0; i < circuitTraces.length; i++) {
-        var trace = circuitTraces[i];
-        var bright = 0.3 + 0.7 * (0.5 + 0.5 * p.sin(time * 0.02 * trace.speed + trace.phase));
-        var alpha = trace.alpha * bright;
+      /* Pulsating geometric rings */
+      for (var i = 0; i < rings.length; i++) {
+        var r = rings[i];
+        var radius = r.baseRadius * (1 + r.pulseAmp * p.sin(time * r.pulseSpeed + r.phase));
+        var rot = r.rotation + time * r.rotSpeed;
+        var alpha = r.alpha * (0.6 + 0.4 * p.sin(time * r.pulseSpeed * 1.5 + r.phase * 1.2));
 
         p.noFill();
-        p.stroke(trace.color[0], trace.color[1], trace.color[2], alpha);
-        p.strokeWeight(1);
+        p.stroke(r.color[0], r.color[1], r.color[2], alpha);
+        p.strokeWeight(r.strokeWidth);
 
-        p.beginShape();
-        for (var j = 0; j < trace.points.length; j++) {
-          var pt2 = trace.points[j];
-          /* Make angular: line to x, then to y (right-angle routing) */
-          if (j === 0) {
-            p.vertex(pt2.x, pt2.y);
-          } else {
-            var prev = trace.points[j - 1];
-            p.vertex(pt2.x, prev.y);
-            p.vertex(pt2.x, pt2.y);
+        p.push();
+        p.translate(r.cx, r.cy);
+        p.rotate(rot);
+
+        if (r.dash) {
+          /* Dashed ring — draw arcs with gaps */
+          var segments = 24;
+          var gapSize = p.TWO_PI / segments;
+          var drawSize = gapSize * 0.6;
+          for (var k = 0; k < segments; k++) {
+            var startA = k * gapSize + 0.02 * p.sin(time * r.pulseSpeed * 0.5 + k * 0.5);
+            var endA = startA + drawSize;
+            var rr = radius * (1 + r.warp * p.sin(startA * r.sides + time * 0.005));
+            p.arc(0, 0, rr * 2, rr * 2, startA, endA);
           }
+        } else {
+          /* Smooth ring with subtle warping */
+          p.beginShape();
+          for (var k = 0; k <= 60; k++) {
+            var a = (k / 60) * p.TWO_PI;
+            var rr = radius * (1 + r.warp * p.sin(a * r.sides + time * 0.004));
+            p.vertex(p.cos(a) * rr, p.sin(a) * rr);
+          }
+          p.endShape(p.CLOSE);
         }
-        p.endShape();
+
+        p.pop();
+      }
+
+      /* Central glow — large soft bloom at viewport center */
+      var glowAlpha = (0.02 + 0.01 * p.sin(time * 0.005)) * maxOpacity * 2;
+      var glowR = p.min(p.width, p.height) * 0.4;
+      p.noStroke();
+      for (var j = 3; j > 0; j--) {
+        var gt = j / 3;
+        p.fill(255, 0, 170, glowAlpha * (1 - gt) * 0.2);
+        p.ellipse(p.width / 2 + p.sin(time * 0.003) * 40,
+                  p.height / 2 + p.cos(time * 0.004) * 30,
+                  glowR * (1 + gt), glowR * (1 + gt));
       }
     };
 
