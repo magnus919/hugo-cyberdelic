@@ -58,7 +58,7 @@
           vx: p.random(-0.3, 0.3),
           vy: p.random(-1.2, -0.3),
           color: col,
-          alpha: p.random(80, 200),
+          alpha: p.random(150, 230),
           pulse: p.random(100, 300),
           pulsePhase: p.random(p.TWO_PI)
         });
@@ -83,7 +83,7 @@
         circuitTraces.push({
           points: genCircuitPath(startX, startY, p.random(3, 6)),
           color: i % 2 === 0 ? [0, 255, 255] : [255, 176, 0],
-          alpha: p.random(12, 20),
+          alpha: p.random(60, 120),
           speed: p.random(0.5, 1.5),
           phase: p.random(p.TWO_PI)
         });
@@ -133,7 +133,7 @@
         for (var j = i + 1; j < particles.length; j++) {
           var d = p.dist(pt.x, pt.y, particles[j].x, particles[j].y);
           if (d < 150) {
-            var connAlpha = p.map(d, 0, 150, 40, 0);
+            var connAlpha = p.map(d, 0, 150, 80, 0);
             var avgColor = [
               (pt.color[0] + particles[j].color[0]) / 2,
               (pt.color[1] + particles[j].color[1]) / 2,
@@ -156,7 +156,7 @@
         p.noStroke();
         for (var j = 0; j < 20; j++) {
           var t = j / 20;
-          var a = p.map(t, 0, 1, 6, 1);
+          var a = p.map(t, 0, 1, 20, 3);
           p.fill(shaft.color[0], shaft.color[1], shaft.color[2], a);
           p.beginShape();
           var x1 = cx - w/2 + p.cos(angle) * t * p.height;
