@@ -148,6 +148,16 @@ carousel.slide_label: 'Slide {{ .Number }}'
 # Draft Label
 draft.label: 'Draft'
 
+# Social Sharing
+sharing.title: 'Share'
+sharing.label: 'Share this post'
+sharing.bluesky: 'Share on Bluesky'
+sharing.twitter: 'Share on Twitter'
+sharing.linkedin: 'Share on LinkedIn'
+sharing.mastodon: 'Share on Mastodon'
+sharing.reddit: 'Share on Reddit'
+sharing.email: 'Share via email'
+
 # Comments
 comments.title: 'Comments'
 comments.label: 'Comments'

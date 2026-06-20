@@ -1,0 +1,108 @@
+{{- /* sharing.html — Social sharing links (Bluesky, Twitter/X, LinkedIn, Mastodon, Reddit, Email)
+     Usage:
+       {{- partial "sharing.html" . -}}
+     Controls:
+       site.Params.sharing.enabled       — master toggle (default: false)
+       site.Params.sharing.bluesky       — Bluesky toggle (default: true)
+       site.Params.sharing.twitter       — Twitter/X toggle (default: true)
+       site.Params.sharing.linkedin      — LinkedIn toggle (default: true)
+       site.Params.sharing.mastodon      — Mastodon toggle (default: true)
+       site.Params.sharing.reddit        — Reddit toggle (default: true)
+       site.Params.sharing.email         — Email toggle (default: true)
+       site.Params.sharing.twitterHandle — Twitter/X @handle for via param
+       site.Params.sharing.mastodonInstance — Mastodon instance (e.g., "mastodon.social")
+*/ -}}
+
+{{- $enabled := site.Params.sharing.enabled | default false -}}
+{{- $page := . -}}
+{{- $title := $page.Title -}}
+{{- $permalink := $page.Permalink -}}
+{{- $url := urls.Parse $permalink -}}
+
+{{- /* URL-encode values */ -}}
+{{- $encodedTitle := querify "t" $title | replaceRE "^t=" "" -}}
+{{- $encodedURL := querify "u" $permalink | replaceRE "^u=" "" -}}
+{{- $encodedText := querify "t" (printf "%s %s" $title $permalink) | replaceRE "^t=" "" -}}
+
+{{- if $enabled -}}
+<nav class="cd-sharing" aria-label="{{ i18n "sharing.label" | default "Share this post" }}">
+  <span class="cd-sharing-heading">{{ i18n "sharing.title" | default "Share" }}</span>
+  <div class="cd-sharing-links">
+
+    {{- /* Bluesky */ -}}
+    {{- if site.Params.sharing.bluesky | default true -}}
+      {{- $bskyHref := printf "https://bsky.app/intent/compose?text=%s" $encodedText -}}
+      <a href="{{ $bskyHref }}" class="cd-sharing-link cd-sharing-link--bluesky" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "sharing.bluesky" | default "Share on Bluesky" }}">
+        <span class="cd-sharing-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.5-1-4-1.5-5.5-1-2 .8-3.5 3.5-2.5 6.5 1 3 3.5 4.5 3.5 4.5s-2 .5-4.5-1c-2.5-1.5-4.5 0-4.5 2.5 0 2.5 2 5.5 6 7 4 1.5 7.5 1 7.5 1s3.5.5 7.5-1c4-1.5 6-4.5 6-7 0-2.5-2-4-4.5-2.5-2.5 1.5-4.5 1-4.5 1s2.5-1.5 3.5-4.5c1-3-.5-5.7-2.5-6.5-1.5-.5-4 0-5.5 1z"/></svg>
+        </span>
+        <span class="cd-sharing-label">{{ i18n "sharing.bluesky" | default "Bluesky" }}</span>
+      </a>
+    {{- end -}}
+
+    {{- /* Twitter / X */ -}}
+    {{- if site.Params.sharing.twitter | default true -}}
+      {{- $twitterHref := printf "https://twitter.com/intent/tweet?text=%s&url=%s" $encodedTitle $encodedURL -}}
+      {{- if site.Params.sharing.twitterHandle -}}
+        {{- $handle := site.Params.sharing.twitterHandle -}}
+        {{- $twitterHref = printf "%s&via=%s" $twitterHref $handle -}}
+      {{- end -}}
+      <a href="{{ $twitterHref }}" class="cd-sharing-link cd-sharing-link--twitter" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "sharing.twitter" | default "Share on Twitter" }}">
+        <span class="cd-sharing-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46L20 4"/></svg>
+        </span>
+        <span class="cd-sharing-label">{{ i18n "sharing.twitter" | default "Twitter" }}</span>
+      </a>
+    {{- end -}}
+
+    {{- /* LinkedIn */ -}}
+    {{- if site.Params.sharing.linkedin | default true -}}
+      {{- $linkedinHref := printf "https://www.linkedin.com/sharing/share-offsite/?url=%s" $encodedURL -}}
+      <a href="{{ $linkedinHref }}" class="cd-sharing-link cd-sharing-link--linkedin" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "sharing.linkedin" | default "Share on LinkedIn" }}">
+        <span class="cd-sharing-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/><path d="M8 11l0 5"/><path d="M8 8l0 .01"/><path d="M12 16l0 -5"/><path d="M16 16v-3a2 2 0 0 0 -4 0"/></svg>
+        </span>
+        <span class="cd-sharing-label">{{ i18n "sharing.linkedin" | default "LinkedIn" }}</span>
+      </a>
+    {{- end -}}
+
+    {{- /* Mastodon */ -}}
+    {{- if site.Params.sharing.mastodon | default true -}}
+      {{- $mastodonInstance := site.Params.sharing.mastodonInstance | default "mastodon.social" -}}
+      {{- $mastodonHref := printf "https://%s/share?text=%s" $mastodonInstance $encodedText -}}
+      <a href="{{ $mastodonHref }}" class="cd-sharing-link cd-sharing-link--mastodon" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "sharing.mastodon" | default "Share on Mastodon" }}">
+        <span class="cd-sharing-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.648 15.254c-1.817 1.047 -3.767 1.746 -5.648 1.746c-1.9 0 -3.85 -0.7 -5.648 -1.746c-1.127 -1.363 -1.352 -3.3 -1.352 -4.754v-1.5c0 -1.7 0 -3.5 1.5 -5c1.5 -1.5 3.5 -1.5 5.5 -1.5h0c2 0 4 0 5.5 1.5c1.5 1.5 1.5 3.3 1.5 5v1.5c0 1.454 -0.225 3.39 -1.352 4.754z"/><path d="M8 11v-1.5c0 -1 .632 -1.5 1.5 -1.5s1.5 .5 1.5 1.5v3.5"/><path d="M13 11v-1.5c0 -1 .632 -1.5 1.5 -1.5s1.5 .5 1.5 1.5v3.5"/><path d="M8 14v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2 -2v-2"/></svg>
+        </span>
+        <span class="cd-sharing-label">{{ i18n "sharing.mastodon" | default "Mastodon" }}</span>
+      </a>
+    {{- end -}}
+
+    {{- /* Reddit */ -}}
+    {{- if site.Params.sharing.reddit | default true -}}
+      {{- $redditHref := printf "https://www.reddit.com/submit?url=%s&title=%s" $encodedURL $encodedTitle -}}
+      <a href="{{ $redditHref }}" class="cd-sharing-link cd-sharing-link--reddit" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "sharing.reddit" | default "Share on Reddit" }}">
+        <span class="cd-sharing-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8c2.648 0 5.028 .826 6.675 2.14a2.5 2.5 0 0 1 2.326 4.36c0 3.59 -4.03 6.5 -9 6.5c-4.875 0 -8.85 -2.8 -8.996 -6.3l.001 -.2a2.5 2.5 0 0 1 2.326 -4.36c1.646 -1.313 4.025 -2.14 6.668 -2.14z"/><path d="M12 8l1 -5 6 1"/><path d="M19 4.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><circle cx="9" cy="13" r=".5" fill="currentColor"/><circle cx="15" cy="13" r=".5" fill="currentColor"/><path d="M10 17c.667 .333 1.333 .5 2 .5s1.333 -.167 2 -.5"/></svg>
+        </span>
+        <span class="cd-sharing-label">{{ i18n "sharing.reddit" | default "Reddit" }}</span>
+      </a>
+    {{- end -}}
+
+    {{- /* Email */ -}}
+    {{- if site.Params.sharing.email | default true -}}
+      {{- $emailBody := printf "%s\n\n%s" $title $permalink -}}
+      {{- $encodedSubject := querify "s" $title | replaceRE "^s=" "" -}}
+      {{- $encodedBody := querify "b" $emailBody | replaceRE "^b=" "" -}}
+      {{- $mailtoHref := printf "mailto:?subject=%s&body=%s" $encodedSubject $encodedBody -}}
+      <a href="{{ $mailtoHref }}" class="cd-sharing-link cd-sharing-link--email" aria-label="{{ i18n "sharing.email" | default "Share via email" }}">
+        <span class="cd-sharing-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
+        </span>
+        <span class="cd-sharing-label">{{ i18n "sharing.email" | default "Email" }}</span>
+      </a>
+    {{- end -}}
+
+  </div>
+</nav>
+{{- end -}}

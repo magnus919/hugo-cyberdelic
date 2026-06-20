@@ -39,6 +39,25 @@ relatedArticlesLimit = 4
 # Next / Previous article pagination
 showPagination = false
 
+# === Social Sharing ===
+[sharing]
+  # Master toggle — when false, no sharing buttons render
+  enabled = false
+
+  # Platform-specific toggles
+  bluesky  = true
+  twitter  = true
+  linkedin = true
+  mastodon = true
+  reddit   = true
+  email    = true
+
+  # Twitter/X: optional @handle for the `via` parameter
+  twitterHandle = ""
+
+  # Mastodon: custom instance (e.g., "mastodon.social")
+  mastodonInstance = ""
+
 # === Comments ===
 [comments]
   # Master toggle — when false, no comments section renders

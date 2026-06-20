@@ -14,9 +14,19 @@ showReadingTime   = true
 readingSpeed      = 0
 showWordCount     = true
 showWordCountOnList = true
-showSharing       = false
+showSharing       = true
 showRelated       = true
 showPagination    = true
+
+# === Social Sharing ===
+[sharing]
+  enabled    = true
+  bluesky    = true
+  twitter    = true
+  linkedin   = true
+  mastodon   = true
+  reddit     = true
+  email      = true
 
 # === Navigation & Discovery ===
 showSearch          = true
