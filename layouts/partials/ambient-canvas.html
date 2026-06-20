@@ -1,11 +1,15 @@
 {{- /* ambient-canvas.html — p5.js ambient background effects
      Gated behind params.cyberdelic.ambientCanvas
-     Self-contained sketch: load p5 from CDN, detect page type, render effects
+     Loads p5 from theme assets via Hugo Pipes, detects page type, renders effects
 */ -}}
 {{- if .Site.Params.cyberdelic.ambientCanvas -}}
+{{- $p5 := resources.Get "js/p5.min.js" -}}
+{{- if hugo.IsProduction -}}
+  {{- $p5 = $p5 | fingerprint -}}
+{{- end -}}
 <div id="cd-ambient-wrapper"><div id="cd-ambient"></div></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.4/p5.min.js"></script>
+<script src="{{ $p5.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $p5.Data.Integrity }}"{{ end }}></script>
 
 <script>
 (function() {
