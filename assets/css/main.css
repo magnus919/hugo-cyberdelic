@@ -173,6 +173,7 @@
     z-index: -1;
     pointer-events: none;
   }
+
   #cd-ambient-wrapper canvas {
     display: block;
     width: 100%;
