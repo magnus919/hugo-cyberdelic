@@ -17,9 +17,7 @@
    */
   async function fetchGitHubAPI(path) {
     const url = `${GITHUB_API_BASE}${path}`;
-    const response = await fetch(url, {
-      headers: { Accept: 'application/vnd.github.v3+json' },
-    });
+    const response = await fetch(url);
 
     if (!response.ok) {
       if (response.status === 404) {
@@ -362,6 +360,7 @@
       loading.hidden = true;
       content.hidden = false;
     } catch (err) {
+      console.error('[GitHub Card] Failed to load:', err.message);
       showError(card, err.message);
     }
   }
