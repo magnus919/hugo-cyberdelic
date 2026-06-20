@@ -1,7 +1,7 @@
 {{- /* ambient-canvas.html — p5.js ambient background effects
      Gated behind params.cyberdelic.ambientCanvas
-     Loads p5 from theme assets via Hugo Pipes, renders psychedelic effects
-     1969 psychedelic concert poster meets cyberpunk: liquid aurora + pulsating rings
+     Bioluminescent oil blobs with glowing edges — liquid light show
+     Theme palette colors on violet-black void
 */ -}}
 {{- if .Site.Params.cyberdelic.ambientCanvas -}}
 {{- $p5 := resources.Get "js/p5.min.js" -}}
@@ -17,171 +17,194 @@
   var isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (isReduced) return;
 
-  var isArticle = document.querySelector('.cd-article') !== null &&
-    document.querySelector('.cd-hero') === null;
+  var isHero = document.querySelector('.cd-hero') !== null;
+  var isArticle = document.querySelector('.cd-article') !== null && !isHero;
+  var is404 = document.title.indexOf('404') !== -1 || document.title.indexOf('Page not found') !== -1;
 
   var sketch = function(p) {
-    var aurora = [];
-    var rings = [];
+    var blobs = [];
     var time = 0;
 
+    /* Theme palette */
     var palette = [
-      [255, 0, 170],   /* magenta */
-      [56, 71, 255],   /* electric blue */
-      [0, 255, 255],   /* holographic cyan */
-      [255, 176, 0]    /* warm amber */
+      { r: 255, g: 0,   b: 170 },  /* magenta */
+      { r: 56,  g: 71,  b: 255 },  /* electric blue */
+      { r: 0,   g: 255, b: 255 },  /* holographic cyan */
+      { r: 255, g: 176, b: 0   }   /* warm amber */
     ];
-
-    var maxOpacity = isArticle ? 0.35 : 0.5;
 
     p.setup = function() {
       var canvas = p.createCanvas(p.windowWidth, p.windowHeight);
       canvas.parent('cd-ambient');
-      p.frameRate(20);
+      p.frameRate(24);
 
-      /* Aurora fields — large organic morphing blobs */
-      for (var i = 0; i < (isArticle ? 3 : 5); i++) {
-        aurora.push({
-          cx: p.random(p.width),
-          cy: p.random(p.height),
-          radius: p.random(p.min(p.width, p.height) * 0.15, p.min(p.width, p.height) * 0.4),
-          color: palette[i % palette.length],
-          alpha: p.random(15, 30),
-          driftX: p.random(-0.15, 0.15),
-          driftY: p.random(-0.1, 0.1),
-          phase: p.random(p.TWO_PI),
-          warp: p.random(0.3, 0.7),
-          speed: p.random(0.003, 0.008),
-          pulseSpeed: p.random(0.005, 0.015)
-        });
-      }
+      var count = isArticle ? 4 : (isHero || is404 ? 8 : 5);
 
-      /* Pulsating rings — concentric geometric shapes */
-      var ringCount = isArticle ? 3 : 6;
-      for (var i = 0; i < ringCount; i++) {
-        rings.push({
-          cx: p.random(p.width * 0.15, p.width * 0.85),
-          cy: p.random(p.height * 0.15, p.height * 0.85),
-          baseRadius: p.random(40, p.min(p.width, p.height) * 0.35),
-          strokeWidth: p.random(0.5, 2.5),
-          color: palette[i % palette.length],
-          alpha: p.random(10, 20),
-          rotation: p.random(p.TWO_PI),
-          rotSpeed: p.random(-0.003, 0.003),
-          pulseAmp: p.random(0.05, 0.2),
-          pulseSpeed: p.random(0.008, 0.025),
-          phase: p.random(p.TWO_PI),
-          dash: p.random() > 0.5,
-          sides: p.choice([3, 4, 5, 6, 8, 12, 24, 60]),
-          warp: p.random(0.02, 0.08)
-        });
-      }
-
-      /* Fill the void — more rings on article pages near edges */
-      if (isArticle) {
-        for (var i = 0; i < 4; i++) {
-          rings.push({
-            cx: p.random(p.width * 0.05, p.width * 0.95),
-            cy: p.random(p.height * 0.05, p.height * 0.95),
-            baseRadius: p.random(20, 80),
-            strokeWidth: p.random(0.3, 1.0),
-            color: palette[i % palette.length],
-            alpha: p.random(5, 12),
-            rotation: p.random(p.TWO_PI),
-            rotSpeed: p.random(-0.005, 0.005),
-            pulseAmp: p.random(0.1, 0.25),
-            pulseSpeed: p.random(0.01, 0.03),
-            phase: p.random(p.TWO_PI),
-            dash: true,
-            sides: p.choice([3, 4, 6, 12]),
-            warp: p.random(0.03, 0.1)
-          });
-        }
+      for (var i = 0; i < count; i++) {
+        var col = palette[i % palette.length];
+        blobs.push(createBlob(col));
       }
     };
+
+    function createBlob(col) {
+      var maxR = p.min(p.width, p.height);
+      var baseR = isArticle
+        ? p.random(maxR * 0.06, maxR * 0.15)
+        : p.random(maxR * 0.08, maxR * 0.22);
+
+      return {
+        x: p.random(p.width),
+        y: p.random(p.height),
+        baseRadius: baseR,
+        color: col,
+
+        /* Movement */
+        vx: p.random(-0.15, 0.15),
+        vy: p.random(-0.12, 0.12),
+        driftPhase: p.random(p.TWO_PI),
+
+        /* Shape morph — 4 lobes with independent oscillations */
+        lobes: [
+          { amp: p.random(0.1, 0.3), speed: p.random(0.005, 0.02), phase: p.random(p.TWO_PI) },
+          { amp: p.random(0.08, 0.25), speed: p.random(0.008, 0.025), phase: p.random(p.TWO_PI) },
+          { amp: p.random(0.05, 0.2), speed: p.random(0.003, 0.015), phase: p.random(p.TWO_PI) },
+          { amp: p.random(0.1, 0.2), speed: p.random(0.006, 0.018), phase: p.random(p.TWO_PI) }
+        ],
+
+        /* Pulse */
+        pulseAmp: p.random(0.08, 0.18),
+        pulseSpeed: p.random(0.004, 0.012),
+
+        /* Opacity */
+        bodyAlpha: p.random(40, 80),
+        glowAlpha: p.random(12, 25),
+        edgeAlpha: p.random(120, 180),
+
+        /* Tint shift — how much this blob drifts in color */
+        tintPhase: p.random(p.TWO_PI),
+        tintSpeed: p.random(0.002, 0.006)
+      };
+    }
 
     p.draw = function() {
       if (document.hidden) return;
       p.clear();
       time += 1;
 
-      /* Fade-tint the background for subtle persistence */
-      p.noStroke();
-      p.fill(10, 0, 21, 2);
-      p.rect(0, 0, p.width, p.height);
+      for (var i = 0; i < blobs.length; i++) {
+        var b = blobs[i];
 
-      /* Aurora fields */
-      for (var i = 0; i < aurora.length; i++) {
-        var a = aurora[i];
-        var cx = a.cx + p.sin(time * a.driftX * 0.5 + a.phase) * a.warp * a.radius * 0.3;
-        var cy = a.cy + p.cos(time * a.driftY * 0.5 + a.phase * 1.3) * a.warp * a.radius * 0.3;
-        var r = a.radius * (0.85 + 0.15 * p.sin(time * a.pulseSpeed + a.phase));
-        var alpha = a.alpha * (0.7 + 0.3 * p.sin(time * a.speed * 2 + a.phase * 0.7));
+        /* Drift */
+        b.x += b.vx + 0.3 * p.sin(time * 0.003 + b.driftPhase);
+        b.y += b.vy + 0.3 * p.cos(time * 0.004 + b.driftPhase * 0.7);
 
-        for (var j = 5; j > 0; j--) {
-          var t = j / 5;
-          var layerAlpha = alpha * (1 - t) * 0.6;
-          var layerR = r * (1 + t * 1.5);
-          p.fill(a.color[0], a.color[1], a.color[2], layerAlpha);
-          p.noStroke();
-          p.ellipse(cx + p.sin(time * a.speed + j) * 20,
-                    cy + p.cos(time * a.speed * 1.2 + j) * 20,
-                    layerR, layerR * (0.8 + 0.2 * p.sin(time * a.speed * 0.7 + j)));
-        }
-      }
+        /* Wrap around edges with padding */
+        var margin = b.baseRadius * 2;
+        if (b.x < -margin) b.x = p.width + margin;
+        if (b.x > p.width + margin) b.x = -margin;
+        if (b.y < -margin) b.y = p.height + margin;
+        if (b.y > p.height + margin) b.y = -margin;
 
-      /* Pulsating geometric rings */
-      for (var i = 0; i < rings.length; i++) {
-        var r = rings[i];
-        var radius = r.baseRadius * (1 + r.pulseAmp * p.sin(time * r.pulseSpeed + r.phase));
-        var rot = r.rotation + time * r.rotSpeed;
-        var alpha = r.alpha * (0.6 + 0.4 * p.sin(time * r.pulseSpeed * 1.5 + r.phase * 1.2));
+        /* Pulse */
+        var pulse = 1 + b.pulseAmp * p.sin(time * b.pulseSpeed + b.driftPhase);
 
-        p.noFill();
-        p.stroke(r.color[0], r.color[1], r.color[2], alpha);
-        p.strokeWeight(r.strokeWidth);
+        /* Color tint drift — slowly shift toward neighboring palette color */
+        var tintShift = 0.5 + 0.5 * p.sin(time * b.tintSpeed + b.tintPhase);
+        var nextCol = palette[(palette.indexOf(b.color) + 1) % palette.length];
+        var r = p.lerp(b.color.r, nextCol.r, tintShift * 0.15);
+        var g = p.lerp(b.color.g, nextCol.g, tintShift * 0.15);
+        var bv = p.lerp(b.color.b, nextCol.b, tintShift * 0.15);
 
-        p.push();
-        p.translate(r.cx, r.cy);
-        p.rotate(rot);
+        /* Get current radius with morph */
+        var rCurrent = b.baseRadius * pulse;
 
-        if (r.dash) {
-          /* Dashed ring — draw arcs with gaps */
-          var segments = 24;
-          var gapSize = p.TWO_PI / segments;
-          var drawSize = gapSize * 0.6;
-          for (var k = 0; k < segments; k++) {
-            var startA = k * gapSize + 0.02 * p.sin(time * r.pulseSpeed * 0.5 + k * 0.5);
-            var endA = startA + drawSize;
-            var rr = radius * (1 + r.warp * p.sin(startA * r.sides + time * 0.005));
-            p.arc(0, 0, rr * 2, rr * 2, startA, endA);
-          }
-        } else {
-          /* Smooth ring with subtle warping */
-          p.beginShape();
-          for (var k = 0; k <= 60; k++) {
-            var a = (k / 60) * p.TWO_PI;
-            var rr = radius * (1 + r.warp * p.sin(a * r.sides + time * 0.004));
-            p.vertex(p.cos(a) * rr, p.sin(a) * rr);
-          }
-          p.endShape(p.CLOSE);
-        }
-
-        p.pop();
-      }
-
-      /* Central glow — large soft bloom at viewport center */
-      var glowAlpha = (5 + 3 * p.sin(time * 0.005));
-      var glowR = p.min(p.width, p.height) * 0.4;
-      p.noStroke();
-      for (var j = 3; j > 0; j--) {
-        var gt = j / 3;
-        p.fill(255, 0, 170, glowAlpha * (1 - gt) * 0.2);
-        p.ellipse(p.width / 2 + p.sin(time * 0.003) * 40,
-                  p.height / 2 + p.cos(time * 0.004) * 30,
-                  glowR * (1 + gt), glowR * (1 + gt));
+        /* Draw the blob layers */
+        drawBlob(b, rCurrent, r, g, bv);
       }
     };
+
+    function drawBlob(b, radius, r, g, bv) {
+      var steps = 40;
+
+      /* --- Layer 1: Outer glow (large, soft, low alpha) --- */
+      p.noStroke();
+      p.fill(r, g, bv, b.glowAlpha);
+      p.beginShape();
+      for (var k = 0; k <= steps; k++) {
+        var a = (k / steps) * p.TWO_PI;
+        var morphR = radius * 1.8;
+        for (var l = 0; l < b.lobes.length; l++) {
+          morphR += radius * b.lobes[l].amp *
+            p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase);
+        }
+        p.vertex(b.x + p.cos(a) * morphR, b.y + p.sin(a) * morphR);
+      }
+      p.endShape(p.CLOSE);
+
+      /* --- Layer 2: Mid glow (medium, slight bleed) --- */
+      p.fill(r, g, bv, b.bodyAlpha * 0.5);
+      p.beginShape();
+      for (var k = 0; k <= steps; k++) {
+        var a = (k / steps) * p.TWO_PI;
+        var morphR = radius * 1.3;
+        for (var l = 0; l < b.lobes.length; l++) {
+          morphR += radius * b.lobes[l].amp * 0.8 *
+            p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase);
+        }
+        p.vertex(b.x + p.cos(a) * morphR, b.y + p.sin(a) * morphR);
+      }
+      p.endShape(p.CLOSE);
+
+      /* --- Layer 3: Body (core color) --- */
+      p.fill(r, g, bv, b.bodyAlpha);
+      p.beginShape();
+      for (var k = 0; k <= steps; k++) {
+        var a = (k / steps) * p.TWO_PI;
+        var morphR = radius;
+        for (var l = 0; l < b.lobes.length; l++) {
+          morphR += radius * b.lobes[l].amp * 0.6 *
+            p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase);
+        }
+        p.vertex(b.x + p.cos(a) * morphR, b.y + p.sin(a) * morphR);
+      }
+      p.endShape(p.CLOSE);
+
+      /* --- Layer 4: Sharp glowing edge --- */
+      p.noFill();
+      p.stroke(r, g, bv, b.edgeAlpha);
+      p.strokeWeight(1.2);
+      p.beginShape();
+      for (var k = 0; k <= steps; k++) {
+        var a = (k / steps) * p.TWO_PI;
+        var morphR = radius;
+        for (var l = 0; l < b.lobes.length; l++) {
+          morphR += radius * b.lobes[l].amp * 0.6 *
+            p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase);
+        }
+        p.vertex(b.x + p.cos(a) * morphR, b.y + p.sin(a) * morphR);
+      }
+      p.endShape(p.CLOSE);
+
+      /* --- Layer 5: Hot edge highlight (brighter accent on a portion) --- */
+      p.stroke(
+        p.min(r + 80, 255),
+        p.min(g + 80, 255),
+        p.min(bv + 80, 255),
+        b.edgeAlpha * 0.5
+      );
+      p.strokeWeight(0.8);
+      p.beginShape();
+      for (var k = 0; k <= steps; k++) {
+        var a = (k / steps) * p.TWO_PI;
+        var morphR = radius * 0.98;
+        for (var l = 0; l < b.lobes.length; l++) {
+          morphR += radius * b.lobes[l].amp * 0.5 *
+            p.sin(a * (l + 2) + time * b.lobes[l].speed + b.lobes[l].phase + 0.3);
+        }
+        p.vertex(b.x + p.cos(a) * morphR, b.y + p.sin(a) * morphR);
+      }
+      p.endShape(p.CLOSE);
+    }
 
     p.windowResized = function() {
       p.resizeCanvas(p.windowWidth, p.windowHeight);
