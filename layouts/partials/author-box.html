@@ -24,7 +24,7 @@
     {{- with $authorData.links -}}
       <div class="cd-author-box-links">
         {{- range . -}}
-          <a href="{{ .url }}" rel="me" target="_blank" rel="noopener noreferrer" itemprop="sameAs">{{ .label }}</a>
+          <a href="{{ .url }}" target="_blank" rel="me noopener noreferrer" itemprop="sameAs">{{ .label }}</a>
         {{- end -}}
       </div>
     {{- end -}}
