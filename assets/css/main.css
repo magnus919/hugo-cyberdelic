@@ -1162,6 +1162,16 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+
+    /* Permanent gradient fallback: renders behind background image when present,
+       or as the sole background when no image is configured */
+    background: linear-gradient(
+      135deg,
+      var(--cd-accent-purple) 0%,
+      var(--cd-bg) 30%,
+      var(--cd-accent-blue) 60%,
+      var(--cd-bg) 100%
+    );
   }
 
   .cd-home-background-image {
@@ -1183,17 +1193,6 @@
       rgb(10 0 21 / 0.5) 40%,
       rgb(10 0 21 / 0.7) 100%
     );
-  }
-
-  /* Gradient fallback when no image is set */
-  .cd-home-background-image:only-child {
-    background: linear-gradient(
-      135deg,
-      var(--cd-accent-purple) 0%,
-      var(--cd-bg) 30%,
-      var(--cd-accent-blue) 60%,
-      var(--cd-bg) 100%
-    ) !important;
   }
 
   .cd-home-background-content {
