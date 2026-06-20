@@ -148,6 +148,9 @@ carousel.next: 'Next slide'
 carousel.indicators: 'Slide indicators'
 carousel.slide_label: 'Slide {{ .Number }}'
 
+# Back to Top
+back_to_top.label: 'Back to top'
+
 # Draft Label
 draft.label: 'Draft'
 

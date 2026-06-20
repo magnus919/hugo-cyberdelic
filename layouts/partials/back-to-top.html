@@ -1,0 +1,54 @@
+{{- /* back-to-top.html — Floating neon back-to-top button
+     Gated behind params.cyberdelic.backToTop in single.html
+*/ -}}
+<button id="cd-back-to-top"
+  class="cd-back-to-top"
+  onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+  aria-label="{{ i18n "back_to_top.label" | default "Back to top" }}">
+  ↑
+</button>
+
+<style>
+  .cd-back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 100;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--cd-accent-cyan);
+    background: var(--cd-bg);
+    color: var(--cd-accent-cyan);
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+    border-radius: 4px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cd-back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cd-back-to-top:hover {
+    box-shadow: 0 0 10px var(--cd-accent-magenta);
+    border-color: var(--cd-accent-magenta);
+    color: var(--cd-accent-magenta);
+  }
+</style>
+
+<script>
+  (function() {
+    var btn = document.getElementById('cd-back-to-top');
+    if (!btn) return;
+    var toggle = function() {
+      btn.classList.toggle('visible', window.scrollY > 300);
+    };
+    document.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+  })();
+</script>

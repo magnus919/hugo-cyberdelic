@@ -103,6 +103,21 @@ showSeries = false
     # Maximum number of cards to display
     limit = 6
 
+# === Cyberdelic Effects ===
+[cyberdelic]
+  # Visual effects — defaults match current always-on aesthetic
+  glitch = true           # Glitch text animation on .cd-glitch elements
+  scanlines = true        # CRT scan line overlay on body
+  fadeIn = true           # Scroll-triggered fade-in on card grid
+  particles = false       # Floating neon particle background (CSS, opt-in)
+  circuitBorder = false   # Animated circuit-board border (CSS, opt-in)
+
+  # Dynamic content — opt-in
+  showRelatedPosts = false
+  tableOfContents = false
+  backToTop = false
+  paginationStyle = "minimal"   # "minimal" | "numbered" | "infinite"
+
 # === Social Sharing ===
 [sharing]
   # Master toggle — when false, no sharing buttons render
