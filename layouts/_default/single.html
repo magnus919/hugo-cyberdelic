@@ -26,9 +26,7 @@
   <h1 class="cd-article-title">{{ .Title }}</h1>
   <div class="cd-article-meta">
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
-    {{- with .ReadingTime -}}
-      &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
-    {{- end -}}
+    {{- partial "reading-time.html" . -}}
     {{- if site.Params.showWordCount -}}
       {{- with .WordCount -}}
         {{- $words := lang.FormatNumber 0 . -}}

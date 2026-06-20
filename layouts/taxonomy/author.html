@@ -58,9 +58,7 @@
         </h2>
         <p class="cd-card-meta">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-          {{- with .ReadingTime -}}
-            &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
-          {{- end -}}
+          {{- partial "reading-time.html" . -}}
           {{- if site.Params.showWordCountOnList -}}
             {{- with .WordCount -}}
               {{- $words := lang.FormatNumber 0 . -}}

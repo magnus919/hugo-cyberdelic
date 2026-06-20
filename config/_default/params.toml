@@ -16,6 +16,11 @@ homepageLayout = "hero"
 # Reading time display
 showReadingTime = false
 
+# Reading speed in words per minute (for reading time calculation).
+# Default (0) uses Hugo's built-in calculation (~200-250 wpm).
+# Set to a custom value like 100, 150, 300 for different pacing.
+readingSpeed = 0
+
 # Word count display
 showWordCount = false
 

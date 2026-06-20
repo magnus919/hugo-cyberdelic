@@ -1,0 +1,20 @@
+{{- /* reading-time.html — Configurable reading time display
+     Usage: {{- partial "reading-time.html" . -}}
+     Behavior:
+       - Renders nothing when params.showReadingTime is false
+       - Uses Hugo's built-in .ReadingTime when readingSpeed is 0 (default)
+       - Calculates ceil(.WordCount / readingSpeed) when readingSpeed > 0
+       - Floors at 1 minute for very short articles
+       - Uses i18n "article.min_read" for the label
+*/ -}}
+{{- if site.Params.showReadingTime -}}
+  {{- $readingTime := .ReadingTime -}}
+  {{- $speed := site.Params.readingSpeed | default 0 -}}
+  {{- if gt $speed 0 -}}
+    {{- $readingTime = div (add .WordCount (sub $speed 1)) $speed -}}
+    {{- if lt $readingTime 1 -}}{{- $readingTime = 1 -}}{{- end -}}
+  {{- end -}}
+  {{- with $readingTime -}}
+    &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
+  {{- end -}}
+{{- end -}}

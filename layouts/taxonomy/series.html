@@ -29,9 +29,7 @@
         </h2>
         <p class="cd-series-entry-meta">
           <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "Jan 2, 2006" }}</time>
-          {{- with $page.ReadingTime -}}
-            &middot; {{ i18n "article.min_read" . | default (printf "%d min read" .) }}
-          {{- end -}}
+          {{- partial "reading-time.html" $page -}}
         </p>
         {{- with $page.Summary -}}
           <div class="cd-series-entry-summary">
