@@ -3,6 +3,9 @@ resources/
 LICENSE
 config/
 
+# TOML author files — Prettier has no .toml parser
+data/
+
 # Hugo Go template syntax breaks HTML parser
 layouts/
 archetypes/
