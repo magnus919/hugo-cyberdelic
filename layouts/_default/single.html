@@ -2,7 +2,18 @@
 {{ define "description" }}{{ .Description | default .Summary | plainify | truncate 160 }}{{ end }}
 
 {{ define "main" }}
-{{- partial "cover.html" (dict "page" . "class" "cd-cover-img") -}}
+{{- if .Params.externalUrl -}}
+  {{/* External article: redirect page */}}
+  {{- if site.Params.externalLink.newTab | default true -}}
+    <script>(function() { var url = {{ .Params.externalUrl | jsonify }}; if (url && url !== "") { window.location.replace(url); } })();</script>
+  {{- end -}}
+  <div class="cd-external-redirect">
+    <h1>{{ .Title }}</h1>
+    <p>{{ i18n "external_link.redirect_text" | default "This article is hosted on an external site." }}</p>
+    <p><a href="{{ .Params.externalUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "external_link.visit" | default "Visit the original article" }}</a></p>
+  </div>
+{{- else -}}
+  {{- partial "cover.html" (dict "page" . "class" "cd-cover-img") -}}
 
 {{- partial "breadcrumbs.html" . -}}
 
@@ -81,4 +92,5 @@
 {{- partial "pagination.html" . -}}
 
 {{- partial "related.html" . -}}
+{{- end -}}
 {{ end }}

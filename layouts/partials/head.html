@@ -8,7 +8,7 @@
 <meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}">
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
-<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:url" content="{{ if .Params.externalUrl }}{{ .Params.externalUrl }}{{ else }}{{ .Permalink }}{{ end }}">
 {{- with .Site.Params.ogImage -}}
 <meta property="og:image" content="{{ . | absURL }}">
 {{- end -}}
@@ -29,7 +29,7 @@
     "@context": "https://schema.org",
     "@type": {{ if .IsPage }}"Article"{{ else }}"WebPage"{{ end }},
     "headline": {{ .Title | jsonify }},
-    "url": {{ .Permalink | jsonify }},
+    "url": {{ if .Params.externalUrl }}{{ .Params.externalUrl | jsonify }}{{ else }}{{ .Permalink | jsonify }}{{ end }},
     {{- with .Description }}
     "description": {{ . | jsonify }},
     {{- end -}}

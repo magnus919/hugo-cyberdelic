@@ -19,7 +19,7 @@
           <article class="cd-card cd-related-card">
             {{- partial "cover.html" (dict "page" . "class" "cd-card-cover" "wrapper" "cd-card-figure") -}}
             <h3 class="cd-card-title">
-              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              <a href="{{ .Params.externalUrl | default .RelPermalink }}"{{ if .Params.externalUrl }}{{ if site.Params.externalLink.newTab | default true }} target="_blank" rel="noopener noreferrer"{{ end }}{{ end }}>{{ .Title }}{{- if and .Params.externalUrl (site.Params.externalLink.showIndicator | default true) -}}<span class="cd-external-indicator" aria-label="{{ i18n "external_link.indicator" | default "External link" }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path d="M18 10.82a1 1 0 0 1-1-1V6.41l-8.3 8.3a1 1 0 1 1-1.41-1.41l8.3-8.3h-3.41a1 1 0 0 1 0-2H18a1 1 0 0 1 1 1v5.41a1 1 0 0 1-1 1z"/><path d="M18 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h4a1 1 0 1 1 0 2H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4a1 1 0 0 1 2 0v4a3 3 0 0 1-3 3z"/></svg></span>{{- end -}}</a>
             </h3>
             <p class="cd-card-meta">
               <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>

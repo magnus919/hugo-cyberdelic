@@ -105,6 +105,12 @@ series.next: 'Next article in series'
 series.post_count_single: '{{ .Count }} article'
 series.post_count_plural: '{{ .Count }} articles'
 
+# External Links
+external_link.indicator: 'External link'
+external_link.redirect_heading: 'External article'
+external_link.redirect_text: 'This article is hosted on an external site.'
+external_link.visit: 'Visit the original article'
+
 # Gallery
 gallery.label: 'Image gallery'
 gallery.close: 'Close lightbox'

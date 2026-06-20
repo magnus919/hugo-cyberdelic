@@ -68,6 +68,14 @@ showAuthorBox = false
 # Series navigation component
 showSeries = false
 
+# === External Articles ===
+# Articles with externalUrl frontmatter open in new tab and show an indicator
+[externalLink]
+  # Open external articles in a new tab (target=_blank)
+  newTab = true
+  # Show a visual indicator (external link icon) on card listings
+  showIndicator = true
+
 # === Analytics ===
 [analytics]
   # Supported providers: "google", "fathom", "umami", "seline"

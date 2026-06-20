@@ -1,0 +1,49 @@
+{{- /* rss.xml — Custom RSS feed that handles external articles
+     External articles use their externalUrl for the <link> element
+     and include <category>external</category> for identification.
+*/ -}}
+{{- $pages := .Site.RegularPages -}}
+{{- $limit := .Site.Config.Services.RSS.Limit -}}
+{{- if gt $limit 0 -}}
+  {{- $pages = $pages | first $limit -}}
+{{- end -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML -}}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} on {{ end }}{{ .Site.Title }}{{ end }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ .Site.Params.description | default "Recent content" }}</description>
+    <generator>Hugo {{ hugo.Version }}</generator>
+    <language>{{ .Site.Language.LanguageCode | default "en-us" }}</language>
+    {{- with .Site.Copyright -}}
+    <copyright>{{ . }}</copyright>
+    {{- end -}}
+    {{- if not .Date.IsZero -}}
+    <lastBuildDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+    {{- end -}}
+    {{- with .OutputFormats.Get "RSS" -}}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q/>" .Permalink .MediaType | safeHTML }}
+    {{- end -}}
+    {{- range $pages -}}
+    {{- $externalUrl := .Params.externalUrl -}}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ if $externalUrl }}{{ $externalUrl }}{{ else }}{{ .Permalink }}{{ end }}</link>
+      <pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      {{- with $externalUrl }}
+      <source url="{{ . }}">{{ $.Site.Title }}</source>
+      <guid isPermaLink="false">{{ . }}</guid>
+      {{- else }}
+      <guid>{{ .Permalink }}</guid>
+      {{- end -}}
+      <description>{{ .Summary | html }}</description>
+      {{- if $externalUrl -}}
+      <category>external</category>
+      {{- end -}}
+      {{- range .Params.tags -}}
+      <category>{{ . }}</category>
+      {{- end -}}
+    </item>
+    {{- end -}}
+  </channel>
+</rss>
