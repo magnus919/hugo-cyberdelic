@@ -364,6 +364,8 @@
   /* Content-out page layout: full-bleed + constrained */
   .cd-page {
     display: grid;
+    position: relative;
+    z-index: 1;
     grid-template-columns:
       [full-start] minmax(var(--cd-space-4), 1fr)
       [main-start] minmax(0, var(--cd-max-width))
