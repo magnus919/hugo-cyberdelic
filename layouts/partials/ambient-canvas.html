@@ -124,6 +124,26 @@
           }
         }
 
+        /* Edge anti-gravity — gentle push-back from viewport borders */
+        var edgeZone = p.min(p.width, p.height) * 0.2;
+        var edgeStr = 0.5;
+        if (b.x < edgeZone) {
+          var t = 1 - b.x / edgeZone;
+          b.vx += t * t * edgeStr;
+        }
+        if (b.x > p.width - edgeZone) {
+          var t = 1 - (p.width - b.x) / edgeZone;
+          b.vx -= t * t * edgeStr;
+        }
+        if (b.y < edgeZone) {
+          var t = 1 - b.y / edgeZone;
+          b.vy += t * t * edgeStr;
+        }
+        if (b.y > p.height - edgeZone) {
+          var t = 1 - (p.height - b.y) / edgeZone;
+          b.vy -= t * t * edgeStr;
+        }
+
         /* Hard edge barriers — keep center within viewport bounds */
         if (b.x < 0) { b.x = 0; b.vx *= -0.5; }
         if (b.x > p.width) { b.x = p.width; b.vx *= -0.5; }
