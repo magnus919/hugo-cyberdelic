@@ -124,12 +124,11 @@
           }
         }
 
-        /* Hard edge barriers — bounce off viewport edges */
-        var margin = effectiveRadius * 1.5;
-        if (b.x < -margin) { b.x = -margin; b.vx *= -0.5; }
-        if (b.x > p.width + margin) { b.x = p.width + margin; b.vx *= -0.5; }
-        if (b.y < -margin) { b.y = -margin; b.vy *= -0.5; }
-        if (b.y > p.height + margin) { b.y = p.height + margin; b.vy *= -0.5; }
+        /* Hard edge barriers — keep center within viewport bounds */
+        if (b.x < 0) { b.x = 0; b.vx *= -0.5; }
+        if (b.x > p.width) { b.x = p.width; b.vx *= -0.5; }
+        if (b.y < 0) { b.y = 0; b.vy *= -0.5; }
+        if (b.y > p.height) { b.y = p.height; b.vy *= -0.5; }
 
         /* Color tint drift — slowly shift toward neighboring palette color */
         var tintShift = 0.5 + 0.5 * p.sin(time * b.tintSpeed + b.tintPhase);
