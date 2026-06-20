@@ -94,6 +94,10 @@
       for (var i = 0; i < blobs.length; i++) {
         var b = blobs[i];
 
+        /* Pulse — compute before collision so we use actual size */
+        var pulse = 1 + b.pulseAmp * p.sin(time * b.pulseSpeed + b.driftPhase);
+        var effectiveRadius = b.baseRadius * pulse * 1.3;
+
         /* Drift */
         b.x += b.vx + 0.3 * p.sin(time * 0.003 + b.driftPhase);
         b.y += b.vy + 0.3 * p.cos(time * 0.004 + b.driftPhase * 0.7);
@@ -105,27 +109,27 @@
           var dx = b.x - other.x;
           var dy = b.y - other.y;
           var dist = p.sqrt(dx * dx + dy * dy);
-          var minDist = (b.baseRadius + other.baseRadius) * 0.9;
+          var otherPulse = 1 + other.pulseAmp * p.sin(time * other.pulseSpeed + other.driftPhase);
+          var otherEffective = other.baseRadius * otherPulse * 1.3;
+          var minDist = (effectiveRadius + otherEffective) * 0.85;
           if (dist < minDist && dist > 0.01) {
-            var force = (minDist - dist) / minDist * 0.08;
+            var overlap = (minDist - dist) / minDist;
+            var force = overlap * overlap * 0.6;
             var nx = dx / dist;
             var ny = dy / dist;
-            b.x += nx * force * other.baseRadius;
-            b.y += ny * force * other.baseRadius;
-            other.x -= nx * force * b.baseRadius;
-            other.y -= ny * force * b.baseRadius;
+            b.x += nx * force * otherEffective;
+            b.y += ny * force * otherEffective;
+            other.x -= nx * force * effectiveRadius;
+            other.y -= ny * force * effectiveRadius;
           }
         }
 
         /* Wrap around edges with padding */
-        var margin = b.baseRadius * 2;
+        var margin = effectiveRadius * 1.5;
         if (b.x < -margin) b.x = p.width + margin;
         if (b.x > p.width + margin) b.x = -margin;
         if (b.y < -margin) b.y = p.height + margin;
         if (b.y > p.height + margin) b.y = -margin;
-
-        /* Pulse */
-        var pulse = 1 + b.pulseAmp * p.sin(time * b.pulseSpeed + b.driftPhase);
 
         /* Color tint drift — slowly shift toward neighboring palette color */
         var tintShift = 0.5 + 0.5 * p.sin(time * b.tintSpeed + b.tintPhase);
