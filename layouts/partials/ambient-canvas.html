@@ -144,6 +144,18 @@
           b.vy -= t * t * edgeStr;
         }
 
+        /* Speed limits — chill pace enforcement */
+        var speed = p.sqrt(b.vx * b.vx + b.vy * b.vy);
+        var minSpeed = 0.2;
+        var maxSpeed = 1.2;
+        if (speed > maxSpeed) {
+          b.vx = (b.vx / speed) * maxSpeed;
+          b.vy = (b.vy / speed) * maxSpeed;
+        } else if (speed < minSpeed && speed > 0.001) {
+          b.vx = (b.vx / speed) * minSpeed;
+          b.vy = (b.vy / speed) * minSpeed;
+        }
+
         /* Hard edge barriers — keep center within viewport bounds */
         if (b.x < 0) { b.x = 0; b.vx *= -0.5; }
         if (b.x > p.width) { b.x = p.width; b.vx *= -0.5; }
