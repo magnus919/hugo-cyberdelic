@@ -1,6 +1,6 @@
 # Author profile — cybernaut
 name = "Cybernaut"
-avatar = "/images/placeholder.svg"
+avatar = "/images/cybernaut-avatar.png"
 bio = "Digital artist and frontend architect. Passionate about cyberpunk aesthetics, interactive design, and pushing the boundaries of web technologies."
 links = [
   { label = "Portfolio", url = "https://cybernaut.example.com" },

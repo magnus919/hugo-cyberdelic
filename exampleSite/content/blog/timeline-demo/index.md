@@ -4,7 +4,7 @@ date: 2026-06-19
 description: 'A demonstration of the vertical timeline shortcode with cyberdelic styling.'
 authors: ['magnus']
 tags: ['shortcodes', 'features', 'documentation', 'timeline']
-cover: '/images/placeholder.svg'
+cover: 'cover.png'
 ---
 
 This page demonstrates the timeline shortcode. The timeline renders a vertical list of items

@@ -5,7 +5,7 @@ description:
   'How CSS custom properties power a consistent, maintainable design system in hugo-cyberdelic.'
 authors: ['magnus', 'cybernaut']
 tags: ['design', 'css', 'development']
-cover: '/images/placeholder.svg'
+cover: 'cover.png'
 ---
 
 ## What Are Design Tokens?

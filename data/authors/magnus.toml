@@ -1,6 +1,6 @@
 # Author profile — magnus
 name = "Magnus"
-avatar = "/images/placeholder.svg"
+avatar = "/images/profile-avatar.png"
 bio = "Creator of hugo-cyberdelic and lifelong explorer of the neon void. Writing about web development, design, and the spaces between."
 links = [
   { label = "Website", url = "https://example.com" },

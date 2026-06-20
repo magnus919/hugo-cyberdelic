@@ -5,6 +5,6 @@
   layout = "background"
 
   [homepage.background]
-    image = "/images/placeholder.svg"
+    image = "/images/hero-background.png"
     heading = "hugo-cyberdelic"
     subtitle = "A cyberdelic Hugo theme — 1969 psychedelic concert poster meets cyberpunk holographic future."
