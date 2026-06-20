@@ -39,8 +39,54 @@ relatedArticlesLimit = 4
 # Next / Previous article pagination
 showPagination = false
 
-# Comments integration (Disqus, utterances, giscus, isso)
-showComments = false
+# === Comments ===
+[comments]
+  # Master toggle — when false, no comments section renders
+  enabled = false
+  # Supported providers: "disqus", "utterances", "giscus", "isso"
+  provider = ""
+
+  [comments.disqus]
+    # Your Disqus shortname (e.g., "myblog")
+    shortname = ""
+
+  [comments.utterances]
+    # GitHub repository in format "owner/repo" (e.g., "owner/my-repo")
+    repo = ""
+    # Mapping: "pathname", "url", "title", "og:title"
+    issueTerm = "pathname"
+    # Optional label for utterances issues
+    label = ""
+
+  [comments.giscus]
+    # GitHub repository in format "owner/repo"
+    repo = ""
+    # GitHub repository ID (required by giscus)
+    repoId = ""
+    # Discussion category
+    category = ""
+    # Discussion category ID (required by giscus)
+    categoryId = ""
+    # Mapping: "pathname", "url", "title", "og:title"
+    mapping = "pathname"
+    # Theme: "dark" (recommended for cyberdelic), "dark_dimmed", "light"
+    theme = "dark"
+    # Language for giscus (e.g., "en")
+    language = ""
+    # Enable reactions: "1" or "0"
+    reactionsEnabled = "1"
+    # Emit metadata: "1" or "0"
+    emitMetadata = "0"
+    # Input position: "top" or "bottom"
+    inputPosition = "bottom"
+
+  [comments.isso]
+    # Isso server URL (e.g., "https://comments.example.com")
+    dataUrl = ""
+    # Show avatar: true or false
+    avatar = true
+    # Load Isso CSS: true or false
+    css = true
 
 # === Navigation & Discovery ===
 # Client-side search overlay (Fuse.js)

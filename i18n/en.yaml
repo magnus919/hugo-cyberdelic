@@ -148,6 +148,15 @@ carousel.slide_label: 'Slide {{ .Number }}'
 # Draft Label
 draft.label: 'Draft'
 
+# Comments
+comments.title: 'Comments'
+comments.label: 'Comments'
+comments.no_provider: 'Comments are enabled but no comment provider has been configured.'
+comments.disqus_loading: 'Loading Disqus comments…'
+comments.utterances_loading: 'Loading comments…'
+comments.giscus_loading: 'Loading comments…'
+comments.isso_loading: 'Loading comments…'
+
 # GitHub Card
 github_card.loading: 'Loading GitHub data…'
 github_card.error_generic: 'Could not load GitHub data. Please check your connection and try again.'

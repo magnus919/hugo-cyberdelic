@@ -1,0 +1,111 @@
+{{- /* comments.html — Comment system integrations (Disqus, utterances, giscus, Isso)
+     Usage:
+       {{- partial "comments.html" . -}}
+     Controls:
+       site.Params.comments.enabled  — master toggle (default: false)
+       site.Params.comments.provider — "disqus", "utterances", "giscus", "isso"
+     Each provider has its own sub-config under [comments.*].
+     When enabled but no/invalid provider: renders a friendly placeholder.
+*/ -}}
+
+{{- $enabled := site.Params.comments.enabled | default false -}}
+{{- $provider := site.Params.comments.provider | default "" -}}
+{{- $page := . -}}
+
+{{- if $enabled -}}
+<section class="cd-comments" aria-label="{{ i18n "comments.label" | default "Comments" }}">
+  <h2 class="cd-comments-heading">{{ i18n "comments.title" | default "Comments" }}</h2>
+
+  {{- /* Disqus */ -}}
+  {{- if eq $provider "disqus" -}}
+    {{- $shortname := site.Params.comments.disqus.shortname | default "" -}}
+    {{- if $shortname -}}
+      <div id="disqus_thread"></div>
+      <script>
+        (function() {
+          var d = document, s = d.createElement('script');
+          s.src = 'https://{{ $shortname }}.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript>
+        <p class="cd-comments-noscript">{{ i18n "comments.disqus_loading" | default "Loading Disqus comments…" }}</p>
+      </noscript>
+    {{- else -}}
+      <p class="cd-comments-placeholder">{{ i18n "comments.no_provider" | default "Comments are enabled but no comment provider has been configured." }}</p>
+    {{- end -}}
+
+  {{- /* utterances */ -}}
+  {{- else if eq $provider "utterances" -}}
+    {{- $repo := site.Params.comments.utterances.repo | default "" -}}
+    {{- if $repo -}}
+      {{- $issueTerm := site.Params.comments.utterances.issueTerm | default "pathname" -}}
+      {{- $label := site.Params.comments.utterances.label | default "" -}}
+      <script src="https://utteranc.es/client.js"
+        repo="{{ $repo }}"
+        issue-term="{{ $issueTerm }}"
+        {{- if $label }} label="{{ $label }}"{{ end }}
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+      </script>
+    {{- else -}}
+      <p class="cd-comments-placeholder">{{ i18n "comments.no_provider" | default "Comments are enabled but no comment provider has been configured." }}</p>
+    {{- end -}}
+
+  {{- /* giscus */ -}}
+  {{- else if eq $provider "giscus" -}}
+    {{- $repo := site.Params.comments.giscus.repo | default "" -}}
+    {{- $repoId := site.Params.comments.giscus.repoId | default "" -}}
+    {{- $category := site.Params.comments.giscus.category | default "" -}}
+    {{- $categoryId := site.Params.comments.giscus.categoryId | default "" -}}
+    {{- if and $repo $repoId $category $categoryId -}}
+      {{- $mapping := site.Params.comments.giscus.mapping | default "pathname" -}}
+      {{- $theme := site.Params.comments.giscus.theme | default "dark" -}}
+      {{- $lang := site.Params.comments.giscus.language | default "" -}}
+      {{- $reactions := site.Params.comments.giscus.reactionsEnabled | default "1" -}}
+      {{- $emitMetadata := site.Params.comments.giscus.emitMetadata | default "0" -}}
+      {{- $inputPosition := site.Params.comments.giscus.inputPosition | default "bottom" -}}
+      <script src="https://giscus.app/client.js"
+        data-repo="{{ $repo }}"
+        data-repo-id="{{ $repoId }}"
+        data-category="{{ $category }}"
+        data-category-id="{{ $categoryId }}"
+        data-mapping="{{ $mapping }}"
+        data-strict="0"
+        data-reactions-enabled="{{ $reactions }}"
+        data-emit-metadata="{{ $emitMetadata }}"
+        data-input-position="{{ $inputPosition }}"
+        data-theme="{{ $theme }}"
+        {{- if $lang }} data-lang="{{ $lang }}"{{ end }}
+        crossorigin="anonymous"
+        async>
+      </script>
+    {{- else -}}
+      <p class="cd-comments-placeholder">{{ i18n "comments.no_provider" | default "Comments are enabled but no comment provider has been configured." }}</p>
+    {{- end -}}
+
+  {{- /* Isso */ -}}
+  {{- else if eq $provider "isso" -}}
+    {{- $dataUrl := site.Params.comments.isso.dataUrl | default "" -}}
+    {{- if $dataUrl -}}
+      {{- $avatar := site.Params.comments.isso.avatar | default true -}}
+      {{- $css := site.Params.comments.isso.css | default true -}}
+      <script
+        data-isso="{{ $dataUrl }}"
+        {{- if not $avatar }} data-isso-avatar="false"{{ end }}
+        {{- if not $css }} data-isso-css="false"{{ end }}
+        src="{{ $dataUrl }}js/embed.min.js">
+      </script>
+      <section id="isso-thread"></section>
+    {{- else -}}
+      <p class="cd-comments-placeholder">{{ i18n "comments.no_provider" | default "Comments are enabled but no comment provider has been configured." }}</p>
+    {{- end -}}
+
+  {{- /* No provider or unrecognised provider — show placeholder */ -}}
+  {{- else -}}
+    <p class="cd-comments-placeholder">{{ i18n "comments.no_provider" | default "Comments are enabled but no comment provider has been configured." }}</p>
+  {{- end -}}
+</section>
+{{- end -}}

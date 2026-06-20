@@ -17,7 +17,6 @@ showWordCountOnList = true
 showSharing       = false
 showRelated       = true
 showPagination    = true
-showComments      = false
 
 # === Navigation & Discovery ===
 showSearch          = true
@@ -52,3 +51,39 @@ showSeries = true
 
   [analytics.seline]
     token = ""
+
+# === Comments ===
+[comments]
+  # Enabled with placeholder (no provider configured) for demo
+  enabled = true
+  provider = ""
+
+  # Uncomment one of the following provider blocks to activate:
+
+  # Disqus example:
+  # provider = "disqus"
+  # [comments.disqus]
+  #   shortname = "your-disqus-shortname"
+
+  # utterances example:
+  # provider = "utterances"
+  # [comments.utterances]
+  #   repo = "owner/repo-name"
+  #   issueTerm = "pathname"
+
+  # giscus example:
+  # provider = "giscus"
+  # [comments.giscus]
+  #   repo = "owner/repo-name"
+  #   repoId = "R_kgDOXXXXXX"
+  #   category = "Announcements"
+  #   categoryId = "DIC_kwDOXXXXXX"
+  #   mapping = "pathname"
+  #   theme = "dark"
+
+  # Isso example:
+  # provider = "isso"
+  # [comments.isso]
+  #   dataUrl = "https://comments.example.com"
+  #   avatar = true
+  #   css = true

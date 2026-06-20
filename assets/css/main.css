@@ -1742,6 +1742,72 @@
     --cd-grid-min: 280px;
   }
 
+  /* -- Comments -- */
+  .cd-comments {
+    margin-top: var(--cd-space-8);
+    padding-top: var(--cd-space-7);
+    border-top: 1px solid var(--cd-border);
+    max-width: 65ch;
+  }
+
+  .cd-comments-heading {
+    font-family: var(--cd-font-heading);
+    font-size: var(--cd-step-1);
+    color: var(--cd-accent-cyan);
+    margin-bottom: var(--cd-space-5);
+    letter-spacing: 0.03em;
+  }
+
+  .cd-comments-placeholder {
+    padding: var(--cd-space-6) var(--cd-space-5);
+    border: 1px dashed var(--cd-border);
+    border-radius: var(--cd-radius-md);
+    color: var(--cd-text-dim);
+    font-size: var(--cd-step--1);
+    text-align: center;
+    background: color-mix(in srgb, var(--cd-accent-blue) 4%, var(--cd-bg-alt));
+    line-height: 1.6;
+  }
+
+  .cd-comments-noscript {
+    font-size: var(--cd-step--1);
+    color: var(--cd-text-dim);
+    text-align: center;
+    padding: var(--cd-space-4);
+  }
+
+  /* Disqus embed container — ID required by Disqus embed script */
+  /* stylelint-disable-next-line selector-id-pattern */
+  #disqus_thread {
+    min-height: 200px;
+    background: transparent;
+  }
+
+  /* utterances embed — class set by utterances widget */
+  /* stylelint-disable-next-line selector-class-pattern */
+  .utterances {
+    max-width: 100% !important;
+  }
+
+  /* giscus embed — class set by giscus widget */
+  /* stylelint-disable-next-line selector-class-pattern */
+  .giscus {
+    width: 100%;
+  }
+
+  /* Isso thread */
+  #isso-thread {
+    margin-top: var(--cd-space-5);
+  }
+
+  /* Ensure no white backgrounds from third-party embeds leak through */
+  .cd-comments iframe,
+  .cd-comments frame,
+  .cd-comments[class*='giscus'],
+  .cd-comments [class*='giscus'] {
+    background: transparent;
+  }
+
   /* -- Article Pagination -- */
   .cd-pagination {
     display: flex;
