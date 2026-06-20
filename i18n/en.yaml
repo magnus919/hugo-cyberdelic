@@ -145,6 +145,9 @@ carousel.next: 'Next slide'
 carousel.indicators: 'Slide indicators'
 carousel.slide_label: 'Slide {{ .Number }}'
 
+# Draft Label
+draft.label: 'Draft'
+
 # GitHub Card
 github_card.loading: 'Loading GitHub data…'
 github_card.error_generic: 'Could not load GitHub data. Please check your connection and try again.'

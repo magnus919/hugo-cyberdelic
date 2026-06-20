@@ -18,6 +18,11 @@
 {{- partial "breadcrumbs.html" . -}}
 
 <header class="cd-article-header">
+  {{- if and .Draft .Site.Params.showDraftLabel -}}
+    <div class="cd-article-draft">
+      <span class="cd-draft-label" role="status">{{ i18n "draft.label" }}</span>
+    </div>
+  {{- end -}}
   <h1 class="cd-article-title">{{ .Title }}</h1>
   <div class="cd-article-meta">
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>

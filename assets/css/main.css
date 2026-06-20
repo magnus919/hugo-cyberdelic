@@ -1245,6 +1245,7 @@
 
   /* -- Card (for list pages) -- */
   .cd-card {
+    position: relative;
     background: var(--cd-bg-card);
     border: 1px solid var(--cd-border);
     border-radius: var(--cd-radius-md);
@@ -1328,6 +1329,11 @@
 
   .cd-card-summary p {
     margin-bottom: 0;
+  }
+
+  /* Draft label wrapper above article title (single page) */
+  .cd-article-draft {
+    margin-bottom: var(--cd-space-3);
   }
 
   /* -- External Article Indicator -- */
@@ -3075,6 +3081,48 @@
 
   .cd-alert--caution .cd-alert-label {
     color: var(--cd-accent-magenta);
+  }
+
+  /* -- Draft Label -- */
+  .cd-draft-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cd-space-1);
+    padding: 2px var(--cd-space-2);
+    font-family: var(--cd-font-mono);
+    font-size: var(--cd-step--2);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: #000000;
+    background: var(--cd-accent-amber);
+    border-radius: var(--cd-radius-sm);
+    box-shadow: 0 0 8px var(--cd-glow-amber);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  /* Draft label variant for cards (absolute positioned) */
+  .cd-card-draft-label {
+    position: absolute;
+    top: var(--cd-space-3);
+    right: var(--cd-space-3);
+    z-index: 5;
+    padding: 2px var(--cd-space-2);
+    font-family: var(--cd-font-mono);
+    font-size: var(--cd-step--2);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: #000000;
+    background: var(--cd-accent-amber);
+    border-radius: var(--cd-radius-sm);
+    box-shadow: 0 0 8px var(--cd-glow-amber);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
   }
 
   /* -- Author Meta (article inline) -- */
