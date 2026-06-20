@@ -12,7 +12,7 @@ description: 'Demonstrating the GitHub card shortcode for repos, issues, and pul
 
 ## Issue Card
 
-{{< github-card url="golang/go/issues/1" >}}
+{{< github-card url="microsoft/vscode/issues/1" >}}
 
 ## Pull Request Card
 
