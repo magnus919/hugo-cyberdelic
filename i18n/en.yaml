@@ -151,6 +151,9 @@ carousel.slide_label: 'Slide {{ .Number }}'
 # Back to Top
 back_to_top.label: 'Back to top'
 
+# Reading Progress
+reading_progress.label: 'Reading progress'
+
 # Draft Label
 draft.label: 'Draft'
 
