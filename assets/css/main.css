@@ -1379,6 +1379,119 @@
     outline-offset: 2px;
   }
 
+  /* -- Paginator (page-level numbered pagination) -- */
+  .cd-paginator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--cd-space-3);
+    margin-top: var(--cd-space-6);
+    padding-top: var(--cd-space-5);
+    border-top: 1px solid var(--cd-border);
+  }
+
+  .cd-paginator-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cd-space-2);
+    padding: var(--cd-space-2) var(--cd-space-4);
+    font-family: var(--cd-font-display);
+    font-size: var(--cd-step--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cd-text-bright);
+    background: color-mix(in srgb, var(--cd-accent-blue) 12%, var(--cd-bg-alt));
+    border: 1px solid var(--cd-border);
+    border-radius: var(--cd-radius-sm);
+    text-decoration: none;
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      box-shadow 0.2s,
+      background 0.2s;
+  }
+
+  .cd-paginator-link:hover,
+  .cd-paginator-link:focus-visible {
+    color: var(--cd-accent-cyan);
+    border-color: color-mix(in srgb, var(--cd-accent-cyan) 40%, transparent);
+    box-shadow: 0 0 16px var(--cd-glow-cyan);
+    background: color-mix(in srgb, var(--cd-accent-cyan) 6%, var(--cd-bg-alt));
+  }
+
+  .cd-paginator-link:focus-visible {
+    outline: 2px solid var(--cd-accent-cyan);
+    outline-offset: 2px;
+  }
+
+  .cd-paginator-link--disabled {
+    opacity: 0.35;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .cd-paginator-pages {
+    display: flex;
+    align-items: center;
+    gap: var(--cd-space-1);
+  }
+
+  .cd-paginator-page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 var(--cd-space-2);
+    font-family: var(--cd-font-display);
+    font-size: var(--cd-step--1);
+    color: var(--cd-text-dim);
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--cd-radius-sm);
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      box-shadow 0.2s,
+      background 0.2s;
+  }
+
+  .cd-paginator-page:hover,
+  .cd-paginator-page:focus-visible {
+    color: var(--cd-accent-cyan);
+    border-color: color-mix(in srgb, var(--cd-accent-cyan) 30%, transparent);
+    box-shadow: 0 0 8px var(--cd-glow-cyan);
+  }
+
+  .cd-paginator-page:focus-visible {
+    outline: 2px solid var(--cd-accent-cyan);
+    outline-offset: 2px;
+  }
+
+  .cd-paginator-page--active {
+    color: var(--cd-bg);
+    background: var(--cd-accent-cyan);
+    border-color: var(--cd-accent-cyan);
+    box-shadow: 0 0 12px var(--cd-glow-cyan);
+    cursor: default;
+  }
+
+  .cd-paginator-page--active:hover {
+    color: var(--cd-bg);
+    background: var(--cd-accent-cyan);
+    box-shadow: 0 0 12px var(--cd-glow-cyan);
+  }
+
+  .cd-paginator-label {
+    display: none;
+  }
+
+  @media (min-width: 480px) {
+    .cd-paginator-label {
+      display: inline;
+    }
+  }
+
   /* -- Breadcrumbs -- */
   .cd-breadcrumbs {
     font-size: var(--cd-step--1);
@@ -1662,6 +1775,37 @@
 
   .cd-card:hover .cd-card-cover {
     transform: scale(1.05);
+  }
+
+  /* -- Card: Featured / Hero (spans two columns) -- */
+  .cd-card-featured {
+    grid-column: span 2;
+  }
+
+  .cd-card-featured .cd-card-cover {
+    aspect-ratio: 21 / 9;
+  }
+
+  .cd-card-featured .cd-card-title {
+    font-size: var(--cd-step-2);
+  }
+
+  .cd-card-featured .cd-card-summary {
+    font-size: var(--cd-step-0);
+  }
+
+  .cd-card-featured-label {
+    display: inline-block;
+    font-family: var(--cd-font-display);
+    font-size: var(--cd-step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cd-accent-amber);
+    background: color-mix(in srgb, var(--cd-accent-amber) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--cd-accent-amber) 30%, transparent);
+    border-radius: var(--cd-radius-sm);
+    padding: var(--cd-space-1) var(--cd-space-3);
+    margin-bottom: var(--cd-space-2);
   }
 
   .cd-card-title {

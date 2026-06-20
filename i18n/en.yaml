@@ -16,6 +16,7 @@ home.recent_posts: 'Recent posts'
 home.view_all_posts: 'View all posts'
 home.card_heading: 'Recent Posts'
 home.profile_social: 'Social links'
+home.featured_label: 'Featured'
 
 # List pages
 list.nothing_here: 'Nothing here yet.'
@@ -71,6 +72,11 @@ related.label: 'Related articles'
 pagination.previous: 'Previous article'
 pagination.next: 'Next article'
 pagination.label: 'Article pagination'
+
+# Page-level Paginator
+paginator.previous: 'Previous'
+paginator.next: 'Next'
+paginator.label: 'Page navigation'
 
 # Heading Anchors
 heading_anchors.permalink_to: 'Permalink to'

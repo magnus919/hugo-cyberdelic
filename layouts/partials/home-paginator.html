@@ -1,0 +1,43 @@
+{{- /* home-paginator.html — Numbered pagination for the homepage card grid
+     Accepts a Hugo Pager object via .paginator context
+*/ -}}
+
+{{- $paginator := .paginator -}}
+{{- if gt $paginator.TotalPages 1 -}}
+  <nav class="cd-paginator" aria-label="{{ i18n "paginator.label" | default "Page navigation" }}">
+    {{- if $paginator.HasPrev -}}
+      <a href="{{ $paginator.Prev.URL }}" class="cd-paginator-link cd-paginator-link--prev" rel="prev" aria-label="{{ i18n "paginator.previous" | default "Previous page" }}">
+        <span aria-hidden="true">&larr;</span>
+        <span class="cd-paginator-label">{{ i18n "paginator.previous" | default "Previous" }}</span>
+      </a>
+    {{- else -}}
+      <span class="cd-paginator-link cd-paginator-link--prev cd-paginator-link--disabled" aria-hidden="true">
+        <span aria-hidden="true">&larr;</span>
+        <span class="cd-paginator-label">{{ i18n "paginator.previous" | default "Previous" }}</span>
+      </span>
+    {{- end -}}
+
+    <span class="cd-paginator-pages">
+      {{- $current := $paginator.PageNumber -}}
+      {{- range $paginator.Pagers -}}
+        {{- if eq .PageNumber $current -}}
+          <span class="cd-paginator-page cd-paginator-page--active" aria-current="page">{{ .PageNumber }}</span>
+        {{- else -}}
+          <a href="{{ .URL }}" class="cd-paginator-page">{{ .PageNumber }}</a>
+        {{- end -}}
+      {{- end -}}
+    </span>
+
+    {{- if $paginator.HasNext -}}
+      <a href="{{ $paginator.Next.URL }}" class="cd-paginator-link cd-paginator-link--next" rel="next" aria-label="{{ i18n "paginator.next" | default "Next page" }}">
+        <span class="cd-paginator-label">{{ i18n "paginator.next" | default "Next" }}</span>
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    {{- else -}}
+      <span class="cd-paginator-link cd-paginator-link--next cd-paginator-link--disabled" aria-hidden="true">
+        <span class="cd-paginator-label">{{ i18n "paginator.next" | default "Next" }}</span>
+        <span aria-hidden="true">&rarr;</span>
+      </span>
+    {{- end -}}
+  </nav>
+{{- end -}}

@@ -105,6 +105,7 @@ showSeries = true
   fadeIn = true
   particles = false
   circuitBorder = false
+  frame = true
   showRelatedPosts = true
   tableOfContents = true
   backToTop = true

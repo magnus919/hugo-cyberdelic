@@ -100,8 +100,8 @@ showSeries = false
   [homepage.card]
     # Custom heading text (falls back to i18n "Recent Posts")
     heading = ""
-    # Maximum number of cards to display
-    limit = 6
+    # Maximum number of cards to display (odd recommended for the featured post layout)
+    limit = 7
 
 # === Cyberdelic Effects ===
 [cyberdelic]
@@ -111,6 +111,7 @@ showSeries = false
   fadeIn = true           # Scroll-triggered fade-in on card grid
   particles = false       # Floating neon particle background (CSS, opt-in)
   circuitBorder = false   # Animated circuit-board border (CSS, opt-in)
+  frame = false           # Ornate cyberdelic frame (corner medallions, edge strips, corner flourishes)
 
   # Dynamic content — opt-in
   showRelatedPosts = false

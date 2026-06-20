@@ -5,6 +5,7 @@ description: 'A meditation on darkness, light, and the spaces between in cyberde
 authors: ['magnus']
 tags: ['design', 'philosophy', 'visual-language']
 cover: 'cover.png'
+featured: true
 ---
 
 ## The Void as Canvas
