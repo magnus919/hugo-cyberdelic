@@ -16,10 +16,15 @@
       data-scanlines="{{ .Site.Params.cyberdelic.scanlines | default true }}"
       data-fade-in="{{ .Site.Params.cyberdelic.fadeIn | default true }}"
       data-particles="{{ .Site.Params.cyberdelic.particles | default false }}"
-      data-circuit-border="{{ .Site.Params.cyberdelic.circuitBorder | default false }}">
+      data-circuit-border="{{ .Site.Params.cyberdelic.circuitBorder | default false }}"
+      data-frame="{{ .Site.Params.cyberdelic.frame | default false }}">
   <a href="#main-content" class="skip-link">{{ i18n "navigation.skip_to_content" | default "Skip to main content" }}</a>
 
   {{- partial "ambient-canvas.html" . -}}
+
+  {{- if .Site.Params.cyberdelic.frame | default false -}}
+    {{ partial "frame.html" . }}
+  {{- end -}}
 
   <div class="cd-page">
     {{- block "header" . }}{{ partial "header.html" . }}{{ end -}}
