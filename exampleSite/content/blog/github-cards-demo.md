@@ -8,7 +8,7 @@ description: 'Demonstrating the GitHub card shortcode for repos, issues, and pul
 
 ## Repository Card
 
-{{< github-card url="magnus919/hugo-cyberdelic" >}}
+{{< github-card url="torvalds/linux" >}}
 
 ## Issue Card
 
@@ -16,7 +16,7 @@ description: 'Demonstrating the GitHub card shortcode for repos, issues, and pul
 
 ## Pull Request Card
 
-{{< github-card url="lodash/lodash/pull/1" >}}
+{{< github-card url="facebook/react/pull/1" >}}
 
 ## Non-existent Repo (Error State)
 

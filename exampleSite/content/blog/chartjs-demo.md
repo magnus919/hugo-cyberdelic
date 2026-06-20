@@ -1,9 +1,9 @@
 ---
 title: 'Interactive Charts with Chart.js'
-date: 2025-06-01
+date: 2026-06-01
 draft: false
 tags: ['charts', 'demo', 'shortcodes']
-summary: 'Demonstrating the Chart.js shortcode with various chart types and configurations.'
+description: 'Demonstrating the Chart.js shortcode with various chart types and configurations.'
 ---
 
 The Chart.js shortcode renders interactive charts using the Chart.js library loaded from CDN. Charts
@@ -37,7 +37,7 @@ A doughnut chart for budget allocation:
 
 A radar chart comparing skill levels:
 
-{{< chart type="radar" labels="JavaScript,CSS,Python,Go,Rust,Design" dataset="Skill Level" data="90,85,75,60,45,70" backgroundColor="rgba(56,71,255,0.2)" borderColor="#3847FF" title="Technical Skills Assessment" >}}
+{{< chart type="radar" labels="JavaScript,CSS,Python,Go,Rust,Design" dataset="Skill Level" data="90,85,75,60,45,70" backgroundColor="'rgba(56, 71, 255, 0.2)'" borderColor="#3847FF" title="Technical Skills Assessment" >}}
 
 ## Polar Area Chart
 

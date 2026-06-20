@@ -4,11 +4,11 @@
 # Site metadata
 description = "A cyberdelic Hugo theme demo — 1969 psychedelic concert poster meets cyberpunk holographic future."
 author      = "Cyberdelic Demo"
-ogImage     = ""
+
 
 # === Article / Post Features ===
 showReadingTime   = true
-readingSpeed      = 0
+readingSpeed      = 200
 showWordCount     = true
 showWordCountOnList = true
 showSharing       = true
@@ -61,8 +61,7 @@ showSeries = true
 
 # === Comments ===
 [comments]
-  # Enabled with placeholder (no provider configured) for demo
-  enabled = true
+  enabled = false
   provider = ""
 
   # Uncomment one of the following provider blocks to activate:

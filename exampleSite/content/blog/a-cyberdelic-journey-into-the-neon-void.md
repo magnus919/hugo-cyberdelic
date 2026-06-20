@@ -7,8 +7,7 @@ description:
 authors: ['neon-writer']
 tags: ['cyberdelic', 'design', 'aesthetics']
 externalUrl: 'https://example.com/cyberdelic-journey'
-externalLink: true
-outputs: ['RSS']
+outputs: ['HTML', 'RSS']
 ---
 
 This article is hosted externally. Click the link above to read it on the original site.

@@ -1,9 +1,9 @@
 ---
 title: 'Mathematical Notation with KaTeX'
-date: 2025-06-10
+date: 2026-06-10
 draft: false
 tags: ['math', 'demo', 'shortcodes', 'katex']
-summary:
+description:
   'Demonstrating the KaTeX shortcode with inline and block math, complex expressions, and accessible
   rendering.'
 ---
@@ -46,7 +46,7 @@ The Gaussian integral:
 
 The Riemann zeta function:
 
-{{< katex >}} \zeta(s) = \sum*{n=1}^{\infty} \frac{1}{n^s} = \prod*{p \text{ prime}} \frac{1}{1 -
+{{< katex >}} \zeta(s) = \sum\_{n=1}^{\infty} \frac{1}{n^s} = \prod\_{p \text{ prime}} \frac{1}{1 -
 p^{-s}} {{< /katex >}}
 
 Taylor series expansion:
