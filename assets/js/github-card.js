@@ -342,6 +342,7 @@
     const number = card.dataset.ghNumber;
     const loading = card.querySelector('.cd-github-card-loading');
     const content = card.querySelector('.cd-github-card-content');
+    const error = card.querySelector('.cd-github-card-error');
 
     try {
       let data;
@@ -356,8 +357,9 @@
         renderIssueCard(data, itemType, content);
       }
 
-      // Show content, hide loading
+      // Show content, hide loading and error
       loading.hidden = true;
+      error.hidden = true;
       content.hidden = false;
     } catch (err) {
       console.error('[GitHub Card] Failed to load:', err.message);

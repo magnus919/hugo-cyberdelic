@@ -3393,7 +3393,7 @@
   }
 
   /* -- Error State -- */
-  .cd-github-card-error {
+  .cd-github-card-error:not([hidden]) {
     display: flex;
     align-items: center;
     gap: var(--cd-space-3);
