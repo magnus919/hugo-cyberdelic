@@ -1,0 +1,11 @@
+# Profile homepage layout variant
+# Usage: hugo server -D --environment profile
+
+[homepage]
+  layout = "profile"
+
+  [homepage.profile]
+    avatar = "/images/placeholder.svg"
+    name = "Cyberdelic Demo"
+    headline = "A cyberdelic Hugo theme — 1969 psychedelic concert poster meets cyberpunk holographic future."
+    bio = "Welcome to the hugo-cyberdelic demo site. Browse the sample posts below to see the theme in action."

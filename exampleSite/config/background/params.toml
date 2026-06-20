@@ -1,0 +1,10 @@
+# Background homepage layout variant
+# Usage: hugo server -D --environment background
+
+[homepage]
+  layout = "background"
+
+  [homepage.background]
+    image = "/images/placeholder.svg"
+    heading = "hugo-cyberdelic"
+    subtitle = "A cyberdelic Hugo theme — 1969 psychedelic concert poster meets cyberpunk holographic future."

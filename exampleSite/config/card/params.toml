@@ -1,0 +1,9 @@
+# Card homepage layout variant
+# Usage: hugo server -D --environment card
+
+[homepage]
+  layout = "card"
+
+  [homepage.card]
+    heading = "Latest Posts"
+    limit = 6
