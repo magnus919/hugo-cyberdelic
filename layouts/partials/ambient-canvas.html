@@ -46,7 +46,7 @@
           cy: p.random(p.height),
           radius: p.random(p.min(p.width, p.height) * 0.15, p.min(p.width, p.height) * 0.4),
           color: palette[i % palette.length],
-          alpha: p.random(0.08, 0.18) * maxOpacity * 2,
+          alpha: p.random(15, 30),
           driftX: p.random(-0.15, 0.15),
           driftY: p.random(-0.1, 0.1),
           phase: p.random(p.TWO_PI),
@@ -65,7 +65,7 @@
           baseRadius: p.random(40, p.min(p.width, p.height) * 0.35),
           strokeWidth: p.random(0.5, 2.5),
           color: palette[i % palette.length],
-          alpha: p.random(0.04, 0.12) * maxOpacity * 2,
+          alpha: p.random(10, 20),
           rotation: p.random(p.TWO_PI),
           rotSpeed: p.random(-0.003, 0.003),
           pulseAmp: p.random(0.05, 0.2),
@@ -86,7 +86,7 @@
             baseRadius: p.random(20, 80),
             strokeWidth: p.random(0.3, 1.0),
             color: palette[i % palette.length],
-            alpha: p.random(0.02, 0.06) * maxOpacity * 2,
+            alpha: p.random(5, 12),
             rotation: p.random(p.TWO_PI),
             rotSpeed: p.random(-0.005, 0.005),
             pulseAmp: p.random(0.1, 0.25),
@@ -120,7 +120,7 @@
 
         for (var j = 5; j > 0; j--) {
           var t = j / 5;
-          var layerAlpha = alpha * (1 - t) * 0.3;
+          var layerAlpha = alpha * (1 - t) * 0.6;
           var layerR = r * (1 + t * 1.5);
           p.fill(a.color[0], a.color[1], a.color[2], layerAlpha);
           p.noStroke();
@@ -171,7 +171,7 @@
       }
 
       /* Central glow — large soft bloom at viewport center */
-      var glowAlpha = (0.02 + 0.01 * p.sin(time * 0.005)) * maxOpacity * 2;
+      var glowAlpha = (5 + 3 * p.sin(time * 0.005));
       var glowR = p.min(p.width, p.height) * 0.4;
       p.noStroke();
       for (var j = 3; j > 0; j--) {
