@@ -45,6 +45,7 @@
   {{- $cardID := printf "cd-gh-%s-%s-%s-%s" $owner $repo $type $number | sha256 | truncate 12 "" -}}
   {{- $apiType := $type -}}
   {{- if eq $type "pull" -}}{{ $apiType = "pulls" }}{{- end -}}
+  {{- if eq $type "issue" -}}{{ $apiType = "issues" }}{{- end -}}
 
 <div
   class="cd-github-card"
